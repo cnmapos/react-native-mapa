@@ -10,9 +10,12 @@
     "test": "jest"
   },
   "dependencies": {
+    "@rneui/base": "^4.0.0-rc.7",
+    "@rneui/themed": "^4.0.0-rc.8",
     "@rnmapbox/maps": "^10.1.18",
     "react": "18.2.0",
-    "react-native": "0.73.5"
+    "react-native": "0.73.5",
+    "react-native-vector-icons": "^10.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -25,9 +28,15 @@
     "@types/react": "^18.2.6",
     "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.6.3",
-    "eslint": "^8.19.0",
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb": "19.0.4",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
     "jest": "^29.6.3",
     "prettier": "2.8.8",
+    "react-docgen-typescript": "^2.2.2",
     "react-test-renderer": "18.2.0",
     "typescript": "5.0.4"
   },
