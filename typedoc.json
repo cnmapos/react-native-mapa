@@ -1,0 +1,10 @@
+{
+    // Comments are supported, like tsconfig.json
+    "name": "React native map sdk",
+    "entryPoints": ["src/index.ts"],
+    "out": "docs",
+    "excludePrivate": true,
+    "excludeProtected": true,
+    "includeVersion": true,
+    "includes": ["./src"]
+}
