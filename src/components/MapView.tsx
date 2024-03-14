@@ -4,16 +4,32 @@ import amapTileJson from '../config/amap.tile.json';
 import { Children, ReactElement, useState } from 'react';
 import { MapContext } from '../MapContext';
 
-type Props = {
-  children: ReactElement | ReactElement[]
+/**
+ * MapView Props
+ * 
+ * @property
+ */
+export type MapViewProps = {
+  /**
+   * @ignore
+   */
+  children: ReactElement | ReactElement[],
+  /**
+   * 地图显示层级，默认显示15级
+   */
+  zoom?: number,
+  /**
+   * 设置中心位置，如果有使用{Location}定位，则优先使用定位坐标
+   */
+  center?: number,
 }
 
 /**
+ * 地图容器
  * 
- *
  * @category Component
  */
-const MapView = (props: Props) => {
+export const MapView = (props: MapViewProps) => {
   const { children } = props;
   const [map, setMap] = useState<Mapbox.MapView | null>(null);
   const styles = StyleSheet.create({
@@ -54,5 +70,3 @@ const MapView = (props: Props) => {
     </View>
   );
 };
-
-export default MapView;
