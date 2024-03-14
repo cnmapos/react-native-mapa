@@ -1,10 +1,15 @@
 {
     // Comments are supported, like tsconfig.json
-    "name": "React native map sdk",
-    "entryPoints": ["src/index.ts"],
+    "name": "react-native-mapa",
+    "entryPoints": ["src/"],
+    "readme": "none",
+    "sort": ["source-order"],
+    "categorizeByGroup": false,
+    "excludeNotDocumented": true,
     "out": "docs",
     "excludePrivate": true,
     "excludeProtected": true,
-    "includeVersion": true,
-    "includes": ["./src"]
+    "includeVersion": false,
+    "includes": ["./src"],
+    // "plugin": ["typedoc-plugin-markdown"]
 }

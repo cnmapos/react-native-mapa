@@ -10,3 +10,17 @@ https://gitee.com/heavigo/maps/tree/main/docs
 
 执行命令`yarn run doc:gen`生成API文档。执行命令`yarn run doc:start`启动本地服务查看生成的API文档。
 
+如果想生成markdown文件，安装插件typedoc-plugin-markdown
+```
+npm install typedoc-plugin-markdown@next --save-dev
+```
+并在typedoc.json文件添加插件配置项:
+```
+"plugin": ["typedoc-plugin-markdown"]
+```
+
+#执行指令
+- `yarn run doc:gen`: 热启动html文档生成
+- `yarn run doc:`: 启动文档本地服务，可在浏览器查看
+- `yarn run doc:start`: 生成文档并启动本地服务
+- `yarn run doc:md`: 生成markdown格式文档，保存在specs目录

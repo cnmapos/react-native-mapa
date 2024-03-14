@@ -3,11 +3,14 @@ import { StyleSheet, Text, View } from "react-native"
 import { MapContext } from "../MapContext";
 import { Button, Icon } from "@rneui/base";
 
-/**
- * 地图放大、缩小组件
- */
+
 type Props = any;
 
+/**
+ * 地图放大、缩小组件
+ * 
+ * @category Component
+ */
 const ZoomInOut = (props: Props) => {
     const context = useContext(MapContext);
     const styles = StyleSheet.create({

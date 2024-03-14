@@ -7,12 +7,13 @@ import { MapContext } from '../MapContext';
 type Props = {
   children: ReactElement | ReactElement[]
 }
+
 /**
- * MapView 地图视图
- * @param props 
- * @returns 
+ * 
+ *
+ * @category Component
  */
-const MapView = (props: Props): React.JSX.Element => {
+const MapView = (props: Props) => {
   const { children } = props;
   const [map, setMap] = useState<Mapbox.MapView | null>(null);
   const styles = StyleSheet.create({
