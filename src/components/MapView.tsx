@@ -1,15 +1,15 @@
 import Mapbox from '@rnmapbox/maps';
 import {StyleSheet, View} from 'react-native';
 import amapTileJson from '../config/amap.tile.json';
-import { Children, ReactElement, useState } from 'react';
-import { MapContext } from '../MapContext';
+import {Children, ReactElement, useState} from 'react';
+import {MapContext} from '../MapContext';
 
 type Props = {
-  children: ReactElement | ReactElement[]
-}
+  children: ReactElement | ReactElement[];
+};
 
 const MapView = (props: Props): React.JSX.Element => {
-  const { children } = props;
+  const {children} = props;
   const [map, setMap] = useState<Mapbox.MapView | null>();
   const styles = StyleSheet.create({
     page: {
@@ -32,17 +32,18 @@ const MapView = (props: Props): React.JSX.Element => {
     <View style={styles.page}>
       <View style={styles.container}>
         <Mapbox.MapView
-          ref={(ref) => setMap(ref) }
+          ref={ref => setMap(ref)}
           styleJSON={JSON.stringify(amapTileJson)}
           attributionEnabled={false}
           logoEnabled={false}
           zoomEnabled={true}
           scaleBarEnabled={false}
           style={styles.map}>
-            <MapContext.Provider value={{ map }}>
-              { children }
-            </MapContext.Provider>
-          <Mapbox.Camera zoomLevel={16} centerCoordinate={[104.04, 30.39]} />
+          <MapContext.Provider value={{map}}>{children}</MapContext.Provider>
+          <Mapbox.Camera
+            zoomLevel={12}
+            centerCoordinate={[116.436177, 39.935297]}
+          />
           <Mapbox.UserLocation />
         </Mapbox.MapView>
       </View>
