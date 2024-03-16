@@ -1,12 +1,12 @@
 /**
- * 
- * @param props 
- * @returns 
- * 
+ *
+ * @param props
+ * @returns
+ *
  * @category Component
  */
 const Scale = (props: any) => {
-    return (<div></div>)
-}
+    return <div />;
+};
 
 export default Scale;

@@ -6,12 +6,14 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint .",
+    "cz": "bash .husky/pre-commit && git cz",
     "start": "react-native start",
     "test": "jest",
     "doc:gen": "typedoc --watch",
     "doc:dev": "ws -d docs",
     "doc:md": "typedoc --out specs --plugin typedoc-plugin-markdown",
-    "doc:start": "yarn run typedoc && ws -d docs"
+    "doc:start": "yarn run typedoc && ws -d docs",
+    "prepare": "husky"
   },
   "dependencies": {
     "@rneui/base": "^4.0.0-rc.7",
@@ -27,6 +29,8 @@
     "@babel/core": "^7.20.0",
     "@babel/preset-env": "^7.20.0",
     "@babel/runtime": "^7.20.0",
+    "@commitlint/cli": "^19.2.0",
+    "@commitlint/config-angular": "^19.1.0",
     "@react-native/babel-preset": "0.73.21",
     "@react-native/eslint-config": "0.73.2",
     "@react-native/metro-config": "0.73.5",
@@ -34,18 +38,25 @@
     "@types/react": "^18.2.6",
     "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.6.3",
-    "eslint": "^8.2.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "eslint": "^8.19.0",
+    "git-cz": "^4.9.0",
+    "husky": "^9.0.11",
     "jest": "^29.6.3",
     "prettier": "2.8.8",
     "react-docgen-typescript": "^2.2.2",
     "react-test-renderer": "18.2.0",
     "typedoc-plugin-markdown": "^4.0.0-next.53",
     "typescript": "5.0.4"
+  },
+  "config": {
+    "commitizen": {
+      "path": "git-cz"
+    }
   },
   "engines": {
     "node": ">=18"

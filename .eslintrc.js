@@ -1,9 +1,11 @@
 module.exports = {
-  root: true,
-  extends: ['airbnb', 'airbnb/hooks'],
-  rules: {
-    // ...
-    'react/react-in-jsx-scope': 'off',
-    'react/jsx-uses-react': 'off',
-  },
+    root: true,
+    extends: ['@react-native', 'airbnb/hooks'],
+    rules: {
+        // ...
+        'react/react-in-jsx-scope': 'off',
+        'react/jsx-uses-react': 'off',
+        'no-unused-vars': 'off',
+        '@typescript-eslint/no-unused-vars': 'off',
+    },
 };

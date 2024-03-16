@@ -9,7 +9,7 @@ import { defaultCenterCoordinates, defaultZoom } from '../config';
 
 /**
  * MapView Props
- * 
+ *
  * @property
  */
 export type MapViewProps = {
@@ -29,7 +29,7 @@ export type MapViewProps = {
 
 /**
  * 地图容器
- * 
+ *
  * @category Component
  */
 const MapView = (props: MapViewProps) => {
