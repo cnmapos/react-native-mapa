@@ -1,4 +1,3 @@
-
 export * from './components/MapView';
 export { default as ZoomInOut } from './components/ZoomInOut';
 export { default as Background } from './components/Background';

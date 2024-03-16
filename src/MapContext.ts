@@ -1,4 +1,3 @@
-import { createContext } from "react";
-import Mapa from ".";
+import { createContext } from 'react';
 
 export const MapContext = createContext<{ map: any }>({ map: null });

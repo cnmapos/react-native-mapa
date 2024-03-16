@@ -1,12 +1,12 @@
 /**
- * 
- * @param props 
- * @returns 
- * 
+ *
+ * @param props
+ * @returns
+ *
  * @category Component
  */
 const Background = (props: any) => {
-    return <div>背景底图</div>
-}
+    return <div>背景底图</div>;
+};
 
-export default Background
+export default Background;

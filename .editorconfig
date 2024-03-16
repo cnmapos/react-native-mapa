@@ -1,0 +1,16 @@
+# http://editorconfig.org
+root = true
+
+[*]
+# 缩进风格
+indent_style = space
+# 缩进大小
+indent_size = 4
+# 换行，只使用换行符，不使用回车
+end_of_line = lf
+# 编码格式
+charset = utf-8
+# 是否自动删除尾部空白符
+trim_trailing_whitespace = true
+# 文件尾部是否插入新行
+insert_final_newline = true
