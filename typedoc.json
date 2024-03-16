@@ -1,11 +1,11 @@
 {
     // Comments are supported, like tsconfig.json
     "name": "react-native-mapa",
-    "entryPoints": ["src/"],
+    "entryPoints": ["src", "src/types"],
     "readme": "none",
     "sort": ["source-order"],
     "categorizeByGroup": true,
-    "groupOrder": ["Functions", "Type"],
+    "groupOrder": ["Functions", "Type", "*"],
     "excludeNotDocumented": true,
     "out": "docs",
     "excludePrivate": true,

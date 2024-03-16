@@ -1120,17 +1120,21 @@ PODS:
     - React-jsi (= 0.73.5)
     - React-logger (= 0.73.5)
     - React-perflogger (= 0.73.5)
-  - rnmapbox-maps (10.1.18):
+  - rnmapbox-maps (10.1.19):
     - MapboxMaps (~> 10.16.4)
     - React
     - React-Core
-    - rnmapbox-maps/DynamicLibrary (= 10.1.18)
+    - rnmapbox-maps/DynamicLibrary (= 10.1.19)
     - Turf
-  - rnmapbox-maps/DynamicLibrary (10.1.18):
+  - rnmapbox-maps/DynamicLibrary (10.1.19):
     - MapboxMaps (~> 10.16.4)
     - React
     - React-Core
     - Turf
+  - RNVectorIcons (10.0.3):
+    - glog
+    - RCT-Folly (= 2022.05.16.00)
+    - React-Core
   - SocketRocket (0.6.1)
   - Turf (2.7.0)
   - Yoga (1.14.0)
@@ -1209,6 +1213,7 @@ DEPENDENCIES:
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "rnmapbox-maps (from `../node_modules/@rnmapbox/maps`)"
+  - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -1330,6 +1335,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   rnmapbox-maps:
     :path: "../node_modules/@rnmapbox/maps"
+  RNVectorIcons:
+    :path: "../node_modules/react-native-vector-icons"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -1397,7 +1404,8 @@ SPEC CHECKSUMS:
   React-runtimescheduler: 814b644a5f456c7df1fba7bcd9914707152527c6
   React-utils: 987a4526a2fc0acdfaf87888adfe0bf9d0452066
   ReactCommon: 2947b0bffd82ea0e58ca7928881152d4c6dae9af
-  rnmapbox-maps: b6f180370bc9f46e293bbdaf089cb382eb8825ff
+  rnmapbox-maps: 9c1b8403c28d354c8f0ad142d765054544f90cea
+  RNVectorIcons: 73ab573085f65a572d3b6233e68996d4707fd505
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Turf: 13d1a92d969ca0311bbc26e8356cca178ce95da2
   Yoga: a716eea57d0d3430219c0a5a233e1e93ee931eb7
