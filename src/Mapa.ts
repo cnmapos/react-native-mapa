@@ -1,5 +1,6 @@
 
-export * from './components/MapView';
+export { default as MapView } from './components/MapView';
+export { default as Camera } from './components/Camera';
 export { default as ZoomInOut } from './components/ZoomInOut';
 export { default as Background } from './components/Background';
 export { default as Scale } from './components/Scale';

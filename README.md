@@ -24,3 +24,8 @@ npm install typedoc-plugin-markdown@next --save-dev
 - `yarn run doc:`: 启动文档本地服务，可在浏览器查看
 - `yarn run doc:start`: 生成文档并启动本地服务
 - `yarn run doc:md`: 生成markdown格式文档，保存在specs目录
+
+# Issues
+
+- 1. 设置默认中心坐标
+- 2. 支持地图的源梳理

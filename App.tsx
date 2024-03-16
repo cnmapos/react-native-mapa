@@ -20,6 +20,7 @@ function App(): React.JSX.Element {
   return (
     <SafeAreaView style={{ height: '100%' }}>
       <Mapa.MapView>
+        <Mapa.Camera></Mapa.Camera>
         <Mapa.ZoomInOut></Mapa.ZoomInOut>
       </Mapa.MapView>
     </SafeAreaView>
