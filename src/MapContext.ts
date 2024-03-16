@@ -1,6 +1,4 @@
-import {createContext} from 'react';
-// import Mapa from ".";
+import { createContext } from 'react';
+import { MapViewInterface } from './types';
 
-export const MapContext = createContext<{map: object | undefined}>({
-  map: undefined,
-});
+export const MapContext = createContext<{ map: MapViewInterface }>({ map: null as any });
