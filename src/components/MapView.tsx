@@ -109,33 +109,4 @@ const styles = StyleSheet.create({
     map: {
         flex: 1,
     },
-<<<<<<< HEAD
-  });
-
-  return (
-    <View style={styles.page}>
-      <View style={styles.container}>
-        <Mapbox.MapView
-          ref={ref => setMap(ref)}
-          styleJSON={JSON.stringify(amapTileJson)}
-          attributionEnabled={false}
-          logoEnabled={false}
-          zoomEnabled={true}
-          scaleBarEnabled={false}
-          style={styles.map}>
-          <MapContext.Provider value={{map}}>{children}</MapContext.Provider>
-          <Mapbox.Camera
-            zoomLevel={12}
-            centerCoordinate={[116.436177, 39.935297]}
-          />
-          <Mapbox.UserLocation />
-        </Mapbox.MapView>
-      </View>
-    </View>
-  );
-};
-
-export default MapView;
-=======
 });
->>>>>>> origin/dev
