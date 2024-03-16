@@ -10,52 +10,52 @@ module.exports = {
     scopes: [],
     types: {
         chore: {
-            description: '更改构建过程或辅助工具和库，例如文档生成',
+            description: 'Build process or auxiliary tool changes',
             emoji: '🤖',
             value: 'chore',
         },
         ci: {
-            description: '对CI配置文件和脚本的更改',
+            description: 'CI related changes',
             emoji: '🎡',
             value: 'ci',
         },
         docs: {
-            description: '文档修改',
+            description: 'Documentation only changes',
             emoji: '✏️',
             value: 'docs',
         },
         feat: {
-            description: '一项新功能',
+            description: 'A new feature',
             emoji: '🎸',
             value: 'feat',
         },
         fix: {
-            description: '一个bug修复',
+            description: 'A bug fix',
             emoji: '🐛',
             value: 'fix',
         },
         perf: {
-            description: '性能提升',
+            description: 'A code change that improves performance',
             emoji: '⚡️',
             value: 'perf',
         },
         refactor: {
-            description: '重构代码、不修改功能',
+            description: 'A code change that neither fixes a bug or adds a feature',
             emoji: '💡',
             value: 'refactor',
         },
         release: {
-            description: '创建发布提交',
+            description: 'Create a release commit',
             emoji: '🏹',
             value: 'release',
         },
         style: {
-            description: '代码格式修改',
+            description: 'Markup, white-space, formatting, missing semi-colons...',
             emoji: '💄',
             value: 'style',
         },
         test: {
-            description: '修改测试相关代码',
+            description: 'Adding missing tests',
             emoji: '💍',
             value: 'test',
         },
