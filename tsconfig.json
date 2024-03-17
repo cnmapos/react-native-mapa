@@ -1,7 +1,3 @@
 {
-  "typedocOptions": {
-    "entryPoints": ["src/index.ts"],
-    "out": "docs"
-  },
   "extends": "@react-native/typescript-config/tsconfig.json",
 }
