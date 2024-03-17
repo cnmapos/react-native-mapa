@@ -2,12 +2,7 @@
 
 https://gitee.com/heavigo/maps/tree/main/docs
 
-<<<<<<< HEAD
-# ICON 组件
-
-=======
 # UI组件
->>>>>>> origin/dev
 使用的是https://reactnativeelements.com/
 支持的图标列表：https://oblador.github.io/react-native-vector-icons/
 
