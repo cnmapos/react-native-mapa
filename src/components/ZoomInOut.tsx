@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { MapContext } from '../MapContext';
-// import { Button, Icon } from '@rneui/base';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 type Props = any;
 
@@ -23,9 +23,10 @@ const ZoomInOut = (props: Props) => {
 
     return (
         <View style={styles.container}>
-            {/* <Icon name="plus" type="antdesign" />
-            <Icon name="stepforward" type="antdesign" />
-            <Button title="Hello World" /> */}
+            <Text>
+                <Icon name="rocket" size={30} color="#900" />;
+            </Text>
+            <Icon.Button name="facebook" backgroundColor="#3b5998" />
         </View>
     );
 };
