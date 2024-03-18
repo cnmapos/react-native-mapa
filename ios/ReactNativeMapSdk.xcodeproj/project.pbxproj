@@ -39,6 +39,8 @@
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-ReactNativeMapSdk-ReactNativeMapSdkTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactNativeMapSdk-ReactNativeMapSdkTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B4392A12AC88292D35C810B /* Pods-ReactNativeMapSdk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeMapSdk.debug.xcconfig"; path = "Target Support Files/Pods-ReactNativeMapSdk/Pods-ReactNativeMapSdk.debug.xcconfig"; sourceTree = "<group>"; };
 		3B53B2A02BA6A61400236A61 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
+		3B53B2A22BA72C4700236A61 /* AntDesign.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
+		3B53B2A42BA72F4000236A61 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-ReactNativeMapSdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeMapSdk.release.xcconfig"; path = "Target Support Files/Pods-ReactNativeMapSdk/Pods-ReactNativeMapSdk.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-ReactNativeMapSdk-ReactNativeMapSdkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeMapSdk-ReactNativeMapSdkTests.debug.xcconfig"; path = "Target Support Files/Pods-ReactNativeMapSdk-ReactNativeMapSdkTests/Pods-ReactNativeMapSdk-ReactNativeMapSdkTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-ReactNativeMapSdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactNativeMapSdk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -111,6 +113,8 @@
 		3B53B29F2BA6A5E600236A61 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				3B53B2A42BA72F4000236A61 /* Ionicons.ttf */,
+				3B53B2A22BA72C4700236A61 /* AntDesign.ttf */,
 				3B53B2A02BA6A61400236A61 /* FontAwesome.ttf */,
 			);
 			name = Fonts;

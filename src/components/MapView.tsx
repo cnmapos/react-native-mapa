@@ -5,6 +5,8 @@ import { MapContext } from '../MapContext';
 import { MapViewInterface, Projection, StyleIDs } from '../types';
 import { loadStyle } from '../config/style';
 import EventEmitter from 'eventemitter3';
+import { CameraRef } from '@rnmapbox/maps/lib/typescript/src/components/Camera';
+import { zoomAnimationDuraton, zoomStep } from '../config';
 
 /**
  * MapView Props
@@ -29,6 +31,7 @@ export type MapViewProps = {
 
 class MapViewCls implements MapViewInterface {
     private map?: Mapbox.MapView;
+    private camera?: Mapbox.Camera;
     private emitter: EventEmitter = new EventEmitter();
 
     constructor(map: Mapbox.MapView | null | undefined) {
@@ -36,6 +39,7 @@ class MapViewCls implements MapViewInterface {
             this.map = map;
         }
     }
+
     on(event: 'onCameraChanged', listener: (e: any) => void): void {
         this.emitter.on(event, listener);
     }
@@ -47,10 +51,28 @@ class MapViewCls implements MapViewInterface {
     setMap(map: Mapbox.MapView) {
         this.map = map;
     }
+
+    setCamera(rnCamera: CameraRef): void {
+        this.camera = rnCamera;
+        console.log(this.camera);
+    }
+
+    async zoomTo(step: number, duration?: number) {
+        const zoom = await this.map?.getZoom();
+        this.camera?.zoomTo(zoom! + step, duration !== undefined ? duration : zoomAnimationDuraton);
+    }
 }
 
 /**
- * 地图容器
+ * @example
+ * ```
+ * import Mapa from 'react-native-mapa';
+ * // 或者import { MapView, Camera } from 'react-native-mapa';
+ *
+ * <Mapa.MapView>
+ *  <Mapa.Camera pitch={60} />
+ * </Mapa.MapView>
+ * ```
  *
  * @category Component
  */

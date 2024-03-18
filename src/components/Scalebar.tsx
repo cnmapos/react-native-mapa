@@ -5,8 +5,8 @@
  *
  * @category Component
  */
-const Scale = (props: any) => {
+const Scalebar = (props: any) => {
     return <div />;
 };
 
-export default Scale;
+export default Scalebar;

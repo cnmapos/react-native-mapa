@@ -9,7 +9,7 @@
     "cz": "bash .husky/pre-commit && git cz",
     "start": "react-native start",
     "test": "jest",
-    "doc:gen": "typedoc --watch",
+    "doc:watch": "typedoc --watch",
     "doc:dev": "ws -d docs",
     "doc:md": "typedoc --out specs --plugin typedoc-plugin-markdown",
     "doc:start": "yarn run typedoc && ws -d docs",

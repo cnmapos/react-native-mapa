@@ -1,3 +1,5 @@
+import { CameraRef } from '@rnmapbox/maps/lib/typescript/src/components/Camera';
+
 /**
  * MapView Props
  */
@@ -43,5 +45,19 @@ export type CameraEvent = {
 };
 
 export interface MapViewInterface {
+    setCamera(rnCamera: CameraRef): void;
     on(event: 'onCameraChanged', listener: (e: any) => void): void;
+    zoomTo(step: number, duration?: number): void;
 }
+
+export type PositionStyle = {
+    top?: number;
+    right?: number;
+    bottom?: number;
+    left?: number;
+};
+
+/**
+ * 位置插槽
+ */
+export type PositionSlot = 'top' | 'right' | 'bottom' | 'left' | 'right-top';

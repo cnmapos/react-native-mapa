@@ -6,4 +6,7 @@ export const defaultZoom = 15;
 
 export const defaultMaxZoom = 21;
 
-export const defaultMinZoom = 5;
+export const defaultMinZoom = 3;
+
+export const zoomStep = 1;
+export const zoomAnimationDuraton = 100;

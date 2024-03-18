@@ -2,7 +2,7 @@ import Mapbox from '@rnmapbox/maps';
 import { Text, View } from 'react-native';
 import { Bounds, CameraEvent, PositionLike } from '../types';
 import { defaultCenterCoordinates, defaultMaxZoom, defaultMinZoom, defaultZoom } from '../config';
-import { useContext, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { MapContext } from '../MapContext';
 
 /**
@@ -10,15 +10,18 @@ import { MapContext } from '../MapContext';
  */
 export type CameraProps = {
     /**
-     * 地图显示层级，默认显示15级
+     * 地图显示层级
+     * @defaultValue 15
      */
     zoom?: number;
     /**
-     * 最大显示层级，默认为21
+     * 最大显示层级
+     * @defaultValue 21
      */
     maxzoom?: number;
     /**
-     * 最小显示层级，默认为5
+     * 最小显示层级
+     * @defaultValue 3
      */
     minzoom?: number;
     /**
@@ -51,6 +54,8 @@ export type CameraProps = {
  */
 const Camera = (props: CameraProps) => {
     const { map } = useContext(MapContext);
+    const mpCameraRef = useRef<Mapbox.Camera>(null);
+
     const {
         zoom = defaultZoom,
         maxzoom = defaultMaxZoom,
@@ -61,11 +66,14 @@ const Camera = (props: CameraProps) => {
         pitch,
         onChange,
     } = props;
-    const mpCameraRef = useRef<Mapbox.Camera>(null);
 
     if (onChange) {
         map.on('onCameraChanged', onChange);
     }
+
+    useEffect(() => {
+        mpCameraRef.current && map.setCamera(mpCameraRef.current as any);
+    }, [map, mpCameraRef]);
 
     return (
         <Mapbox.Camera
