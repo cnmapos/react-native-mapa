@@ -1,12 +1,11 @@
 import Mapbox from '@rnmapbox/maps';
 import { StyleSheet, View } from 'react-native';
-import { ReactElement, useEffect, useState } from 'react';
+import { ReactElement, useEffect, useRef, useState } from 'react';
 import { MapContext } from '../MapContext';
-import { MapViewInterface, Position, Projection, StyleIDs } from '../types';
-import { loadStyle } from '../config/style';
-import EventEmitter from 'eventemitter3';
-import { CameraRef } from '@rnmapbox/maps/lib/typescript/src/components/Camera';
-import { zoomAnimationDuraton, zoomStep } from '../config';
+import { Projection, StyleIDs } from '../types';
+import { loadStyle, styleFormat } from '../config/style';
+import React from 'react';
+import { Map } from '../modules/Map';
 
 /**
  * MapView Props
@@ -29,44 +28,6 @@ export type MapViewProps = {
     children: ReactElement | ReactElement[];
 };
 
-class MapViewCls implements MapViewInterface {
-    private map?: Mapbox.MapView;
-    private camera?: Mapbox.Camera;
-    private emitter: EventEmitter = new EventEmitter();
-
-    constructor(map: Mapbox.MapView | null | undefined) {
-        if (map) {
-            this.map = map;
-        }
-    }
-
-    on(event: 'onCameraChanged', listener: (e: any) => void): void {
-        this.emitter.on(event, listener);
-    }
-
-    emit(event: 'onCameraChanged', ...args: any[]) {
-        this.emitter.emit(event, ...args);
-    }
-
-    setMap(map: Mapbox.MapView) {
-        this.map = map;
-    }
-
-    setCamera(rnCamera: CameraRef): void {
-        this.camera = rnCamera;
-    }
-
-    async zoomTo(step: number, duration?: number) {
-        const zoom = await this.map?.getZoom();
-        this.camera?.zoomTo(zoom! + step, duration !== undefined ? duration : zoomAnimationDuraton);
-    }
-
-    async flyTo(center: Position, duration?: number) {
-        duration = duration !== undefined ? duration : 100;
-        this.camera?.flyTo(center, duration);
-    }
-}
-
 /**
  * @example
  * ```
@@ -83,17 +44,21 @@ class MapViewCls implements MapViewInterface {
 const MapView = (props: MapViewProps) => {
     const { children, style = StyleIDs.MapboxVector, projection = 'mercator' } = props;
     const [rnMap, setRNMap] = useState<Mapbox.MapView | null>(null);
-    const map = new MapViewCls(rnMap);
-    const styleContent = loadStyle(style);
-    let styleURL: any, styleJSON;
-    if (typeof styleContent === 'object') {
-        styleJSON = JSON.stringify(styleContent);
-    } else {
-        styleURL = styleContent;
-    }
+
+    const [customStyles, setStyle] = useState<{ styleURL: ReturnType<typeof loadStyle>; styleJSON: string }>(() => {
+        return styleFormat(style);
+    });
+
+    const mapRef = useRef<Map | null>(new Map(null));
+
     useEffect(() => {
-        rnMap && map.setMap(rnMap);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        setStyle(styleFormat(style));
+    }, [style]);
+
+    useEffect(() => {
+        if (rnMap && mapRef.current) {
+            mapRef.current.setMap(rnMap);
+        }
     }, [rnMap]);
 
     return (
@@ -101,17 +66,23 @@ const MapView = (props: MapViewProps) => {
             <View style={styles.container}>
                 <Mapbox.MapView
                     ref={(ref) => setRNMap(ref)}
-                    styleURL={styleURL}
-                    styleJSON={styleJSON}
+                    styleURL={customStyles.styleURL}
+                    styleJSON={customStyles.styleJSON}
                     projection={projection}
                     attributionEnabled={false}
                     logoEnabled={false}
                     zoomEnabled={true}
+                    compassEnabled={true}
                     scaleBarEnabled={false}
-                    onCameraChanged={(...args) => map.emit('onCameraChanged', ...args)}
+                    compassPosition={{
+                        left: 2,
+                        top: 5,
+                    }}
+                    onCameraChanged={(...args) => mapRef.current?.emit('onCameraChanged', ...args)}
+                    onDidFinishLoadingMap={(...args) => mapRef.current?.emit('loaded', ...args)}
                     style={styles.map}
                 >
-                    <MapContext.Provider value={{ map }}>{children}</MapContext.Provider>
+                    <MapContext.Provider value={{ map: mapRef.current as any }}>{children}</MapContext.Provider>
                 </Mapbox.MapView>
             </View>
         </View>

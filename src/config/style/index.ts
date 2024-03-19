@@ -15,5 +15,25 @@ export function loadStyle(styleId: StyleIDs) {
         throw new Error('Style not supported.');
     }
 
-    return style;
+    return style as string;
+}
+
+/**
+ * 样式解析
+ */
+export function styleFormat(style: StyleIDs): {
+    styleURL: ReturnType<typeof loadStyle>;
+    styleJSON: string;
+} {
+    const styleContent = loadStyle(style);
+    let styleURL: ReturnType<typeof loadStyle> = '',
+        styleJSON: string = '';
+
+    if (typeof styleContent === 'object') {
+        styleJSON = JSON.stringify(styleContent);
+    } else {
+        styleURL = styleContent;
+    }
+
+    return { styleURL, styleJSON };
 }
