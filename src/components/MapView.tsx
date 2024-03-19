@@ -1,9 +1,9 @@
 import Mapbox from '@rnmapbox/maps';
 import { StyleSheet, View } from 'react-native';
-import { ReactElement, useEffect, useState } from 'react';
+import { ReactElement, useEffect, useRef, useState } from 'react';
 import { MapContext } from '../MapContext';
 import { MapViewInterface, Projection, StyleIDs } from '../types';
-import { loadStyle } from '../config/style';
+import { loadStyle, styleFormat } from '../config/style';
 import EventEmitter from 'eventemitter3';
 import { CameraRef } from '@rnmapbox/maps/lib/typescript/src/components/Camera';
 import { zoomAnimationDuraton, zoomStep } from '../config';
@@ -34,7 +34,7 @@ class MapViewCls implements MapViewInterface {
     private camera?: Mapbox.Camera;
     private emitter: EventEmitter = new EventEmitter();
 
-    constructor(map: Mapbox.MapView | null | undefined) {
+    constructor(map: Mapbox.MapView | null) {
         if (map) {
             this.map = map;
         }
@@ -79,17 +79,21 @@ class MapViewCls implements MapViewInterface {
 const MapView = (props: MapViewProps) => {
     const { children, style = StyleIDs.MapboxVector, projection = 'mercator' } = props;
     const [rnMap, setRNMap] = useState<Mapbox.MapView | null>(null);
-    const map = new MapViewCls(rnMap);
-    const styleContent = loadStyle(style);
-    let styleURL: any, styleJSON;
-    if (typeof styleContent === 'object') {
-        styleJSON = JSON.stringify(styleContent);
-    } else {
-        styleURL = styleContent;
-    }
+
+    const [customStyles, setStyle] = useState<{ styleURL: ReturnType<typeof loadStyle>; styleJSON: string }>(() => {
+        return styleFormat(style);
+    });
+
+    const mapRef = useRef<MapViewCls | null>(new MapViewCls(null));
+
     useEffect(() => {
-        rnMap && map.setMap(rnMap);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        setStyle(styleFormat(style));
+    }, [style]);
+
+    useEffect(() => {
+        if (rnMap && mapRef.current) {
+            mapRef.current.setMap(rnMap);
+        }
     }, [rnMap]);
 
     return (
@@ -97,17 +101,18 @@ const MapView = (props: MapViewProps) => {
             <View style={styles.container}>
                 <Mapbox.MapView
                     ref={(ref) => setRNMap(ref)}
-                    styleURL={styleURL}
-                    styleJSON={styleJSON}
+                    styleURL={customStyles.styleURL}
+                    styleJSON={customStyles.styleJSON}
                     projection={projection}
                     attributionEnabled={false}
                     logoEnabled={false}
                     zoomEnabled={true}
+                    compassEnabled={true}
                     scaleBarEnabled={false}
-                    onCameraChanged={(...args) => map.emit('onCameraChanged', ...args)}
+                    onCameraChanged={(...args) => mapRef.current?.emit('onCameraChanged', ...args)}
                     style={styles.map}
                 >
-                    <MapContext.Provider value={{ map }}>{children}</MapContext.Provider>
+                    <MapContext.Provider value={{ map: mapRef.current || null }}>{children}</MapContext.Provider>
                 </Mapbox.MapView>
             </View>
         </View>
