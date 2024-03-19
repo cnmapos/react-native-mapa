@@ -2,7 +2,7 @@ import Mapbox from '@rnmapbox/maps';
 import { StyleSheet, View } from 'react-native';
 import { ReactElement, useEffect, useState } from 'react';
 import { MapContext } from '../MapContext';
-import { MapViewInterface, Projection, StyleIDs } from '../types';
+import { MapViewInterface, Position, Projection, StyleIDs } from '../types';
 import { loadStyle } from '../config/style';
 import EventEmitter from 'eventemitter3';
 import { CameraRef } from '@rnmapbox/maps/lib/typescript/src/components/Camera';
@@ -54,12 +54,16 @@ class MapViewCls implements MapViewInterface {
 
     setCamera(rnCamera: CameraRef): void {
         this.camera = rnCamera;
-        console.log(this.camera);
     }
 
     async zoomTo(step: number, duration?: number) {
         const zoom = await this.map?.getZoom();
         this.camera?.zoomTo(zoom! + step, duration !== undefined ? duration : zoomAnimationDuraton);
+    }
+
+    async flyTo(center: Position, duration?: number) {
+        duration = duration !== undefined ? duration : 100;
+        this.camera?.flyTo(center, duration);
     }
 }
 

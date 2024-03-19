@@ -48,6 +48,7 @@ export interface MapViewInterface {
     setCamera(rnCamera: CameraRef): void;
     on(event: 'onCameraChanged', listener: (e: any) => void): void;
     zoomTo(step: number, duration?: number): void;
+    flyTo(center: Position, duration?: number): void;
 }
 
 export type PositionStyle = {
@@ -61,3 +62,18 @@ export type PositionStyle = {
  * 位置插槽
  */
 export type PositionSlot = 'top' | 'right' | 'bottom' | 'left' | 'right-top';
+
+/**
+ * 定位基础样式
+ */
+export type PosBaseProps = {
+    /**
+     * 默认显示在屏幕右上角，可设置style自定义位置
+     * @example
+     * ```
+     * { right: 5, bottom: 5 }
+     * 或者 'right-top'
+     * ```
+     */
+    style?: PositionStyle; // | PositionSlot;
+};

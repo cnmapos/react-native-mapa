@@ -5,7 +5,7 @@ export { default as ZoomInOut, type ZoomInOutProps } from './components/ZoomInOu
 export { default as Background } from './components/Background';
 export { default as Scalebar } from './components/Scalebar';
 export { default as Marker } from './components/Marker';
-export { default as Location } from './components/Location';
+export { default as Location, type LocationProps } from './components/Location';
 /** 设置mapbox 的token */
 export function setAccessToken(token: string) {
     Mapbox.setAccessToken(token);
