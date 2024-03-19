@@ -109,6 +109,10 @@ const MapView = (props: MapViewProps) => {
                     zoomEnabled={true}
                     compassEnabled={true}
                     scaleBarEnabled={false}
+                    compassPosition={{
+                        left: 2,
+                        top: 5,
+                    }}
                     onCameraChanged={(...args) => mapRef.current?.emit('onCameraChanged', ...args)}
                     style={styles.map}
                 >
