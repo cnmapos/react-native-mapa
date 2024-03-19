@@ -1,11 +1,11 @@
 import { Button, Icon } from '@rneui/themed';
 import Mapbox from '@rnmapbox/maps';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
-import { PosBaseProps, PositionStyle } from '..';
+import { PositionStyle } from '..';
 import { buttonSize } from '../config';
-import { locationManager } from '@rnmapbox/maps';
 import { useContext } from 'react';
 import { MapContext } from '../MapContext';
+import React from 'react';
 
 /**
  * Location props
@@ -25,29 +25,50 @@ export type LocationProps = {
      * ```
      */
     style?: PositionStyle; // | PositionSlot;
+    /**
+     * 初始化时自动定位
+     *
+     * @defaultValue false
+     */
+    locateWhenInit?: boolean;
 };
 
 /**
  *用户定位
+ * @example
+ * ```
+ * <Mapa.Location locateWhenInit={true} visible={true} />
+ * ```
  *
  * @category Component
  */
 const Location = (props: LocationProps) => {
-    const { visible = true } = props;
+    const { visible = true, locateWhenInit = false } = props;
     const { map } = useContext(MapContext);
     const containerStyle: StyleProp<ViewStyle> = props.style
         ? { position: 'absolute', ...props.style }
         : styles.container;
 
+    const locate = async () => {
+        const location = await map?.locationManager.getLastKnownLocation();
+        if (location) {
+            const center = [location.coords.longitude, location.coords.latitude];
+            const zoom = await map.getZoom();
+            map.flyTo(center as any);
+        }
+    };
+
     if (visible) {
-        locationManager.start();
+        // 启动位置监听
+        map.locationManager.start();
+        if (locateWhenInit) {
+            map.on('loaded', async () => {
+                await locate();
+            });
+        }
     }
     const onPress = async () => {
-        const location = await locationManager.getLastKnownLocation();
-        console.log(location);
-        if (location) {
-            map.flyTo(location.coords as any);
-        }
+        await locate();
     };
     return (
         <View style={containerStyle}>

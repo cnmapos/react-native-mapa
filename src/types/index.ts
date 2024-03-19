@@ -1,4 +1,5 @@
 import { CameraRef } from '@rnmapbox/maps/lib/typescript/src/components/Camera';
+import { EventName } from 'react-native/Libraries/Performance/Systrace';
 
 /**
  * MapView Props
@@ -44,11 +45,51 @@ export type CameraEvent = {
     pitch: number;
 };
 
-export interface MapViewInterface {
+/**
+ * Map loaded event props
+ */
+export type MapLoadedEvent = any;
+
+export interface MapEventNameAndProps {
+    cameraChanged: CameraEvent;
+    loaded: MapLoadedEvent;
+}
+
+export interface PropEventSource<T> {
+    on<Key extends string & keyof T>(event: Key, listener: (e: T[Key]) => void): void;
+    off<Key extends string & keyof T>(event: Key, listener: (e: T[Key]) => void): void;
+    emit<Key extends string & keyof T>(event: Key, opts: T[Key]): void;
+}
+
+export interface MapViewInterface extends PropEventSource<MapEventNameAndProps> {
     setCamera(rnCamera: CameraRef): void;
-    on(event: 'onCameraChanged', listener: (e: any) => void): void;
+    // on(event: 'onCameraChanged', listener: (e: any) => void): void;
     zoomTo(step: number, duration?: number): void;
     flyTo(center: Position, duration?: number): void;
+    getZoom(): Promise<number | undefined>;
+
+    get locationManager(): {
+        start: () => void;
+        /**
+         * @example
+         * {"coords":
+         *  {
+         *      "accuracy": 24.95806772832081,
+         *      "altitude": 588.2273369943723,
+         *      "course": -1,
+         *      "heading": 89.29508972167969,
+         *      "latitude": 30.673172799689635,
+         *      "longitude": 104.00440663503657,
+         *      "speed": 0
+         *  },
+         * "timestamp": 1710852623018.5007
+         * }
+         */
+
+        getLastKnownLocation: () => {
+            coords: { longitude: number; latitude: number; speed: number; altitude: number };
+        };
+    };
 }
 
 export type PositionStyle = {
