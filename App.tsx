@@ -17,8 +17,9 @@ function App(): React.JSX.Element {
     return (
         <SafeAreaView style={{ height: '100%' }}>
             <Mapa.MapView>
-                <Mapa.Camera pitch={60} />
-                <Mapa.ZoomInOut style={{ right: 5, bottom: 5 }} />
+                <Mapa.Camera />
+                <Mapa.ZoomInOut style={{ right: 5, top: 5 }} />
+                <Mapa.Location locateWhenInit={true} visible={true} />
             </Mapa.MapView>
         </SafeAreaView>
     );

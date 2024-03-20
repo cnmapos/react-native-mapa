@@ -10,3 +10,5 @@ export const defaultMinZoom = 3;
 
 export const zoomStep = 1;
 export const zoomAnimationDuraton = 100;
+// Icon默认大小
+export const buttonSize = 15;

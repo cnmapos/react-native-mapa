@@ -2,11 +2,10 @@ import Mapbox from '@rnmapbox/maps';
 import { StyleSheet, View } from 'react-native';
 import { ReactElement, useEffect, useRef, useState } from 'react';
 import { MapContext } from '../MapContext';
-import { MapViewInterface, Projection, StyleIDs } from '../types';
+import { Projection, StyleIDs } from '../types';
 import { loadStyle, styleFormat } from '../config/style';
-import EventEmitter from 'eventemitter3';
-import { CameraRef } from '@rnmapbox/maps/lib/typescript/src/components/Camera';
-import { zoomAnimationDuraton, zoomStep } from '../config';
+import React from 'react';
+import { Map } from '../modules/Map';
 
 /**
  * MapView Props
@@ -29,40 +28,6 @@ export type MapViewProps = {
     children: ReactElement | ReactElement[];
 };
 
-class MapViewCls implements MapViewInterface {
-    private map?: Mapbox.MapView;
-    private camera?: Mapbox.Camera;
-    private emitter: EventEmitter = new EventEmitter();
-
-    constructor(map: Mapbox.MapView | null) {
-        if (map) {
-            this.map = map;
-        }
-    }
-
-    on(event: 'onCameraChanged', listener: (e: any) => void): void {
-        this.emitter.on(event, listener);
-    }
-
-    emit(event: 'onCameraChanged', ...args: any[]) {
-        this.emitter.emit(event, ...args);
-    }
-
-    setMap(map: Mapbox.MapView) {
-        this.map = map;
-    }
-
-    setCamera(rnCamera: CameraRef): void {
-        this.camera = rnCamera;
-        console.log(this.camera);
-    }
-
-    async zoomTo(step: number, duration?: number) {
-        const zoom = await this.map?.getZoom();
-        this.camera?.zoomTo(zoom! + step, duration !== undefined ? duration : zoomAnimationDuraton);
-    }
-}
-
 /**
  * @example
  * ```
@@ -84,7 +49,7 @@ const MapView = (props: MapViewProps) => {
         return styleFormat(style);
     });
 
-    const mapRef = useRef<MapViewCls | null>(new MapViewCls(null));
+    const mapRef = useRef<Map | null>(new Map(null));
 
     useEffect(() => {
         setStyle(styleFormat(style));
@@ -114,9 +79,10 @@ const MapView = (props: MapViewProps) => {
                         top: 5,
                     }}
                     onCameraChanged={(...args) => mapRef.current?.emit('onCameraChanged', ...args)}
+                    onDidFinishLoadingMap={(...args) => mapRef.current?.emit('loaded', ...args)}
                     style={styles.map}
                 >
-                    <MapContext.Provider value={{ map: mapRef.current || null }}>{children}</MapContext.Provider>
+                    <MapContext.Provider value={{ map: mapRef.current as any }}>{children}</MapContext.Provider>
                 </Mapbox.MapView>
             </View>
         </View>

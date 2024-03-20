@@ -4,7 +4,7 @@ import { Bounds, CameraEvent, PositionLike } from '../types';
 import { defaultCenterCoordinates, defaultMaxZoom, defaultMinZoom, defaultZoom } from '../config';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { MapContext } from '../MapContext';
-
+import React from 'react';
 /**
  * Camera props
  */
@@ -68,11 +68,11 @@ const Camera = (props: CameraProps) => {
     } = props;
 
     if (onChange) {
-        map.on('onCameraChanged', onChange);
+        map?.on('cameraChanged', onChange);
     }
 
     useEffect(() => {
-        mpCameraRef.current && map.setCamera(mpCameraRef.current as any);
+        mpCameraRef.current && map?.setCamera(mpCameraRef.current as any);
     }, [map, mpCameraRef]);
 
     return (
@@ -80,6 +80,8 @@ const Camera = (props: CameraProps) => {
             ref={mpCameraRef}
             zoomLevel={zoom}
             maxZoomLevel={maxzoom}
+            // Camera的默认定位动画执行周期设置为0，否则和Location自动定位冲突
+            animationDuration={0}
             minZoomLevel={minzoom}
             pitch={pitch}
             centerCoordinate={center}
