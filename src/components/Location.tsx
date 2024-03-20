@@ -1,7 +1,7 @@
 import { Button, Icon } from '@rneui/themed';
 import Mapbox from '@rnmapbox/maps';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
-import { PositionStyle } from '..';
+import { LocationEvent, PositionStyle } from '..';
 import { buttonSize } from '../config';
 import { useContext } from 'react';
 import { MapContext } from '../MapContext';
@@ -9,6 +9,7 @@ import React from 'react';
 
 /**
  * Location props
+ * @category Props
  */
 export type LocationProps = {
     /**
@@ -31,19 +32,26 @@ export type LocationProps = {
      * @defaultValue false
      */
     locateWhenInit?: boolean;
+
+    /**
+     * 监听最新定位信息
+     * @param e 事件信息
+     * @returns
+     */
+    onChange?: (e: LocationEvent) => void;
 };
 
 /**
  *用户定位
  * @example
  * ```
- * <Mapa.Location locateWhenInit={true} visible={true} />
+ * <Mapa.Location locateWhenInit={true} visible={true} style="right-bottom" />
  * ```
  *
  * @category Component
  */
 const Location = (props: LocationProps) => {
-    const { visible = true, locateWhenInit = false } = props;
+    const { visible = true, locateWhenInit = false, onChange } = props;
     const { map } = useContext(MapContext);
     const containerStyle: StyleProp<ViewStyle> = props.style
         ? { position: 'absolute', ...props.style }
@@ -53,7 +61,6 @@ const Location = (props: LocationProps) => {
         const location = await map?.locationManager.getLastKnownLocation();
         if (location) {
             const center = [location.coords.longitude, location.coords.latitude];
-            const zoom = await map.getZoom();
             map.flyTo(center as any);
         }
     };
@@ -65,6 +72,9 @@ const Location = (props: LocationProps) => {
             map.on('loaded', async () => {
                 await locate();
             });
+        }
+        if (onChange) {
+            map.locationManager.on('locationChange', onChange);
         }
     }
     const onPress = async () => {

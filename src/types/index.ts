@@ -1,5 +1,6 @@
 import { CameraRef } from '@rnmapbox/maps/lib/typescript/src/components/Camera';
 import { EventName } from 'react-native/Libraries/Performance/Systrace';
+import { LocationManager } from '../modules/LocationManager';
 
 /**
  * MapView Props
@@ -27,6 +28,14 @@ export type PositionLike = number[] | [number, number];
 
 export type Position = [number, number];
 
+export type LocationState = {
+    heading?: number;
+    longitude: number;
+    latitude: number;
+    speed: number;
+    altitude: number;
+};
+
 /** 投影方式 */
 export type Projection = 'mercator' | 'globe';
 
@@ -53,6 +62,7 @@ export type MapLoadedEvent = any;
 export interface MapEventNameAndProps {
     cameraChanged: CameraEvent;
     loaded: MapLoadedEvent;
+    locationChanged: LocationEvent;
 }
 
 export interface PropEventSource<T> {
@@ -68,28 +78,7 @@ export interface MapViewInterface extends PropEventSource<MapEventNameAndProps> 
     flyTo(center: Position, duration?: number): void;
     getZoom(): Promise<number | undefined>;
 
-    get locationManager(): {
-        start: () => void;
-        /**
-         * @example
-         * {"coords":
-         *  {
-         *      "accuracy": 24.95806772832081,
-         *      "altitude": 588.2273369943723,
-         *      "course": -1,
-         *      "heading": 89.29508972167969,
-         *      "latitude": 30.673172799689635,
-         *      "longitude": 104.00440663503657,
-         *      "speed": 0
-         *  },
-         * "timestamp": 1710852623018.5007
-         * }
-         */
-
-        getLastKnownLocation: () => {
-            coords: { longitude: number; latitude: number; speed: number; altitude: number };
-        };
-    };
+    get locationManager(): LocationManager;
 }
 
 export type PositionStyle = {
@@ -117,4 +106,9 @@ export type PosBaseProps = {
      * ```
      */
     style?: PositionStyle; // | PositionSlot;
+};
+
+export type LocationEvent = {
+    coords: LocationState;
+    timestamp?: number;
 };

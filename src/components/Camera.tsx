@@ -7,6 +7,7 @@ import { MapContext } from '../MapContext';
 import React from 'react';
 /**
  * Camera props
+ * @category Props
  */
 export type CameraProps = {
     /**

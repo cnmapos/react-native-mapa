@@ -1,15 +1,17 @@
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import { MapContext } from '../MapContext';
+/**
+ * Compass props
+ *
+ * @category Props
+ */
+export type CompassProps = {};
 
 /**
- * map.locationManager.addListener((location) => {})实时监听坐标信息，其中包含偏航角heading
+  @category Component
  */
-
-const Compass = (props: any) => {
-    return (
-        <View>
-            <Text>指南针</Text>
-        </View>
-    );
+const Compass = (props: CompassProps) => {
+    return <View>Compass</View>;
 };
 
 export default Compass;
