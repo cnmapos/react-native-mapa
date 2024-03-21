@@ -10,7 +10,7 @@ import { Map } from '../modules/Map';
 /**
  * MapView Props
  *
- * @property
+ * @category Props
  */
 export type MapViewProps = {
     /**

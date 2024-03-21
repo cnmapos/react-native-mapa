@@ -9,6 +9,8 @@ import { PosBaseProps, PositionStyle } from '..';
 
 /**
  * ZoomInOut props
+ *
+ * @category Props
  */
 export type ZoomInOutProps = PosBaseProps & {
     /**
@@ -29,7 +31,7 @@ export type ZoomInOutProps = PosBaseProps & {
      * 或者 'right-top'
      * ```
      */
-    style?: PositionStyle; // | PositionSlot;
+    style?: PositionStyle;
 };
 
 /**

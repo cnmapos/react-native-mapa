@@ -1,12 +1,17 @@
+import { View } from 'react-native';
+import { MapContext } from '../MapContext';
 /**
+ * Marker props
  *
- * @param props
- * @returns
- *
- * @category Component
+ * @category Props
  */
-const Marker = (props: any) => {
-    return <div>Marker</div>;
+export type MarkerProps = {};
+
+/**
+  @category Component
+ */
+const Marker = (props: MarkerProps) => {
+    return <View>Marker</View>;
 };
 
 export default Marker;

@@ -2,21 +2,23 @@ import Mapbox, { Camera } from '@rnmapbox/maps';
 import { zoomAnimationDuraton } from '../config';
 import { MapEventNameAndProps, MapViewInterface, Position, PropEventSource } from '../types';
 import EventEmitter from 'eventemitter3';
-import { locationManager } from '@rnmapbox/maps';
+import { LocationManager } from './LocationManager';
 
 export class Map implements MapViewInterface {
     private map?: Mapbox.MapView;
     private camera?: Mapbox.Camera;
     private emitter: EventEmitter = new EventEmitter();
+    private locManager: LocationManager;
 
-    get locationManager() {
-        return locationManager as any;
+    get locationManager(): LocationManager {
+        return this.locManager;
     }
 
     constructor(map: Mapbox.MapView | null) {
         if (map) {
             this.map = map;
         }
+        this.locManager = new LocationManager();
     }
     off(event: any, listener: any): void {
         this.emitter.off(event, listener);
