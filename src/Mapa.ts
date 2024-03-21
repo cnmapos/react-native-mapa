@@ -8,6 +8,8 @@ export { default as Scalebar, type ScalebarProps } from './components/Scalebar';
 export { default as Marker, type MarkerProps } from './components/Marker';
 export { default as Location, type LocationProps } from './components/Location';
 export { default as POIFinder, type POIFinderProps } from './components/POIFinder';
+// export { default as Slot } from './components/slots';
+export * from './components/slots';
 /**
  * 设置mapbox 的token
  * @category static
