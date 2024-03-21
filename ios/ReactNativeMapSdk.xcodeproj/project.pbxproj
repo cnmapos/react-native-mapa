@@ -38,6 +38,9 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ReactNativeMapSdk/main.m; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-ReactNativeMapSdk-ReactNativeMapSdkTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactNativeMapSdk-ReactNativeMapSdkTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B4392A12AC88292D35C810B /* Pods-ReactNativeMapSdk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeMapSdk.debug.xcconfig"; path = "Target Support Files/Pods-ReactNativeMapSdk/Pods-ReactNativeMapSdk.debug.xcconfig"; sourceTree = "<group>"; };
+		3B53B2A02BA6A61400236A61 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
+		3B53B2A22BA72C4700236A61 /* AntDesign.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
+		3B53B2A42BA72F4000236A61 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-ReactNativeMapSdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeMapSdk.release.xcconfig"; path = "Target Support Files/Pods-ReactNativeMapSdk/Pods-ReactNativeMapSdk.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-ReactNativeMapSdk-ReactNativeMapSdkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeMapSdk-ReactNativeMapSdkTests.debug.xcconfig"; path = "Target Support Files/Pods-ReactNativeMapSdk-ReactNativeMapSdkTests/Pods-ReactNativeMapSdk-ReactNativeMapSdkTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-ReactNativeMapSdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactNativeMapSdk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -86,6 +89,7 @@
 		13B07FAE1A68108700A75B9A /* ReactNativeMapSdk */ = {
 			isa = PBXGroup;
 			children = (
+				3B53B29F2BA6A5E600236A61 /* Fonts */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -104,6 +108,16 @@
 				19F6CBCC0A4E27FBF8BF4A61 /* libPods-ReactNativeMapSdk-ReactNativeMapSdkTests.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3B53B29F2BA6A5E600236A61 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				3B53B2A42BA72F4000236A61 /* Ionicons.ttf */,
+				3B53B2A22BA72C4700236A61 /* AntDesign.ttf */,
+				3B53B2A02BA6A61400236A61 /* FontAwesome.ttf */,
+			);
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -479,7 +493,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "cn.cnmapos.--PRODUCT-NAME-rfc1034identifier-";
 				PRODUCT_NAME = ReactNativeMapSdk;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -506,7 +520,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "cn.cnmapos.--PRODUCT-NAME-rfc1034identifier-";
 				PRODUCT_NAME = ReactNativeMapSdk;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

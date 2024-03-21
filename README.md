@@ -1,79 +1,54 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# API 文档
 
-# Getting Started
+https://gitee.com/heavigo/maps/tree/main/docs
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+# UI组件
+使用的是https://reactnativeelements.com/
+支持的图标列表：https://oblador.github.io/react-native-vector-icons/
 
-## Step 1: Start the Metro Server
+开发时使用@rneui/base的Icon图标,依赖react-native-vector-icons。
+- 使用react-native-vector-icons是需要配置使用xcode配置xcodeproj项目文件，配置流程可查看[官方文档](https://github.com/oblador/react-native-vector-icons?tab=readme-ov-file#bundled-icon-sets)
+- 使用方式如下
+```
+import { Icon } from '@rneui/themed';
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
-
-To start Metro, run the following command from the _root_ of your React Native project:
-
-```bash
-# using npm
-npm start
-
-# OR using Yarn
-yarn start
+<Icon name="accessibility" type={'ionicon'} size={30} color="#900" />
+<Icon name="accessibility-outline" type={'ionicon'} size={30} color="#900" />
+```
+- 如上代码在使用的前提是在项目中加入FontAwesome字体，要使用其他字体时也需要做相应的配置，已支持的字体以及代码可查看[react-native-vector-icons directory](https://oblador.github.io/react-native-vector-icons/)
+-- 增加新的字体之后，需要执行以下指令之后才能正常显示图标
+```
+yarn install
+cd ios
+pod install
 ```
 
-## Step 2: Start your Application
+# 文档生成
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+`typedoc`API 文档生成使用`typedoc`，生成结果为静态 html 文件，可直接执行。如果为组件添加注释，可查看[官网](https://typedoc.org/guides/overview/)。
 
-### For Android
+执行命令`yarn run doc:gen`生成 API 文档。执行命令`yarn run doc:start`启动本地服务查看生成的 API 文档。
 
-```bash
-# using npm
-npm run android
+如果想生成 markdown 文件，安装插件 typedoc-plugin-markdown
 
-# OR using Yarn
-yarn android
+```
+npm install typedoc-plugin-markdown@next --save-dev
 ```
 
-### For iOS
+并在 typedoc.json 文件添加插件配置项:
 
-```bash
-# using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
+```
+"plugin": ["typedoc-plugin-markdown"]
 ```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+#执行指令
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+-   `yarn run doc:gen`: 热启动 html 文档生成
+-   `yarn run doc:`: 启动文档本地服务，可在浏览器查看
+-   `yarn run doc:start`: 生成文档并启动本地服务
+-   `yarn run doc:md`: 生成 markdown 格式文档，保存在 specs 目录
 
-## Step 3: Modifying your App
+# Issues
 
-Now that you have successfully run the app, let's modify it.
-
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+-   1. 设置默认中心坐标
+-   2. 支持地图的源梳理
