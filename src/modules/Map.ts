@@ -1,6 +1,6 @@
 import Mapbox, { Camera } from '@rnmapbox/maps';
 import { zoomAnimationDuraton } from '../config';
-import { MapEventNameAndProps, MapViewInterface, Position, PropEventSource } from '../types';
+import { MapViewInterface, Position } from '../types';
 import EventEmitter from 'eventemitter3';
 import { LocationManager } from './LocationManager';
 

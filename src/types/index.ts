@@ -1,5 +1,4 @@
 import { CameraRef } from '@rnmapbox/maps/lib/typescript/src/components/Camera';
-import { EventName } from 'react-native/Libraries/Performance/Systrace';
 import { LocationManager } from '../modules/LocationManager';
 
 /**

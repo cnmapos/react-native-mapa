@@ -1,5 +1,4 @@
 import { View } from 'react-native';
-import { MapContext } from '../MapContext';
 /**
  * Scalebar props
  *

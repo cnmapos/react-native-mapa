@@ -1,9 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { MapContext } from '../MapContext';
-import Mapbox, { MapView } from '@rnmapbox/maps';
-import { useContext, useEffect, useState } from 'react';
+import Mapbox from '@rnmapbox/maps';
+import { useEffect, useState } from 'react';
 import { Magnetometer } from 'expo-sensors';
-import { PositionLike } from '../types';
 
 /**
  * Compass props
@@ -33,9 +31,7 @@ const styles = StyleSheet.create({
   @category Component
  */
 const Compass = (props: CompassProps) => {
-    const { map } = useContext(MapContext);
     const [heading, setHeading] = useState<number>(0);
-    const [coordinate, updateCoordinate] = useState<PositionLike>([0, 0]);
 
     useEffect(() => {
         const subscription = Magnetometer.addListener((event) => {
