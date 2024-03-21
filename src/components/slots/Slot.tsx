@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { ColorValue, Dimensions, SafeAreaView, StyleSheet, View } from 'react-native';
 import { PositionStyle } from '../../types';
 import { ReactNode } from 'react';
 
@@ -8,6 +8,8 @@ export enum SlotFixedLocation {
     rightBottom = 'rightBottom',
     leftBottom = 'leftBottom',
 }
+
+const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
 
 export const SlotFixedStylesConfig: {
     [k in keyof typeof SlotFixedLocation]: PositionStyle;
@@ -39,6 +41,11 @@ export function pickSlotPosition(slot: keyof typeof SlotFixedLocation): Position
 type SlotPropsType = {
     slot: keyof typeof SlotFixedLocation;
     children: ReactNode;
+    // 屏幕宽度的百分比
+    width?: number;
+    // 屏幕高度的百分比
+    height?: number;
+    backgroundColor?: ColorValue;
 };
 
 /**
@@ -52,21 +59,24 @@ type SlotPropsType = {
  * @returns
  */
 export function Slot(props: SlotPropsType) {
-    const { children, slot } = props;
+    const { children, slot, width = 0.2, height = 0.35, backgroundColor = 'white' } = props;
 
+    // TODO： 重构样式计算方式，支持更多的样式配置写入
     const styles = StyleSheet.create({
         container: {
             flex: 1,
-            // position: 'absolute',
-            maxHeight: '40%',
-            height: '35%',
-            width: '30%',
-            maxWidth: '35%',
-            backgroundColor: 'pink', // test
+            position: 'absolute',
+            maxHeight: windowHeight * 0.5,
+            height: windowHeight * height,
+            width: windowWidth * width,
+            maxWidth: windowWidth * 0.4,
+            flexDirection: 'column',
+            backgroundColor,
             ...pickSlotPosition(slot),
         },
         scrollView: {
-            // position: 'relative',
+            flex: 1,
+            flexDirection: 'column',
         },
     });
 
