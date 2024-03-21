@@ -20,15 +20,9 @@ function App(): React.JSX.Element {
                 <Slot slot="rightTop" backgroundColor={'pink'}>
                     <Mapa.Camera />
                 </Slot>
-                <Slot slot="leftTop" backgroundColor={'pink'}>
-                    <Text>some component</Text>
-                </Slot>
                 <Slot slot="rightBottom" width={0.2} height={0.35} backgroundColor={'pink'}>
                     <Mapa.ZoomInOut />
                     <Mapa.Location locateWhenInit={true} visible={true} />
-                </Slot>
-                <Slot slot="leftBottom" backgroundColor={'pink'}>
-                    <Text>some component</Text>
                 </Slot>
             </Mapa.MapView>
         </SafeAreaView>

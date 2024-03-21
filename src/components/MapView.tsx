@@ -73,7 +73,8 @@ const MapView = (props: MapViewProps) => {
                     logoEnabled={false}
                     zoomEnabled={true}
                     compassEnabled={true}
-                    scaleBarEnabled={false}
+                    scaleBarEnabled={true}
+                    rotateEnabled={true} // 允许地图旋转
                     compassPosition={{
                         left: 2,
                         top: 5,
