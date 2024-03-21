@@ -5,8 +5,9 @@
  * @format
  */
 
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, Text, View } from 'react-native';
 import Mapa from './src';
+import Slot from './src/components/slots/Slot';
 
 function App(): React.JSX.Element {
     Mapa.setAccessToken('sk.eyJ1IjoiY25tYXBvcyIsImEiOiJjbHRqa2RqNzgwczhnMnFrOWNnZ2t5bHA3In0.WJN2DQHS9dwoKVHyfiBKYg');
@@ -17,9 +18,19 @@ function App(): React.JSX.Element {
     return (
         <SafeAreaView style={{ height: '100%' }}>
             <Mapa.MapView>
-                <Mapa.Camera />
-                <Mapa.ZoomInOut style={{ right: 5, top: 5 }} />
-                <Mapa.Location locateWhenInit={true} visible={true} />
+                <Slot slot="rightTop" backgroundColor={'pink'}>
+                    <Mapa.Camera />
+                </Slot>
+                <Slot slot="leftTop" backgroundColor={'pink'}>
+                    <Text>some component</Text>
+                </Slot>
+                <Slot slot="rightBottom" width={0.2} height={0.35} backgroundColor={'pink'}>
+                    <Mapa.ZoomInOut />
+                    <Mapa.Location locateWhenInit={true} visible={true} />
+                </Slot>
+                <Slot slot="leftBottom" backgroundColor={'pink'}>
+                    <Text>some component</Text>
+                </Slot>
             </Mapa.MapView>
         </SafeAreaView>
     );
