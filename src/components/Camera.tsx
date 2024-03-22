@@ -1,12 +1,12 @@
 import Mapbox from '@rnmapbox/maps';
-import { Text, View } from 'react-native';
 import { Bounds, CameraEvent, PositionLike } from '../types';
 import { defaultCenterCoordinates, defaultMaxZoom, defaultMinZoom, defaultZoom } from '../config';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { MapContext } from '../MapContext';
-
+import React from 'react';
 /**
  * Camera props
+ * @category Props
  */
 export type CameraProps = {
     /**
@@ -60,7 +60,6 @@ const Camera = (props: CameraProps) => {
         zoom = defaultZoom,
         maxzoom = defaultMaxZoom,
         minzoom = defaultMinZoom,
-        bounds,
         center = defaultCenterCoordinates,
         heading,
         pitch,
@@ -68,11 +67,11 @@ const Camera = (props: CameraProps) => {
     } = props;
 
     if (onChange) {
-        map.on('onCameraChanged', onChange);
+        map?.on('cameraChanged', onChange);
     }
 
     useEffect(() => {
-        mpCameraRef.current && map.setCamera(mpCameraRef.current as any);
+        mpCameraRef.current && map?.setCamera(mpCameraRef.current as any);
     }, [map, mpCameraRef]);
 
     return (
@@ -80,6 +79,8 @@ const Camera = (props: CameraProps) => {
             ref={mpCameraRef}
             zoomLevel={zoom}
             maxZoomLevel={maxzoom}
+            // Camera的默认定位动画执行周期设置为0，否则和Location自动定位冲突
+            animationDuration={0}
             minZoomLevel={minzoom}
             pitch={pitch}
             centerCoordinate={center}

@@ -1,12 +1,16 @@
+import { View } from 'react-native';
 /**
+ * Background props
  *
- * @param props
- * @returns
- *
- * @category Component
+ * @category Props
  */
-const Background = (props: any) => {
-    return <div>背景底图</div>;
+export type BackgroundProps = {};
+
+/**
+  @category Component
+ */
+const Background = (props: BackgroundProps) => {
+    return <View>Background</View>;
 };
 
 export default Background;

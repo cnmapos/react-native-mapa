@@ -1,12 +1,16 @@
+import { View } from 'react-native';
 /**
+ * Scalebar props
  *
- * @param props
- * @returns
- *
- * @category Component
+ * @category Props
  */
-const Scalebar = (props: any) => {
-    return <div />;
+export type ScalebarProps = {};
+
+/**
+  @category Component
+ */
+const Scalebar = (props: ScalebarProps) => {
+    return <View>Scalebar</View>;
 };
 
 export default Scalebar;
