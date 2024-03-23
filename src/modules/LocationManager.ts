@@ -1,4 +1,4 @@
-import { Location, locationManager } from '@rnmapbox/maps';
+import { locationManager } from '@rnmapbox/maps';
 import { LocationEvent } from '..';
 
 type LocationEventNames = 'locationChange';

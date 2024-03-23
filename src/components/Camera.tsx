@@ -1,8 +1,7 @@
 import Mapbox from '@rnmapbox/maps';
-import { Text, View } from 'react-native';
 import { Bounds, CameraEvent, PositionLike } from '../types';
 import { defaultCenterCoordinates, defaultMaxZoom, defaultMinZoom, defaultZoom } from '../config';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { MapContext } from '../MapContext';
 import React from 'react';
 /**
@@ -61,7 +60,6 @@ const Camera = (props: CameraProps) => {
         zoom = defaultZoom,
         maxzoom = defaultMaxZoom,
         minzoom = defaultMinZoom,
-        bounds,
         center = defaultCenterCoordinates,
         heading,
         pitch,

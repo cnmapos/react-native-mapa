@@ -6,7 +6,7 @@
  */
 
 import { SafeAreaView, Text, View } from 'react-native';
-import Mapa, { Slot } from './src';
+import Mapa, { Slot } from 'react-native-mapa';
 
 function App(): React.JSX.Element {
     Mapa.setAccessToken('sk.eyJ1IjoiY25tYXBvcyIsImEiOiJjbHRqa2RqNzgwczhnMnFrOWNnZ2t5bHA3In0.WJN2DQHS9dwoKVHyfiBKYg');
