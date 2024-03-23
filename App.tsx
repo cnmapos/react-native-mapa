@@ -24,6 +24,7 @@ function App(): React.JSX.Element {
                     <Mapa.ZoomInOut />
                     <Mapa.Location locateWhenInit={true} visible={true} />
                 </Slot>
+                <Mapa.POIFinder />
             </Mapa.MapView>
         </SafeAreaView>
     );

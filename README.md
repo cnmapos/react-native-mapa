@@ -22,6 +22,11 @@ yarn install
 cd ios
 pod install
 ```
+Icon支持的字体库包含
+```
+export declare type IconType = 'material' | 'material-community' | 'simple-line-icon' | 'zocial' | 'font-awesome' | 'octicon' | 'ionicon' | 'foundation' | 'evilicon' | 'entypo' | 'antdesign' | 'font-awesome-5' | string;
+
+```
 
 # 文档生成
 
