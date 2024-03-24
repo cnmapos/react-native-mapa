@@ -71,7 +71,9 @@ export interface PropEventSource<T> {
 }
 
 export interface MapViewInterface extends PropEventSource<MapEventNameAndProps> {
+    getCenter(): Promise<Position>;
     setCamera(rnCamera: CameraRef): void;
+    setCenter(location: Position): void;
     // on(event: 'onCameraChanged', listener: (e: any) => void): void;
     zoomTo(step: number, duration?: number): void;
     flyTo(center: Position, duration?: number): void;
@@ -111,3 +113,92 @@ export type LocationEvent = {
     coords: LocationState;
     timestamp?: number;
 };
+
+export const searchMaxRadius = 50000;
+
+export type SearchNearParams = {
+    /**
+     * 查询key
+     */
+    key: string;
+    /**
+     * 搜索关键字
+     */
+    keywords: string;
+    /**
+     * 查询中心坐标
+     */
+    location?: string;
+    /**
+     * 查询半径
+     * 取值范围:0-50000。规则：大于50000按默认值，单位：米
+     */
+    radius?: number;
+    /**
+     * 查询POI类型
+     */
+    types?: string;
+    city?: string;
+    /**
+     * 每页记录条数
+     */
+    offset?: number;
+    /**
+     * 当前页
+     */
+    page?: number;
+};
+
+export type ResResult<T> = {
+    code: number;
+    data?: T;
+    message?: any;
+};
+
+export type POIProperties = {
+    distance?: number;
+    pcode: string;
+    /**
+     * POI类型
+     * @example
+     * 汽车服务;充电站;充电站
+     */
+    type: string;
+    photos: { title: string[]; url: string }[];
+    typecode: string;
+    citycode: string;
+    adname: string;
+    /**
+     * @example
+     * '万城万充汽车充电站(环球创意广场)'
+     */
+    alias: string;
+    tel: string;
+    /**
+     * 地址
+     * @example
+     * 阜荣街10号首开广场地下二层停车场
+     */
+    address: string;
+    adcode: string;
+    pname: string;
+    cityname: string;
+    /**
+     * POI名称
+     * @example
+     * 万城万充汽车充电站(环球创意广场充电站)
+     */
+    name: string;
+    /**
+     * 坐标
+     */
+    location: Position;
+};
+
+export interface SearchNearData {
+    count: number;
+    pois: POIProperties[];
+}
+export interface POI {
+    searchNear(params: SearchNearParams): Promise<ResResult<SearchNearData>>;
+}

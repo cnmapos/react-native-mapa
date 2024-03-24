@@ -20,6 +20,11 @@ export class Map implements MapViewInterface {
         }
         this.locManager = new LocationManager();
     }
+
+    async getCenter(): Promise<Position> {
+        return (await this.map?.getCenter()) as any;
+    }
+
     off(event: any, listener: any): void {
         this.emitter.off(event, listener);
     }
@@ -42,6 +47,10 @@ export class Map implements MapViewInterface {
 
     setCamera(rnCamera: Camera): void {
         this.camera = rnCamera;
+    }
+
+    setCenter(location: Position) {
+        this.camera?.moveTo(location);
     }
 
     async zoomTo(step: number, duration?: number) {

@@ -10,7 +10,7 @@
 		"scope": "",
 		"prefix": "com",
 		"body": [
-			"import { View } from 'react-native';",
+			"import { View, StyleSheet } from 'react-native';",
 			"import { MapContext } from '../MapContext';",
 			"/**",
 			" * ${TM_FILENAME_BASE} props",
@@ -28,6 +28,9 @@
 			"",
 			"export default ${TM_FILENAME_BASE};",
 			"",
+			"const styles = StyleSheet.create({",
+			"    container: {},",
+			"});",
 		],
 		"description": "Component template"
 	}

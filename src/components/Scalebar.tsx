@@ -10,7 +10,11 @@ export type ScalebarProps = {};
   @category Component
  */
 const Scalebar = (props: ScalebarProps) => {
-    return <View>Scalebar</View>;
+    return (
+        <Slot slot="rightTop" backgroundColor={'pink'}>
+            <View />
+        </Slot>
+    );
 };
 
 export default Scalebar;

@@ -42,7 +42,7 @@ export type MapViewProps = {
  * @category Component
  */
 const MapView = (props: MapViewProps) => {
-    const { children, style = StyleIDs.MapboxVector, projection = 'mercator' } = props;
+    const { children, style = StyleIDs.AmapVector, projection = 'mercator' } = props;
     const [rnMap, setRNMap] = useState<Mapbox.MapView | null>(null);
 
     const [customStyles, setStyle] = useState<{ styleURL: ReturnType<typeof loadStyle>; styleJSON: string }>(() => {
