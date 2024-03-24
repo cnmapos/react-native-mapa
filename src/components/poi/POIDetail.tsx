@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     },
     detail: {
         backgroundColor: '#fff',
-        maxHeight: '40%',
+        maxHeight: '50%',
         paddingHorizontal: 5,
         borderTopLeftRadius: 5,
         borderTopRightRadius: 5,

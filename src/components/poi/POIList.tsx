@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { POIProperties } from '../..';
 import { Icon } from '@rneui/base';
-import { useState } from 'react';
+import { ReactElement, useState } from 'react';
 import POIDetail from './POIDetail';
 import { globalStyles } from '../../modules/styles';
 /**
@@ -21,9 +21,7 @@ export type POIListProps = {
  */
 const POIList = (props: POIListProps) => {
     const { count, pois, keyboards, onPOIPress } = props;
-    const [selectedPOI, setSelectedPOI] = useState<POIProperties>();
     const onPOIItemPress = (poi: POIProperties) => {
-        setSelectedPOI(poi);
         onPOIPress?.(poi);
     };
 
@@ -37,7 +35,7 @@ const POIList = (props: POIListProps) => {
             <ScrollView style={styles.list}>
                 {pois.slice(0, 10).map((p, i) => (
                     <TouchableOpacity
-                        key={p.name}
+                        key={p.address + i}
                         onPress={() => {
                             onPOIItemPress(p);
                         }}

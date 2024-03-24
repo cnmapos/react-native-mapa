@@ -8,11 +8,11 @@ import {
     ViewStyle,
 } from 'react-native';
 import { MapContext } from '../../MapContext';
-import { useContext, useRef, useState } from 'react';
+import { ReactElement, useContext, useRef, useState } from 'react';
 import { Icon, SearchBar } from '@rneui/themed';
 import { AMapPOI } from '../../modules/POI';
 import _ from 'lodash';
-import { POIProperties, SearchNearData, searchMaxRadius } from '../../types';
+import { POI, POIProperties, SearchNearData, searchMaxRadius } from '../../types';
 import POIList from './POIList';
 import { MarkerView } from '@rnmapbox/maps';
 import POIDetail from './POIDetail';
@@ -50,6 +50,36 @@ export type POIFinderProps = {
      * 默认100ms
      */
     debounceDuraton?: number;
+    /**
+     * POI请求接口扩展
+     * 默认实现了amap的web rest服务请求，支持实现POI接口自定义扩展
+     */
+    request: POI;
+    /**
+     * POI结果列表自定义组件
+     * @example
+     * ```
+     * <ListEle
+     *  keyboards={text}
+     *  count={count}
+     *  pois={list}
+     *  onPOIPress={onPOIPress}/>
+     * ```
+     */
+    listEle?: (props: {
+        count: number;
+        pois: POIProperties[];
+        keyboards: string;
+        onPOIPress: (poi: POIProperties) => void;
+    }) => React.ReactElement | null;
+    /**
+     * POI详情自定义组件
+     * @example
+     * ```
+     * <POIDetail poi={selectedPOI} />
+     * ```
+     */
+    detailEle?: (props: { poi: POIProperties }) => React.ReactElement | null;
 };
 
 /**
@@ -68,17 +98,16 @@ export type POIFinderProps = {
  */
 const POIFinder = (props: POIFinderProps) => {
     const { map } = useContext(MapContext);
-    const { placeholder, akey, debounceDuraton = 100 } = props;
+    const { placeholder, akey, debounceDuraton = 100, request = new AMapPOI() } = props;
+    const { listEle: ListEle = POIList, detailEle: DetailEle = POIDetail } = props;
     let { radius = 5000 } = props;
     if (radius > searchMaxRadius) {
         radius = 5000;
     }
     const searchRef = useRef<any>();
-    const poiClient = new AMapPOI();
     const [text, setText] = useState<string>('');
     const [pois, setPois] = useState<SearchNearData>();
     const [selectedPOI, setSelectedPOI] = useState<POIProperties>();
-    // const [cardVisible, setCardVisible] = useState<boolean>(false);
     const [currentMode, setCurrentMode] = useState<POIModeEnum>(POIModeEnum.Default);
     const onFocus = () => {
         setCurrentMode(POIModeEnum.Search);
@@ -93,7 +122,7 @@ const POIFinder = (props: POIFinderProps) => {
     };
     const searchNear = _.debounce(async (keyboards: string) => {
         const location = await map.getCenter();
-        const result = await poiClient.searchNear({
+        const result = await request.searchNear({
             key: akey,
             keywords: keyboards,
             location: location.map((c) => c.toFixed(6)).join(','),
@@ -111,10 +140,6 @@ const POIFinder = (props: POIFinderProps) => {
         }
     };
 
-    const onSearchPress = async (val: string) => {
-        text && searchNear(text);
-    };
-
     const onSearchSubmit = (e: any) => {
         text && searchNear(text);
     };
@@ -124,13 +149,16 @@ const POIFinder = (props: POIFinderProps) => {
         setCurrentMode(POIModeEnum.Search);
     };
 
-    const onPOIPress = (poi: POIProperties) => {
+    const onPOIPress = async (poi: POIProperties) => {
         if (poi) {
             searchRef.current?.blur();
-            map.setCenter(poi.location);
             setSelectedPOI(poi);
             setText(poi.name);
             setCurrentMode(POIModeEnum.Detail);
+            // 将坐标显示到屏幕y轴1/5处
+            const viewPosition = await map.getPointInView(poi.location);
+            const newLocation = await map.getCoordinateFromView([viewPosition[0], viewPosition[1] + screen.height / 5]);
+            map.setCenter(newLocation);
         }
     };
 
@@ -155,10 +183,22 @@ const POIFinder = (props: POIFinderProps) => {
                     onChangeText={onChangeText}
                     onSubmitEditing={onSearchSubmit}
                     readOnly={currentMode === POIModeEnum.Detail}
+                    // rightIcon={
+                    //     currentMode === POIModeEnum.Detail ? (
+                    //         <Icon onPress={onClosePress as any} name="close" type="font-awesome" />
+                    //     ) : undefined
+                    // }
                     clearIcon={
                         currentMode === POIModeEnum.Detail ? (
                             <Icon onPress={onClosePress as any} name="close" type="font-awesome" />
-                        ) : undefined
+                        ) : (
+                            <Icon
+                                style={{ display: 'none' }}
+                                onPress={onClosePress as any}
+                                name="plus"
+                                type="font-awesome"
+                            />
+                        )
                     }
                     searchIcon={
                         currentMode === POIModeEnum.Search ? (
@@ -172,7 +212,7 @@ const POIFinder = (props: POIFinderProps) => {
                 />
                 {currentMode === POIModeEnum.Search && (
                     <View style={styles.searchcard}>
-                        <POIList
+                        <ListEle
                             keyboards={text}
                             count={pois?.count || 0}
                             pois={pois?.pois || []}
@@ -182,7 +222,7 @@ const POIFinder = (props: POIFinderProps) => {
                 )}
                 {currentMode === POIModeEnum.Detail && (
                     <View pointerEvents={'box-none'} style={styles.searchcard}>
-                        <POIDetail poi={selectedPOI!} />
+                        <DetailEle poi={selectedPOI!} />
                     </View>
                 )}
             </View>

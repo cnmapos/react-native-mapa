@@ -72,6 +72,18 @@ export interface PropEventSource<T> {
 
 export interface MapViewInterface extends PropEventSource<MapEventNameAndProps> {
     getCenter(): Promise<Position>;
+    /**
+     * 根据经纬度获取视图坐标
+     * @param location 经纬度信息
+     * @returns 视图坐标[x, y]
+     */
+    getPointInView(location: Position): Promise<Position>;
+    /**
+     * 根据视图坐标获取经纬度
+     * @param location 视图坐标[x, y]
+     * @returns 经纬度
+     */
+    getCoordinateFromView(location: Position): Promise<Position>;
     setCamera(rnCamera: CameraRef): void;
     setCenter(location: Position): void;
     // on(event: 'onCameraChanged', listener: (e: any) => void): void;

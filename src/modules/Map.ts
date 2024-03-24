@@ -25,6 +25,14 @@ export class Map implements MapViewInterface {
         return (await this.map?.getCenter()) as any;
     }
 
+    async getPointInView(location: Position): Promise<Position> {
+        return (await this.map?.getPointInView(location)) as any;
+    }
+
+    async getCoordinateFromView(location: Position) {
+        return (await this.map?.getCoordinateFromView(location)) as any;
+    }
+
     off(event: any, listener: any): void {
         this.emitter.off(event, listener);
     }
