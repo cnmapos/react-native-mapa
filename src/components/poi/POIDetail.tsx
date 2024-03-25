@@ -1,9 +1,8 @@
 import { View, StyleSheet, Text, Image, FlatList } from 'react-native';
-import { MapContext } from '../../MapContext';
-import { POIProperties } from '../..';
+import { POIObject } from '../..';
 import { globalStyles } from '../../modules/styles';
 import { normalizeDistance } from '../../utils/unit';
-import { Divider, Slider } from '@rneui/themed';
+import { Divider } from '@rneui/themed';
 /**
  * POIDetail props
  *
@@ -13,7 +12,7 @@ export type POIDetailProps = {
     /**
      * POI详细信息
      */
-    poi: POIProperties;
+    poi: POIObject;
 };
 
 /**

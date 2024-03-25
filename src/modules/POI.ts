@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { POI, Position, ResResult, SearchNearData, SearchNearParams } from '..';
+import { POI, Position, SearchNearData, SearchNearParams } from '..';
 const serverhost = 'https://restapi.amap.com/v3';
 
 export class AMapPOI implements POI {

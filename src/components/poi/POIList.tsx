@@ -1,8 +1,6 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { POIProperties } from '../..';
+import { POIObject } from '../..';
 import { Icon } from '@rneui/base';
-import { ReactElement, useState } from 'react';
-import POIDetail from './POIDetail';
 import { globalStyles } from '../../modules/styles';
 /**
  * POIList props
@@ -11,9 +9,9 @@ import { globalStyles } from '../../modules/styles';
  */
 export type POIListProps = {
     count: number;
-    pois: POIProperties[];
+    pois: POIObject[];
     keyboards: string;
-    onPOIPress: (poi: POIProperties) => void;
+    onPOIPress: (poi: POIObject) => void;
 };
 
 /**
@@ -21,7 +19,7 @@ export type POIListProps = {
  */
 const POIList = (props: POIListProps) => {
     const { count, pois, keyboards, onPOIPress } = props;
-    const onPOIItemPress = (poi: POIProperties) => {
+    const onPOIItemPress = (poi: POIObject) => {
         onPOIPress?.(poi);
     };
 

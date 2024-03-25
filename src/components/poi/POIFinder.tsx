@@ -1,18 +1,10 @@
-import {
-    Dimensions,
-    KeyboardEvent,
-    StyleSheet,
-    Text,
-    TextInputSubmitEditingEventData,
-    View,
-    ViewStyle,
-} from 'react-native';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { MapContext } from '../../MapContext';
-import { ReactElement, useContext, useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { Icon, SearchBar } from '@rneui/themed';
 import { AMapPOI } from '../../modules/POI';
 import _ from 'lodash';
-import { POI, POIProperties, SearchNearData, searchMaxRadius } from '../../types';
+import { POIRequest, POIObject, SearchNearData, searchMaxRadius } from '../../types';
 import POIList from './POIList';
 import { MarkerView } from '@rnmapbox/maps';
 import POIDetail from './POIDetail';
@@ -54,7 +46,7 @@ export type POIFinderProps = {
      * POI请求接口扩展
      * 默认实现了amap的web rest服务请求，支持实现POI接口自定义扩展
      */
-    request: POI;
+    request: POIRequest;
     /**
      * POI结果列表自定义组件
      * @example
@@ -68,9 +60,9 @@ export type POIFinderProps = {
      */
     listEle?: (props: {
         count: number;
-        pois: POIProperties[];
+        pois: POIObject[];
         keyboards: string;
-        onPOIPress: (poi: POIProperties) => void;
+        onPOIPress: (poi: POIObject) => void;
     }) => React.ReactElement | null;
     /**
      * POI详情自定义组件
@@ -79,7 +71,7 @@ export type POIFinderProps = {
      * <POIDetail poi={selectedPOI} />
      * ```
      */
-    detailEle?: (props: { poi: POIProperties }) => React.ReactElement | null;
+    detailEle?: (props: { poi: POIObject }) => React.ReactElement | null;
 };
 
 /**
@@ -107,7 +99,7 @@ const POIFinder = (props: POIFinderProps) => {
     const searchRef = useRef<any>();
     const [text, setText] = useState<string>('');
     const [pois, setPois] = useState<SearchNearData>();
-    const [selectedPOI, setSelectedPOI] = useState<POIProperties>();
+    const [selectedPOI, setSelectedPOI] = useState<POIObject>();
     const [currentMode, setCurrentMode] = useState<POIModeEnum>(POIModeEnum.Default);
     const onFocus = () => {
         setCurrentMode(POIModeEnum.Search);
@@ -149,7 +141,7 @@ const POIFinder = (props: POIFinderProps) => {
         setCurrentMode(POIModeEnum.Search);
     };
 
-    const onPOIPress = async (poi: POIProperties) => {
+    const onPOIPress = async (poi: POIObject) => {
         if (poi) {
             searchRef.current?.blur();
             setSelectedPOI(poi);
