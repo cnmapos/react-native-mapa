@@ -1,8 +1,11 @@
 import axios from 'axios';
-import { POI, Position, SearchNearData, SearchNearParams } from '..';
+import { POIRequest, Position, ResResult, SearchNearData, SearchNearParams, SearchTipParams, TipObject } from '..';
 const serverhost = 'https://restapi.amap.com/v3';
 
-export class AMapPOI implements POI {
+export class AMapPOI implements POIRequest {
+    seachTip(params: SearchTipParams): Promise<ResResult<TipObject>> {
+        throw new Error('Method not implemented.');
+    }
     async searchNear(params: SearchNearParams) {
         try {
             // console.log('params', params);
