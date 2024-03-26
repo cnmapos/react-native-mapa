@@ -1,22 +1,21 @@
 import React from 'react';
-import BackHomeBtn from './BackHomeBtn';
 import { SafeAreaView } from 'react-native';
-import BaseMap from '../pages/BaseMap';
+import EmptyView from './EmptyView';
+import RoutesConfig from '../routes';
 
 function PreView({ navigation, route }: any): React.JSX.Element {
     const { id } = route.params;
-    const ComponentMap: any = {
-        BaseMap: BaseMap,
-    };
 
-    const ComponentToRender = ComponentMap[id];
+    let ComponentToRender: any = EmptyView;
+    RoutesConfig.forEach(({ data }) => {
+        data.forEach((item) => {
+            if (item.id === id && item.component) {
+                ComponentToRender = item.component;
+            }
+        });
+    });
 
-    return (
-        <SafeAreaView style={{ height: '100%' }}>
-            <BackHomeBtn navigation={navigation} />
-            {<ComponentToRender />}
-        </SafeAreaView>
-    );
+    return <SafeAreaView style={{ height: '100%' }}>{<ComponentToRender />}</SafeAreaView>;
 }
 
 export default PreView;

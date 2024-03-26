@@ -2,77 +2,16 @@ import React from 'react';
 import { StyleSheet, Text, View, SafeAreaView, SectionList, Image, Button } from 'react-native';
 import { ListItem } from '@rneui/themed';
 
-const DATA = [
-    {
-        title: '地图',
-        data: [
-            {
-                title: '基础地图',
-                img: require('../assets/basic.png'),
-                id: 'BaseMap',
-            },
-            {
-                title: '底图组件',
-                img: require('../assets/basic.png'),
-            },
-            {
-                title: '控件',
-                img: require('../assets/basic.png'),
-            },
-            {
-                title: 'POI搜索',
-                img: require('../assets/basic.png'),
-            },
-        ],
-    },
-    {
-        title: '图层',
-        data: [
-            {
-                title: '栅格图层',
-                img: require('../assets/basic.png'),
-            },
-            {
-                title: '矢量图层',
-                img: require('../assets/basic.png'),
-            },
-            {
-                title: '热力图',
-                img: require('../assets/basic.png'),
-            },
-        ],
-    },
-    {
-        title: '绘制',
-        data: [
-            {
-                title: '折线绘制',
-                img: require('../assets/basic.png'),
-            },
-            {
-                title: '圆形绘制',
-                img: require('../assets/basic.png'),
-            },
-            {
-                title: '多边形绘制',
-                img: require('../assets/basic.png'),
-            },
-            {
-                title: '贝塞尔曲线绘制',
-                img: require('../assets/basic.png'),
-            },
-        ],
-    },
-];
+import RoutesConfig from '../routes';
 
 const HomeScreen = ({ navigation }: any) => {
     const jump = (item: any) => {
-        navigation.navigate('Preview', { id: item.id });
+        navigation.navigate('Preview', { id: item.id, title: item.title });
     };
     return (
         <SafeAreaView style={styles.container}>
             <SectionList
-                sections={DATA}
+                sections={RoutesConfig}
                 keyExtractor={(item, index) => item.title + index}
                 renderItem={({ item }) => (
                     <View>
