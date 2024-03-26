@@ -5,25 +5,35 @@
  * @format
  */
 
-import { SafeAreaView } from 'react-native';
-import Mapa, { Slot } from 'react-native-mapa';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { HomeScreen } from './sence/GroupAndItem';
+import PreView from './common/Preview';
+
+const Stack = createNativeStackNavigator();
+
+function AppStackNavigator() {
+    return (
+        <Stack.Navigator
+            initialRouteName="home"
+            screenOptions={({ route, navigation }) => ({
+                title: route.params?.title,
+            })}
+        >
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Preview" component={PreView} />
+        </Stack.Navigator>
+    );
+}
+
+const AppContainer = () => (
+    <NavigationContainer>
+        <AppStackNavigator />
+    </NavigationContainer>
+);
 
 function App(): React.JSX.Element {
-    Mapa.setAccessToken('sk.eyJ1IjoiY25tYXBvcyIsImEiOiJjbHRqa2RqNzgwczhnMnFrOWNnZ2t5bHA3In0.WJN2DQHS9dwoKVHyfiBKYg');
-    return (
-        <SafeAreaView style={{ height: '100%' }}>
-            <Mapa.MapView>
-                <Slot slot="rightTop" backgroundColor={'transparent'}>
-                    <Mapa.Camera />
-                </Slot>
-                <Slot slot="rightBottom" width={0.2} height={0.35} backgroundColor={'transparent'}>
-                    <Mapa.ZoomInOut />
-                    <Mapa.Location style={'right-bottom'} locateWhenInit={true} visible={true} />
-                </Slot>
-                <Mapa.POIFinder placeholder={'请输入地址'} akey={'64bdebe6239a3a398443b2af4ba6085e'} />
-            </Mapa.MapView>
-        </SafeAreaView>
-    );
+    return <AppContainer />;
 }
 
 export default App;
