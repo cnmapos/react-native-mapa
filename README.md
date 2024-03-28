@@ -53,6 +53,19 @@ npm install typedoc-plugin-markdown@next --save-dev
 -   `yarn run doc:start`: 生成文档并启动本地服务
 -   `yarn run doc:md`: 生成 markdown 格式文档，保存在 specs 目录
 
+# amap web service API
+目前通过typescript定义的服务接口以及数据结构如下(目录types/amap):
+- poi: POI周边搜索、POI关键词搜索、多边形搜索、根据POI ID搜索
+- geo: 地理位置编码、逆地理位置编码
+- tip: POI搜索提示
+- ip: 根据IP搜索地址信息
+- event: 实时事件搜索
+- district: 行政区域搜索
+- weather: 实时天气、天气预报
+
+在开发过程中当需要用到以上数据时，需要在modules/amap目录下实现具体接口，目前已实现接口：
+- poi: POI周边搜索
+
 # Issues
 
 -   1. 设置默认中心坐标

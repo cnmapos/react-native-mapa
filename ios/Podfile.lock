@@ -1133,7 +1133,7 @@ PODS:
     - React
     - React-Core
     - Turf
-  - RNScreens (3.30.1):
+  - RNScreens (3.29.0):
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
@@ -1418,7 +1418,7 @@ SPEC CHECKSUMS:
   React-utils: 987a4526a2fc0acdfaf87888adfe0bf9d0452066
   ReactCommon: 2947b0bffd82ea0e58ca7928881152d4c6dae9af
   rnmapbox-maps: 9c1b8403c28d354c8f0ad142d765054544f90cea
-  RNScreens: b6b64d956af3715adbfe84808694ae82d3fec74f
+  RNScreens: 17e2f657f1b09a71ec3c821368a04acbb7ebcb46
   RNVectorIcons: 73ab573085f65a572d3b6233e68996d4707fd505
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Turf: 13d1a92d969ca0311bbc26e8356cca178ce95da2

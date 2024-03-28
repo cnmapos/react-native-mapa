@@ -4,7 +4,7 @@ import { useContext, useRef, useState } from 'react';
 import { Icon, SearchBar } from '@rneui/themed';
 // import { AMapPOI } from '../../modules/POI';
 import _ from 'lodash';
-import { POIRequest, POIObject, Position, POIData } from '../../types';
+import { POIRequest, POIObject, POIData } from '../../types';
 import POIList from './POIList';
 import { MarkerView } from '@rnmapbox/maps';
 import POIDetail from './POIDetail';
@@ -129,7 +129,7 @@ const POIFinder = (props: POIFinderProps) => {
             location: location,
             radius,
         });
-        if (!result.status) {
+        if (result.status) {
             setPoiData(result);
         }
     }, debounceDuraton);
@@ -154,6 +154,7 @@ const POIFinder = (props: POIFinderProps) => {
             searchRef.current?.blur();
             setSelectedPOI(poi);
             setText(poi.name);
+            console.log('poi', poi);
             setCurrentMode(POIModeEnum.Detail);
             // 将坐标显示到屏幕y轴1/5处
             const viewPosition = await map.getPointInView(poi.location);

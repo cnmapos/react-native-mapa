@@ -11,17 +11,18 @@ export class AmapPOIRequest extends RequestBase implements POIRequest {
         try {
             const requestParams = { ...params, location: params.location.join(','), types: params.types?.join('|') };
             const { data } = await axios.get(`${this.serverHost}/place/around`, { params: requestParams });
-            const { suggestion, pois, ...others } = data;
+            const { status, suggestion, pois, ...others } = data;
 
             return {
                 ...others,
+                status: Number(status),
                 suggestion,
                 pois: pois.map((poi: any) => ({
                     ...poi,
-                    location: poi.location.split(','),
+                    location: poi.location.split(',').map((c) => Number(c)),
                     distance: Number(poi.distance),
-                    entrLocation: poi.entr_location?.split(','),
-                    exitLocation: poi.exit_location?.split(','),
+                    entrLocation: poi.entr_location?.split(',').map((c) => Number(c)),
+                    exitLocation: poi.exit_location?.split(',').map((c) => Number(c)),
                 })),
             } as ResResult<POIData>;
         } catch (err: any) {
