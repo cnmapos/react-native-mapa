@@ -1,7 +1,49 @@
-import { Position, ParamsBase, ResResult, Page, City, District, Address } from './base';
+import { Position, ParamsBase, ResResult, Page, City, District, Address, PartialPick } from './base';
 
-export type NearParams = ParamsBase &
+export type KeyParams = ParamsBase &
     Page & {
+        /**
+         * 搜索关键字
+         */
+        keywords: string;
+        /**
+         * 查询POI类型
+         * POI类型列表：https://lbs.amap.com/api/webservice/download
+         */
+        types: string[];
+        /**
+         * 查询城市
+         * 可选值：城市中文、citycode、adcode
+         * 如：北京/010/110000
+         * 填入此参数后，会尽量优先返回此城市数据，但是不一定仅局限此城市结果，若仅需要某个城市数据请调用citylimit参数。
+         * 如在深圳市搜天安门，返回北京天安门结果。
+         */
+        city?: string;
+        /**
+         * 仅返回指定城市数据
+         * @defaultValue false
+         */
+        citylimit?: boolean;
+        /**
+         * 是否按照层级展示子POI数据
+         * 可选值：children=1
+         * 当为0的时候，子POI都会显示。
+         * 当为1的时候，子POI会归类到父POI之中。
+         * 在extensions=all 或者为空时生效
+         */
+        children?: number;
+        /**
+         * 返回结果控制
+         * 此项默认返回基本地址信息；取值为all返回地址信息、附近POI、道路以及道路交叉口信息。
+         */
+        extensions?: string;
+    };
+
+/**
+ * 周边搜索参数
+ */
+export type NearParams = ParamsBase &
+    PartialPick<Page, 'offset' | 'page'> & {
         /**
          * 查询中心坐标
          */
@@ -42,6 +84,31 @@ export type NearParams = ParamsBase &
          */
         extensions?: string;
     };
+
+/**
+ * 多边形范围POI查询参数
+ */
+export type PolygonParams = ParamsBase &
+    Page &
+    Pick<KeyParams, 'keywords' | 'types' | 'extensions'> & {
+        /**
+         * 经纬度坐标对
+         * 经纬度小数点后不得超过6位。
+         * 多边形为矩形时，可传入左上右下两顶点坐标对
+         */
+        polygon: Position[];
+    };
+
+/**
+ * 按ID查询POI参数
+ */
+export type IDParams = ParamsBase & {
+    /**
+     * AOI唯一标识
+     * 最多可以传入1个id，传入目标区域的poiid即可
+     */
+    id: string;
+};
 
 /**
  * POI属性
@@ -218,7 +285,7 @@ export type POIObject = Pick<Address, 'address'> &
 /**
  * 周边POI信息
  */
-export interface NearObject {
+export interface POIData {
     count: number;
     suggestion: {
         keywords: string[];
@@ -238,12 +305,79 @@ export interface NearObject {
 }
 
 /**
- * 周边搜索接口
+ * POI搜索接口
  */
 export interface POIRequest {
+    /**
+     * 关键词搜索
+     * @param {KeyParams}  params
+     */
+    searchByKey(params: KeyParams): Promise<ResResult<POIData>>;
     /**
      * 周边搜索
      * @param {NearParams} params
      */
-    searchNear(params: NearParams): Promise<ResResult<NearObject>>;
+    searchByDistance(params: NearParams): Promise<ResResult<POIData>>;
+    /**
+     * 多边形搜索
+     * @param {PolygonParams} params
+     */
+    searchByPolygon(params: PolygonParams): Promise<ResResult<POIData>>;
+    searchByID(params: IDParams): Promise<ResResult<POIData>>;
+}
+
+export type AOIParams = ParamsBase & {
+    /**
+     * AOI唯一标识
+     * 最多可以传入1个id，传入目标区域的poiid即可
+     */
+    id: string;
+};
+
+export type AOIObject = Pick<Address, 'address'> &
+    Pick<City, 'citycode'> &
+    Pick<District, 'adcode'> & {
+        /**
+         * aoi名称，同poi
+         */
+        name: string;
+        id: string;
+        location: Position;
+        polyline: Position[][];
+        /**
+         * aoi所属分类
+         */
+        type: string;
+        /**
+         * aoi分类编码
+         */
+        typecode: string;
+        /**
+         * aoi所属省份
+         */
+        pname: string;
+        /**
+         * aoi所属省份编码
+         */
+        pcode: string;
+        /**
+         * aoi所属城市
+         */
+        cityname: string;
+        /**
+         * aoi所属区域
+         */
+        adname: string;
+    };
+
+export type AOIData = {
+    aois: AOIObject[];
+};
+
+/**
+ * AOI搜索接口
+ * AOI是指具有面状、区域状特点的POI，包括但不限于工业园区、学校校区、商圈、住宅小区、景区、火车站、机场等类型的POI。
+ */
+export interface AOIRequest {
+    search(params: AOIParams): Promise<ResResult<AOIData>>;
 }

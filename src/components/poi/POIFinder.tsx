@@ -2,12 +2,14 @@ import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { MapContext } from '../../MapContext';
 import { useContext, useRef, useState } from 'react';
 import { Icon, SearchBar } from '@rneui/themed';
-import { AMapPOI } from '../../modules/POI';
+// import { AMapPOI } from '../../modules/POI';
 import _ from 'lodash';
-import { POIRequest, POIObject, SearchNearData, searchMaxRadius } from '../../types';
+import { POIRequest, POIObject, Position, POIData } from '../../types';
 import POIList from './POIList';
 import { MarkerView } from '@rnmapbox/maps';
 import POIDetail from './POIDetail';
+import { AmapPOIRequest } from '../../modules';
+import { searchMaxRadius } from '../../types/amap/base';
 
 enum POIModeEnum {
     // 查询模式
@@ -46,7 +48,7 @@ export type POIFinderProps = {
      * POI请求接口扩展
      * 默认实现了amap的web rest服务请求，支持实现POI接口自定义扩展
      */
-    request: POIRequest;
+    request?: POIRequest;
     /**
      * POI结果列表自定义组件
      * @example
@@ -90,7 +92,14 @@ export type POIFinderProps = {
  */
 const POIFinder = (props: POIFinderProps) => {
     const { map } = useContext(MapContext);
-    const { placeholder, akey, debounceDuraton = 100, request = new AMapPOI() } = props;
+    const {
+        placeholder,
+        akey,
+        debounceDuraton = 100,
+        request = new AmapPOIRequest({
+            key: props.akey,
+        }),
+    } = props;
     const { listEle: ListEle = POIList, detailEle: DetailEle = POIDetail } = props;
     let { radius = 5000 } = props;
     if (radius > searchMaxRadius) {
@@ -98,7 +107,7 @@ const POIFinder = (props: POIFinderProps) => {
     }
     const searchRef = useRef<any>();
     const [text, setText] = useState<string>('');
-    const [pois, setPois] = useState<SearchNearData>();
+    const [poiData, setPoiData] = useState<POIData>();
     const [selectedPOI, setSelectedPOI] = useState<POIObject>();
     const [currentMode, setCurrentMode] = useState<POIModeEnum>(POIModeEnum.Default);
     const onFocus = () => {
@@ -114,15 +123,14 @@ const POIFinder = (props: POIFinderProps) => {
     };
     const searchNear = _.debounce(async (keyboards: string) => {
         const location = await map.getCenter();
-        const result = await request.searchNear({
+        const result = await request.searchByDistance({
             key: akey,
             keywords: keyboards,
-            location: location.map((c) => c.toFixed(6)).join(','),
+            location: location,
             radius,
         });
-        console.log('result', result);
-        if (!result?.code) {
-            setPois(result?.data);
+        if (!result.status) {
+            setPoiData(result);
         }
     }, debounceDuraton);
     const onChangeText = async (val: string) => {
@@ -206,8 +214,8 @@ const POIFinder = (props: POIFinderProps) => {
                     <View style={styles.searchcard}>
                         <ListEle
                             keyboards={text}
-                            count={pois?.count || 0}
-                            pois={pois?.pois || []}
+                            count={poiData?.count || 0}
+                            pois={poiData?.pois || []}
                             onPOIPress={onPOIPress}
                         />
                     </View>
