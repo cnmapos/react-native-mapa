@@ -2,7 +2,7 @@ import Mapbox from '@rnmapbox/maps';
 import { Bounds, CameraEvent, PositionLike } from '../types';
 import { defaultCenterCoordinates, defaultMaxZoom, defaultMinZoom, defaultZoom } from '../config';
 import { useContext, useEffect, useRef } from 'react';
-import { MapContext } from '../MapContext';
+import { MapContext } from '../modules/MapContext';
 import React from 'react';
 /**
  * Camera props

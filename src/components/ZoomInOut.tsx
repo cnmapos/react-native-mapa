@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
-import { MapContext } from '../MapContext';
+import { MapContext } from '../modules/MapContext';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 // import Icon from 'react-native-vector-icons/Ionicons';
 import { Icon, Button } from '@rneui/themed';

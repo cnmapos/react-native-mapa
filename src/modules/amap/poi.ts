@@ -27,7 +27,7 @@ export class AmapPOIRequest extends RequestBase implements POIRequest {
             } as ResResult<POIData>;
         } catch (err: any) {
             return {
-                status: 1,
+                status: 0,
                 info: err.toString(),
             } as ResResult<POIData>;
         }

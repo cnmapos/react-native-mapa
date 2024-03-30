@@ -30,7 +30,7 @@ export type RegeoParams = ParamsBase & {
      *
      * @defaultValue base
      */
-    extensions: string;
+    extensions?: string;
     /**
      * 是否优化POI返回顺序
      * 以下内容需要 extensions 参数为 all 时才生效。
@@ -41,7 +41,7 @@ export type RegeoParams = ParamsBase & {
      *
      * @defaultValue 0
      */
-    homeorcorp: number;
+    homeorcorp?: number;
 };
 
 /**
@@ -172,7 +172,7 @@ export type AddressRegeoObject = {
         /**
          * 所属商圈
          */
-        businessarea: '望京';
+        businessarea: string;
     }[];
 };
 /**
@@ -194,5 +194,5 @@ export interface GeoCodeRequest {
      * 逆地址编码
      * @param {SearchAddRegeoParams} params
      */
-    decodeAddress(params: RegeoParams): Promise<ResResult<{ regeocode: AddressRegeoObject[] }>>;
+    decodeAddress(params: RegeoParams): Promise<ResResult<{ regeocode: AddressRegeoObject }>>;
 }

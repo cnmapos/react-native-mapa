@@ -15,8 +15,10 @@ export type WeatherParams = ParamsBase & {
      * 可选值：base/all
      * base:返回实况天气
      * all:返回预报天气
+     *
+     * @defaultValue base
      */
-    extensions: string;
+    extensions?: string;
 };
 
 /**
@@ -104,14 +106,14 @@ export type ForecastWheatherItem = {
     nightpower: string;
 };
 
+export type WeatherData = {
+    lives?: RealWeatherObject[];
+    forecasts?: ForecastWheatherObject[];
+};
+
 /**
  * 天气接口
  */
 export interface WeatherReuqest {
-    weather(params: WeatherParams): Promise<
-        ResResult<{
-            lives: RealWeatherObject[];
-            forecast: ForecastWheatherObject[];
-        }>
-    >;
+    weather(params: WeatherParams): Promise<ResResult<WeatherData>>;
 }

@@ -1,5 +1,5 @@
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
-import { MapContext } from '../../MapContext';
+import { MapContext } from '../../modules/MapContext';
 import { useContext, useRef, useState } from 'react';
 import { Icon, SearchBar } from '@rneui/themed';
 // import { AMapPOI } from '../../modules/POI';
@@ -35,7 +35,7 @@ export type POIFinderProps = {
      */
     radius?: number;
     /**
-     * POI REST请求密钥信息
+     * POI REST请求key
      */
     akey: string;
 
