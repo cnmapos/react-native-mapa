@@ -7,7 +7,7 @@ function PreView({ navigation }: any): React.JSX.Element {
         <SafeAreaView style={{ height: '100%' }}>
             <Mapa.MapView>
                 <Slot slot="rightTop" backgroundColor={'transparent'}>
-                    <Mapa.Camera location={[103.996994, 30.666417]} />
+                    <Mapa.Camera />
                 </Slot>
                 <Slot slot="rightBottom" width={0.2} height={0.35} backgroundColor={'transparent'}>
                     <Mapa.Weather akey={'64bdebe6239a3a398443b2af4ba6085e'} />

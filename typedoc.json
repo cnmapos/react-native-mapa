@@ -1,7 +1,7 @@
 {
     // Comments are supported, like tsconfig.json
     "name": "react-native-mapa",
-    "entryPoints": ["src", "src/types"],
+    "entryPoints": ["./src", "./src/types"],
     "readme": "none",
     "sort": ["source-order"],
     "categorizeByGroup": true,
@@ -11,6 +11,6 @@
     "excludePrivate": true,
     "excludeProtected": true,
     "includeVersion": false,
-    "includes": ["./src"],
+    "includes": ["./src"]
     // "plugin": ["typedoc-plugin-markdown"]
 }

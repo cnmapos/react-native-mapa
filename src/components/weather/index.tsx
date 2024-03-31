@@ -18,7 +18,7 @@ export type WeatherProps = {
      * 定位图标是否在地图上显示
      * @defaultValue true
      */
-    visible: boolean;
+    visible?: boolean;
     /**
      * 天气请求接口扩展
      * 默认实现了amap的weather rest服务请求

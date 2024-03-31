@@ -16,7 +16,7 @@ function AppStackNavigator() {
     return (
         <Stack.Navigator
             initialRouteName="home"
-            screenOptions={({ route, navigation }) => ({
+            screenOptions={({ route, navigation }: any) => ({
                 title: route.params?.title,
             })}
         >
