@@ -6,6 +6,13 @@
   "module": "lib/module/index.js",
   "react-native": "src/index.ts",
   "types": "lib/typescript/index.d.ts",
+  "source": "src/index/ts",
+  "files": [
+    "lib",
+    "src",
+    "android",
+    "ios"
+  ],
   "scripts": {
     "android": "react-native run-android",
     "pod:install": "cd ios && pod install",
@@ -19,7 +26,7 @@
     "doc:dev": "ws -d docs",
     "doc:md": "typedoc --out specs --plugin typedoc-plugin-markdown",
     "doc:start": "yarn run typedoc --tsconfig tsconfig.json && ws -d docs",
-    "prepare": "husky"
+    "prepare": "husky && bob build"
   },
   "dependencies": {
     "@react-navigation/native": "^6.1.17",

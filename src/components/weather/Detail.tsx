@@ -24,7 +24,7 @@ export type DetailProps = {
  */
 const Detail = (props: DetailProps) => {
     const { onClose } = props;
-    const { lives, forecasts } = props.data;
+    const { forecasts } = props.data;
 
     const onCloseClick = () => {
         onClose?.({ data: props.data });

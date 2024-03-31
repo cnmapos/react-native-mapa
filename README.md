@@ -66,8 +66,10 @@ npm install typedoc-plugin-markdown@next --save-dev
 在开发过程中当需要用到以上数据时，需要在modules/amap目录下实现具体接口，目前已实现接口：
 - poi: POI周边搜索
 
-# Issues
+# 打包构建
+使用react-native-builder-bob打包构建项目:https://callstack.github.io/react-native-builder-bob/build
 
+# Issues
 -   1. 设置默认中心坐标
 -   2. 支持地图的源梳理
 -   3. 目前的demo方式初次构建的index还是在根目录下，暂时在根目录下新建index.js文件引入demo/index.js

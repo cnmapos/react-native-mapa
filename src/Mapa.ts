@@ -1,5 +1,6 @@
 import Mapbox from '@rnmapbox/maps';
 export * from './modules';
+export * from './types';
 export { default as MapView, type MapViewProps } from './components/MapView';
 export { default as Camera, type CameraProps } from './components/Camera';
 export { default as ZoomInOut, type ZoomInOutProps } from './components/ZoomInOut';

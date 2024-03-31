@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ForecastWheatherObject, RealWeatherObject, WeatherData, WeatherParams, WeatherReuqest } from '../../types';
+import { WeatherData, WeatherParams, WeatherReuqest } from '../../types';
 import { ResResult } from '../../types/amap/base';
 import { RequestBase } from './base';
 

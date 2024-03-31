@@ -1,7 +1,7 @@
-import { FlatList, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
-import { ForecastWheatherObject, PositionStyle, RealWeatherObject, WeatherData, WeatherReuqest } from '..';
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
+import { ForecastWheatherObject, PositionStyle, RealWeatherObject, WeatherData, WeatherReuqest } from '../../Mapa';
 import { useContext, useState } from 'react';
-import { BottomSheet, Header, Icon, ListItem, Text } from '@rneui/themed';
+import { BottomSheet, Text } from '@rneui/themed';
 import { AMapGeoRequest, AMapWeatherRequest, MapContext } from '../../Mapa';
 import Detail from './Detail';
 /**

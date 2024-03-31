@@ -1,5 +1,5 @@
 import { Position } from '..';
-import { District, ParamsBase, ResResult } from './base';
+import { District, ResResult } from './base';
 
 export type EventParams = Pick<District, 'adcode'> & {
     /**
