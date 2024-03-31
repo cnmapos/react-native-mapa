@@ -1,7 +1,7 @@
 import Mapbox from '@rnmapbox/maps';
 import { StyleSheet, View } from 'react-native';
 import { ReactElement, useEffect, useRef, useState } from 'react';
-import { MapContext } from '../MapContext';
+import { MapContext } from '../modules/MapContext';
 import { Projection, StyleIDs } from '../types';
 import { loadStyle, styleFormat } from '../config/style';
 import React from 'react';

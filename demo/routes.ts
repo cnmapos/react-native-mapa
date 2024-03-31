@@ -1,4 +1,5 @@
 import BaseMap from './pages/BaseMap';
+import Weather from './pages/Weather';
 
 const RoutesConfig = [
     {
@@ -21,6 +22,12 @@ const RoutesConfig = [
             {
                 title: 'POI搜索',
                 img: require('./assets/basic.png'),
+            },
+            {
+                title: '天气',
+                img: require('./assets/basic.png'),
+                id: 'Weather',
+                component: Weather,
             },
         ],
     },

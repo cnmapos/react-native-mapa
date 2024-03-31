@@ -4,7 +4,7 @@ import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import { LocationEvent, PositionStyle } from '..';
 import { buttonSize } from '../config';
 import { useContext } from 'react';
-import { MapContext } from '../MapContext';
+import { MapContext } from '../modules/MapContext';
 import React from 'react';
 
 /**

@@ -1,7 +1,7 @@
 import { CameraRef } from '@rnmapbox/maps/lib/typescript/src/components/Camera';
 import { LocationManager } from '../modules/LocationManager';
 
-export * from './poi';
+export * from './amap';
 
 /**
  * MapView Props
