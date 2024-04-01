@@ -9,8 +9,23 @@ export enum SlotTypeEnum {
     topCenter = 'topCenter'
 };
 
+export type RegisterItemType = {
+    key: string;
+    visible: boolean;
+    children: ReactElement[] | ReactNode[] | ReactNode;
+}
+
 export type SlotItemType = {
     style: any;
     visible: boolean;
-    child: ReactElement[] | ReactNode[]
+    componentList: RegisterItemType[];
+    child: ReactElement[] | ReactNode[];
 }
+
+export type ParamsType = {
+    site: SlotTypeEnum;
+    options: {
+        start?: true;
+        end?: true;
+    }
+} & RegisterItemType
