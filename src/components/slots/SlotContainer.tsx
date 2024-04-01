@@ -9,7 +9,7 @@ function SlotContainer({ children }) {
     const registerSlot: SlotContextType['registerSlot'] = (
         site: SlotTypeEnum,
         key: string,
-        child: ReactNode,
+        children: ReactNode,
         options: {
             start?: true;
             end?: true;
@@ -20,13 +20,13 @@ function SlotContainer({ children }) {
             payload: {
                 site,
                 key,
-                child,
+                children,
                 options,
             },
         });
     };
 
-    const changeComponentVisible = (site: string, key: string, visible?: boolean) => {
+    const changeComponentVisible = (site: SlotTypeEnum, key: string, visible?: boolean) => {
         dispatch({
             type: SlotActionEnum.changeComponentVisible,
             payload: {
