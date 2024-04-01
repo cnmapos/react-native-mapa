@@ -1,4 +1,4 @@
-import Mapa, { Slot } from 'react-native-mapa';
+import Mapa, { Slot } from '../../src/';
 import { SafeAreaView } from 'react-native';
 
 function PreView({ navigation }: any): React.JSX.Element {
