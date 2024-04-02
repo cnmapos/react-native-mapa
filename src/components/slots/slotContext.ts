@@ -2,7 +2,7 @@ import { createContext, ReactNode } from 'react';
 import { ParamsType, SlotItemType, SlotTypeEnum } from './type';
 import { generateUUID } from './common';
 
-type ContextType = {
+export type ContextType = {
     [k in SlotTypeEnum]: SlotItemType
 }
 
