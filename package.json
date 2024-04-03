@@ -20,7 +20,7 @@
     "lint": "eslint .",
     "build": "bob build",
     "cz": "bash .husky/pre-commit && git cz",
-    "start": "react-native start",
+    "start": "react-native start --inspect",
     "test": "jest",
     "doc:watch": "typedoc --watch",
     "doc:dev": "ws -d docs",
