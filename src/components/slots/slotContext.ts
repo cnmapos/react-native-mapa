@@ -143,7 +143,9 @@ export function slotReducer(store: ContextType, action: {
                     // 更新render child
                     const renderList: ReactNode[] = [];
                     componentList.forEach((item) => {
-                        renderList.push(item.children);
+                        if (item.visible) {
+                            renderList.push(item.children);
+                        }
                     });
 
                     slot.child = renderList;

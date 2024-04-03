@@ -1,16 +1,25 @@
-import React, { forwardRef, useReducer } from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import React, { CSSProperties, forwardRef, ReactNode, useReducer } from 'react';
+import { Dimensions, LayoutChangeEvent, StyleSheet, View, ViewStyle } from 'react-native';
 import SlotContainer from './SlotContainer';
 import { ContextType } from './slotContext';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { SlotTypeEnum } from './type';
+import { SlotItemType, SlotTypeEnum } from './type';
 import { PositionStyle } from '../../types';
 
 //
 const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
 
-const SlotC = forwardRef(function SlotC(props: any, ref) {
-    const { children, type, width = 0.2, height = 0.35, backgroundColor = 'white', onLayout, style } = props;
+type SlotCPropsType = {
+    visible?: boolean;
+    onLayout?: (e: LayoutChangeEvent) => void;
+    width: number; // app screen present value at 0-1
+    height: number; // same with width
+    style: ViewStyle;
+    children: ReactNode;
+};
+
+const SlotC = forwardRef(function SlotC(props: SlotCPropsType, ref) {
+    const { children, onLayout, style, width, height } = props;
 
     // TODO： 重构样式计算方式，支持更多的样式配置写入
     const styles = StyleSheet.create({
@@ -22,7 +31,6 @@ const SlotC = forwardRef(function SlotC(props: any, ref) {
             width: windowWidth * width,
             maxWidth: windowWidth * 0.4,
             flexDirection: 'column',
-            backgroundColor,
             ...style,
         },
         scrollView: {
@@ -31,7 +39,7 @@ const SlotC = forwardRef(function SlotC(props: any, ref) {
         },
     });
 
-    const handleLayoutChange = (event: { nativeEvent: { layout: { height: any } } }) => {
+    const handleLayoutChange = (event: LayoutChangeEvent) => {
         const { height } = event.nativeEvent.layout;
         // setBottomCenterHeight(height);
         if (onLayout) {
@@ -46,18 +54,99 @@ const SlotC = forwardRef(function SlotC(props: any, ref) {
     );
 });
 
-type SlotRenderInfoType = {
+type SlotLayoutType = {
     [k in keyof typeof SlotTypeEnum]: {
-        heightBox: number; // 插槽容器高度！！
-        widthBox: number; // 插槽容器宽度！！
+        height: number; // 插槽容器高度！！
+        width: number; // 插槽容器宽度！！
+        visible: boolean;
     } & PositionStyle;
 };
 
-function renderInfoReducer(store: SlotRenderInfoType, payload: { type: string }) {}
+enum SlotLayoutReducerActionEnum {
+    update = 'update',
+}
+
+function getDefaultLayout(slots: ContextType) {
+    const result: SlotLayoutType = {
+        [SlotTypeEnum.bottomCenter]: {
+            width: 0,
+            height: 0,
+            ...(slots[SlotTypeEnum.bottomCenter]?.style || {}),
+        },
+        [SlotTypeEnum.leftBottom]: {
+            width: 0,
+            height: 0,
+            ...(slots[SlotTypeEnum.leftBottom]?.style || {}),
+        },
+        [SlotTypeEnum.leftTop]: {
+            width: 0,
+            height: 0,
+            ...(slots[SlotTypeEnum.leftTop]?.style || {}),
+        },
+        [SlotTypeEnum.rightBottom]: {
+            width: 0,
+            height: 0,
+            ...(slots[SlotTypeEnum.rightBottom]?.style || {}),
+        },
+        [SlotTypeEnum.rightTop]: {
+            width: 0,
+            height: 0,
+            ...(slots[SlotTypeEnum.rightTop]?.style || {}),
+        },
+        [SlotTypeEnum.topCenter]: {
+            width: 0,
+            height: 0,
+            ...(slots[SlotTypeEnum.topCenter]?.style || {}),
+        },
+    };
+
+    return result;
+}
+
+type payloadType = {
+    width: number;
+    height: number;
+    left: number;
+    right: number;
+    top: number;
+    bottom: number;
+    visible: boolean;
+};
+
+function renderInfoReducer(
+    store: SlotLayoutType,
+    action: { type: SlotLayoutReducerActionEnum; payload: { slotType: SlotTypeEnum } & Partial<payloadType> }
+): SlotLayoutType {
+    const { type, payload } = action;
+
+    const { slotType, ...newLayout } = payload;
+
+    const oldLayout = store[slotType];
+
+    switch (type) {
+        case SlotLayoutReducerActionEnum.update:
+            break;
+        //
+    }
+
+    store[slotType] = { ...oldLayout, ...newLayout };
+
+    return store;
+}
+
+function slotLayoutTransform() {
+    const layout = {
+        width: 0,
+        height: 0,
+    };
+
+    return layout;
+}
 
 export function SlotParser(slots: ContextType) {
-    function pickParams(slots: ContextType, type: SlotTypeEnum, renderInfo) {
+    function pickParams(slots: ContextType, type: SlotTypeEnum, renderInfo: SlotLayoutType) {
         const info = slots[type];
+        const ren = renderInfo[type];
         return {
             key: type,
             type,
@@ -69,26 +158,124 @@ export function SlotParser(slots: ContextType) {
         };
     }
 
-    const [renderInfo, dispatchRenderInfo] = useReducer(renderInfoReducer, {});
+    const [renderInfo, dispatchRenderInfo] = useReducer(renderInfoReducer, getDefaultLayout(slots));
 
-    const handleBottomCenterLayout = (event: { nativeEvent: { layout: { height: any } } }) => {
+    const handleBottomCenterLayout = (event: LayoutChangeEvent) => {
         // 1、当 bottomCenter 布局出现变化时，计算leftBottom、rightBottom的位置变更！！！
+        updateSlotLayout(SlotTypeEnum.bottomCenter)(event);
+
+        // 1、触发更新 rightBottom, leftBottom 位置
+        const leftBottomSlotLayout = renderInfo[SlotTypeEnum.leftBottom];
+        const rightBottomSlotLayout = renderInfo[SlotTypeEnum.rightBottom];
+
+        const { width, height } = event.nativeEvent.layout;
+        //
+
+        const expectLTSTop = height + leftBottomSlotLayout.height;
+
+        if (expectLTSTop < windowHeight) {
+            if (expectLTSTop > (leftBottomSlotLayout.top || 0)) {
+                dispatchRenderInfo({
+                    type: SlotLayoutReducerActionEnum.update,
+                    payload: {
+                        slotType: SlotTypeEnum.leftBottom,
+                        top: windowHeight - expectLTSTop,
+                    },
+                });
+            }
+        } else {
+            dispatchRenderInfo({
+                type: SlotLayoutReducerActionEnum.update,
+                payload: {
+                    slotType: SlotTypeEnum.leftBottom,
+                    visible: false,
+                },
+            });
+        }
+
+        // 更新 rightBottom
+        const expectRTSTop = height + rightBottomSlotLayout.height;
+
+        if (expectRTSTop < windowHeight) {
+            if (expectRTSTop > (rightBottomSlotLayout.top || 0)) {
+                dispatchRenderInfo({
+                    type: SlotLayoutReducerActionEnum.update,
+                    payload: {
+                        slotType: SlotTypeEnum.rightBottom,
+                        top: windowHeight - expectRTSTop,
+                    },
+                });
+            }
+        } else {
+            dispatchRenderInfo({
+                type: SlotLayoutReducerActionEnum.update,
+                payload: {
+                    slotType: SlotTypeEnum.rightBottom,
+                    visible: false,
+                },
+            });
+        }
+    };
+
+    // 当Slot内容更新时， onLayout 触发
+    const updateSlotLayout = (type: SlotTypeEnum) => (e: LayoutChangeEvent) => {
+        const { width, height } = e.nativeEvent.layout;
+
+        dispatchRenderInfo({
+            type: SlotLayoutReducerActionEnum.update,
+            payload: {
+                slotType: type,
+                width,
+                height,
+            },
+        });
     };
 
     // version first
     return (
         <SafeAreaView>
-            <SlotC {...pickParams(slots, SlotTypeEnum.leftTop, renderInfo)}>{slots[SlotTypeEnum.leftTop].child}</SlotC>
-            <SlotC {...pickParams(slots, SlotTypeEnum.rightTop, renderInfo)}>
+            <SlotC
+                width={0}
+                height={0}
+                {...pickParams(slots, SlotTypeEnum.leftTop, renderInfo)}
+                onLayout={updateSlotLayout(SlotTypeEnum.leftTop)}
+            >
+                {slots[SlotTypeEnum.leftTop].child}
+            </SlotC>
+            <SlotC
+                width={0}
+                height={0}
+                {...pickParams(slots, SlotTypeEnum.rightTop, renderInfo)}
+                onLayout={updateSlotLayout(SlotTypeEnum.rightTop)}
+            >
                 {slots[SlotTypeEnum.rightTop].child}
             </SlotC>
-            <SlotC {...pickParams(slots, SlotTypeEnum.leftBottom, renderInfo)}>
+
+            {/* 第一期先实现对底部插槽容器的动态更新！！ */}
+            <SlotC
+                width={0}
+                height={0}
+                {...pickParams(slots, SlotTypeEnum.leftBottom, renderInfo)}
+                onLayout={updateSlotLayout(SlotTypeEnum.leftBottom)}
+            >
                 {slots[SlotTypeEnum.leftBottom].child}
             </SlotC>
-            <SlotC {...pickParams(slots, SlotTypeEnum.rightBottom, renderInfo)}>
+            <SlotC
+                width={0}
+                height={0}
+                {...pickParams(slots, SlotTypeEnum.rightBottom, renderInfo)}
+                onLayout={updateSlotLayout(SlotTypeEnum.rightBottom)}
+            >
                 {slots[SlotTypeEnum.rightBottom].child}
             </SlotC>
-            <SlotC {...pickParams(slots, SlotTypeEnum.bottomCenter, renderInfo)}>
+
+            {/* bottomCenter slot */}
+            <SlotC
+                width={0}
+                height={0}
+                {...pickParams(slots, SlotTypeEnum.bottomCenter, renderInfo)}
+                onLayout={handleBottomCenterLayout}
+            >
                 {slots[SlotTypeEnum.bottomCenter].child}
             </SlotC>
         </SafeAreaView>
@@ -96,14 +283,7 @@ export function SlotParser(slots: ContextType) {
 }
 
 const ParentComponent = () => {
-    return (
-        <SlotContainer>
-            {({ registerSlot, slots }) => (
-                // 渲染
-                <SlotParser slots={slots} />
-            )}
-        </SlotContainer>
-    );
+    return <SlotContainer></SlotContainer>;
 };
 
 export default ParentComponent;
