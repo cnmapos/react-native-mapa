@@ -1,12 +1,11 @@
-import React, { ReactNode, useContext, useEffect } from 'react';
+import { ReactNode, useContext, useEffect } from 'react';
 import SlotContext from './slotContext';
-import { SlotTypeEnum } from './type';
 import { generateUUID } from './common';
 
 //
 
 type SlotCompPropsType = {
-    slot: SlotTypeEnum;
+    slot: any;
     children: ReactNode;
     insertSite: 'start' | 'end';
     visible?: boolean;
