@@ -9,6 +9,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { HomeScreen } from './sence/GroupAndItem';
 import PreView from './common/Preview';
+import '@rnmapbox/maps';
 
 const Stack = createNativeStackNavigator();
 

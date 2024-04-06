@@ -10,7 +10,7 @@ module.exports = {
               root: ['./'],
               alias: {
                   '@': './',
-                  'react-native-mapa': '../src',
+                  // 'react-native-mapa': '../src',
               },
           },
       ],

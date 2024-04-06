@@ -1,14 +1,16 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": ["@react-native/typescript-config/tsconfig.json"],
+  // "paths": {
+  //   "react": ["./node_modules/react"],
+  //   "react-dom":["./node_modules/react-dom"]
+  // },
   "compilerOptions": {
-    "allowJs": true,
-    "resolveJsonModule": true,
-    "baseUrl": ".",
-    "paths": {
-      "react-native-mapa": ["../src"],
-      "react": ["./node_modules/react"],
-    "react-dom":["./node_modules/react-dom"]
-    }
+    "moduleResolution": "NodeNext",
+    "declaration": true,
+    "declarationMap": true,
+    "noImplicitAny": true,
+    "alwaysStrict": true,
+    // 定义了类型的成员必须初始化值，可选属性除外！
+    "strictPropertyInitialization": true,
   },
-  "include": ["global.d.ts", "index.js", "./__tests__/dumpExamplesJson.ts", "jest.config.ts", "jest.setup.ts"]
 }
