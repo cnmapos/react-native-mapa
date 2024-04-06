@@ -1,9 +1,5 @@
 {
   "extends": ["@react-native/typescript-config/tsconfig.json"],
-  // "paths": {
-  //   "react": ["./node_modules/react"],
-  //   "react-dom":["./node_modules/react-dom"]
-  // },
   "compilerOptions": {
     "moduleResolution": "NodeNext",
     "declaration": true,
