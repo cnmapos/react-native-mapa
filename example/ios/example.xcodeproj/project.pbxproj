@@ -12,10 +12,6 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		3B3DCA512BC1A0B000F7F2C4 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B3DCA4D2BC1A0B000F7F2C4 /* AntDesign.ttf */; };
-		3B3DCA522BC1A0B000F7F2C4 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B3DCA4E2BC1A0B000F7F2C4 /* Feather.ttf */; };
-		3B3DCA532BC1A0B000F7F2C4 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B3DCA4F2BC1A0B000F7F2C4 /* FontAwesome.ttf */; };
-		3B3DCA542BC1A0B000F7F2C4 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B3DCA502BC1A0B000F7F2C4 /* Ionicons.ttf */; };
 		7699B88040F8A987B510C191 /* libPods-example-exampleTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-example-exampleTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -261,11 +257,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3B3DCA512BC1A0B000F7F2C4 /* AntDesign.ttf in Resources */,
-				3B3DCA532BC1A0B000F7F2C4 /* FontAwesome.ttf in Resources */,
-				3B3DCA542BC1A0B000F7F2C4 /* Ionicons.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
-				3B3DCA522BC1A0B000F7F2C4 /* Feather.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -608,7 +600,10 @@
 					"-DFOLLY_USE_LIBCPP=1",
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 				);
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -676,7 +671,10 @@
 					"-DFOLLY_USE_LIBCPP=1",
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 				);
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
