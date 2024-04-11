@@ -1,17 +1,16 @@
 import Mapa, {Slot} from 'react-native-mapa';
 import {SafeAreaView} from 'react-native';
 
-function PreView({navigation}: any): React.JSX.Element {
-    const projection = 'mercator';
-    const styleID = 'MapboxVector';
-
+function POI({navigation}: any): React.JSX.Element {
+    const akey = '64bdebe6239a3a398443b2af4ba6085e';
     return (
         <SafeAreaView style={{height: '100%'}}>
-            <Mapa.MapView projection={projection} style={styleID}>
+            <Mapa.MapView>
                 <Mapa.Camera />
+                <Mapa.POIFinder akey={akey} />
             </Mapa.MapView>
         </SafeAreaView>
     );
 }
 
-export default PreView;
+export default POI;

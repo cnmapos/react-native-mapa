@@ -1,6 +1,6 @@
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import { ForecastWheatherObject, PositionStyle, RealWeatherObject, WeatherData, WeatherReuqest } from '../../Mapa';
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { BottomSheet, Text } from '@rneui/themed';
 import { AMapGeoRequest, AMapWeatherRequest, MapContext } from '../../Mapa';
 import Detail from './Detail';

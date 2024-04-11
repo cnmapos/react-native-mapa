@@ -1,6 +1,10 @@
 {
   "name": "react-native-mapa",
   "version": "0.0.1",
+  "description": "React Native Mapa component for iOS + Android",
+  "author": "heavi",
+  "license": "MIT",
+  "homepage": "https://github.com/cnmapos/react-native-mapa#readme",
   "publishConfig": {
     "access": "public"
   },

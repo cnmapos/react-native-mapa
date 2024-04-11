@@ -1,15 +1,30 @@
 import BaseMap from './pages/BaseMap';
+import Caemra from './pages/Camera';
 import Weather from './pages/Weather';
+import ZoomInOut from './pages/ZoomInOut';
+import POI from './pages/POI';
 
 const RoutesConfig = [
     {
         title: '地图',
         data: [
             {
-                title: '基础地图',
+                title: 'MapView',
                 img: require('./assets/basic.png'),
                 id: 'BaseMap',
                 component: BaseMap,
+            },
+            {
+                title: 'Camera',
+                img: require('./assets/basic.png'),
+                id: 'Camera',
+                component: Caemra,
+            },
+            {
+                title: 'Zoom In and Out',
+                img: require('./assets/basic.png'),
+                id: 'ZoomInOut',
+                component: ZoomInOut,
             },
             {
                 title: '底图组件',
@@ -22,6 +37,7 @@ const RoutesConfig = [
             {
                 title: 'POI搜索',
                 img: require('./assets/basic.png'),
+                component: POI,
             },
             {
                 title: '天气',
