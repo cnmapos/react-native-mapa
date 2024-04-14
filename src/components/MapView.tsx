@@ -2,7 +2,7 @@ import Mapbox from '@rnmapbox/maps';
 import { StyleSheet, View } from 'react-native';
 import { ReactElement, useEffect, useRef, useState } from 'react';
 import { MapContext } from '../modules/MapContext';
-import { Projection, StyleIDs } from '../types';
+import { Projection, StyleIDs, MapStyle } from '../types';
 import { loadStyle, styleFormat } from '../config/style';
 import React from 'react';
 import { Map } from '../modules/Map';
@@ -21,7 +21,7 @@ export type MapViewProps = {
      *
      * 地图样式，支持高德矢量地图、高德卫星图、Mapbox矢量地图、mapbox卫星地图，默认显示高德矢量地图。
      */
-    style?: StyleIDs;
+    style?: MapStyle;
     /**
      * @ignore
      */

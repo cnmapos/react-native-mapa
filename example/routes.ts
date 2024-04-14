@@ -3,6 +3,8 @@ import Caemra from './pages/Camera';
 import Weather from './pages/Weather';
 import ZoomInOut from './pages/ZoomInOut';
 import POI from './pages/POI';
+import ImageSource from './pages/ImageSource';
+import ImageShapeIcon from './pages/ImageShapeIcon';
 
 const RoutesConfig = [
     {
@@ -50,6 +52,18 @@ const RoutesConfig = [
     {
         title: '图层',
         data: [
+            {
+                title: 'Image Source',
+                img: require('./assets/basic.png'),
+                id: 'ImageSource',
+                component: ImageSource,
+            },
+            {
+                title: 'Image Shape Icon',
+                img: require('./assets/basic.png'),
+                id: 'ImageShapeIcon',
+                component: ImageShapeIcon,
+            },
             {
                 title: '栅格图层',
                 img: require('./assets/basic.png'),

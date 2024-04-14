@@ -1,4 +1,5 @@
-import { Position, ParamsBase, ResResult, Page, City, District, Address, PartialPick } from './base';
+import { PartialPick } from '../base';
+import { Position, ParamsBase, ResResult, Page, City, District, Address } from './base';
 
 export type KeyParams = ParamsBase &
     Page & {

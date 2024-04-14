@@ -1,7 +1,9 @@
 import { CameraRef } from '@rnmapbox/maps/lib/typescript/src/components/Camera';
 import { LocationManager } from '../modules/LocationManager';
+import { Expression } from './styles';
 
 export * from './amap';
+export * from './styles';
 
 /**
  * MapView Props
@@ -25,9 +27,16 @@ export enum StyleIDs {
     MapboxSatellite = 'MapboxSatellite',
 }
 
+export type MapStyle = 'AmapSatellite' | 'AmapSatellite' | 'MapboxVector' | 'MapboxSatellite';
+
 export type PositionLike = number[] | [number, number];
 
 export type Position = [number, number];
+
+/**
+ * 屏幕坐标[x, y]
+ */
+export type Point = [number, number];
 
 export type LocationState = {
     heading?: number;
@@ -126,4 +135,54 @@ export type PosBaseProps = {
 export type LocationEvent = {
     coords: LocationState;
     timestamp?: number;
+};
+
+/**
+ * 图层插槽位置
+ */
+export type LayerSlot = 'bottom' | 'middle' | 'top';
+
+export type OnPressEvent = {
+    features: Array<GeoJSON.Feature>;
+    coordinates: Position;
+    point: Point;
+};
+
+export type LayerProps = {
+    /**
+     * layer唯一标识
+     */
+    id: string;
+
+    /**
+     * 如果图层id已经存在，则不创建新图层
+     */
+    existing?: boolean;
+
+    /**
+     * 数据来源标识
+     */
+    sourceId?: string;
+
+    /**
+     * 插入图层到指定index
+     */
+    layerIndex?: number;
+
+    /**
+     *  Mapbox filter表达式
+     */
+    filter?: Expression;
+
+    /**
+     * 显示最小zoom层级
+     */
+    minZoom?: number;
+
+    /**
+     * 显示最大zoom层级
+     */
+    maxZoom?: number;
+
+    slot?: LayerSlot;
 };

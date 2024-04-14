@@ -10,7 +10,13 @@ export { default as Marker, type MarkerProps } from './components/Marker';
 export { default as Location, type LocationProps } from './components/Location';
 export { default as POIFinder, type POIFinderProps } from './components/poi/POIFinder';
 export { default as Weather, type WeatherProps } from './components/weather';
-// export { default as Slot } from './components/slots';
+export { default as ImageSource } from './components/image/ImageSource';
+export { default as ImageLayer } from './components/image/ImageLayer';
+export { default as Images } from './components/image/Images';
+export { default as Image } from './components/image/Image';
+export { default as GeoJSONSource } from './components/GeoJSONSource';
+export { default as SymbolLayer } from './components/SymbolLayer';
+
 export * from './components/slots';
 /**
  * 设置mapbox 的token

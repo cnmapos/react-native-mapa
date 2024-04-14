@@ -1,5 +1,6 @@
 import Mapa, {Slot} from 'react-native-mapa';
 import {SafeAreaView} from 'react-native';
+import React from 'react';
 
 function PreView({navigation}: any): React.JSX.Element {
     const projection = 'mercator';

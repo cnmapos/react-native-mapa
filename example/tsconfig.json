@@ -13,4 +13,5 @@
     // 定义了类型的成员必须初始化值，可选属性除外！
     "strictPropertyInitialization": true,
   },
+  "include": ["global.d.ts", "index.js", "jest.config.ts", "jest.setup.ts"]
 }
