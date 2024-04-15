@@ -10,7 +10,7 @@ import provinces from '../assets/json/provinces.json';
 /**
   @category Component
  */
-const ImageShapeIcon = () => {
+const ImageViewIcon = () => {
     const [images, setImages] = useState({
         example: exampleIcon,
     });
@@ -36,7 +36,7 @@ const ImageShapeIcon = () => {
     };
 
     const style: SymbolLayerStyleProps = {
-        iconImage: 'unkown',
+        iconImage: 'viewIcon',
         iconAllowOverlap: true,
         iconSize: 1,
     };
@@ -45,7 +45,13 @@ const ImageShapeIcon = () => {
         <SafeAreaView style={{height: '100%'}}>
             <Mapa.MapView>
                 <Mapa.Camera zoom={3} />
-                <Mapa.Images images={images} onImageMissing={onImageMissing} />
+                <Mapa.Images>
+                    <Mapa.Image name="viewIcon">
+                        <View style={styles.image}>
+                            <Text>省会</Text>
+                        </View>
+                    </Mapa.Image>
+                </Mapa.Images>
                 <Mapa.GeoJSONSource id="gejson-id" url={gejson}>
                     <Mapa.SymbolLayer
                         id="geojson-layer-id"
@@ -58,7 +64,7 @@ const ImageShapeIcon = () => {
     );
 };
 
-export default ImageShapeIcon;
+export default ImageViewIcon;
 
 const styles = StyleSheet.create({
     image: {

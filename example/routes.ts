@@ -5,6 +5,8 @@ import ZoomInOut from './pages/ZoomInOut';
 import POI from './pages/POI';
 import ImageSource from './pages/ImageSource';
 import ImageShapeIcon from './pages/ImageShapeIcon';
+import ImageViewIcon from './pages/ImageViewIcon';
+import LineLayer from './pages/LineLayer';
 
 const RoutesConfig = [
     {
@@ -63,6 +65,18 @@ const RoutesConfig = [
                 img: require('./assets/basic.png'),
                 id: 'ImageShapeIcon',
                 component: ImageShapeIcon,
+            },
+            {
+                title: 'Image View Icon',
+                img: require('./assets/basic.png'),
+                id: 'Image View Icon',
+                component: ImageViewIcon,
+            },
+            {
+                title: 'Line Layer',
+                img: require('./assets/basic.png'),
+                id: 'LineLayer',
+                component: LineLayer,
             },
             {
                 title: '栅格图层',

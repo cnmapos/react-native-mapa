@@ -33,8 +33,8 @@ export type ImagesProps = {
      *   >
      * ```
      */
-    onImageMissing: (imageKey: string) => void;
-    children: TypedReactNode<typeof Image>;
+    onImageMissing?: (imageKey: string) => void;
+    children?: TypedReactNode<typeof Image>;
 };
 
 /**
