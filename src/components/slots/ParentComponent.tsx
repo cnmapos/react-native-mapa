@@ -143,7 +143,7 @@ function slotLayoutTransform() {
     return layout;
 }
 
-export function SlotParser(slots: ContextType) {
+export function SlotParser(props: { slots: ContextType }) {
     function pickParams(slots: ContextType, type: SlotTypeEnum, renderInfo: SlotLayoutType) {
         const info = slots[type];
         const ren = renderInfo[type];
@@ -157,6 +157,8 @@ export function SlotParser(slots: ContextType) {
             visible: info.style,
         };
     }
+
+    const { slots } = props;
 
     const [renderInfo, dispatchRenderInfo] = useReducer(renderInfoReducer, getDefaultLayout(slots));
 
@@ -282,8 +284,8 @@ export function SlotParser(slots: ContextType) {
     );
 }
 
-const ParentComponent = () => {
-    return <SlotContainer></SlotContainer>;
+const ParentComponent = ({ children }) => {
+    return <SlotContainer>{children}</SlotContainer>;
 };
 
 export default ParentComponent;
