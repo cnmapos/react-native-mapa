@@ -1,6 +1,7 @@
 import { View, StyleSheet } from 'react-native';
 import { WeatherData } from '../../types';
 import { Header, Icon, ListItem, Text } from '@rneui/themed';
+import React from 'react';
 /**
  * Detail props
  *

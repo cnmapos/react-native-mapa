@@ -1,6 +1,6 @@
-import { StyleIDs } from '../../types';
 import amapVectorStyle from './amap.vector.json';
 import amapSatellite from './amap.satellite.json';
+import { StyleIDs } from '../../types';
 
 const styleMap = {
     [StyleIDs.AmapVector]: amapVectorStyle,
