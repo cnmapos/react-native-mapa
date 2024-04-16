@@ -1,5 +1,6 @@
 import BaseMap from './pages/BaseMap';
 import Weather from './pages/Weather';
+import Background from './pages/Background';
 
 const RoutesConfig = [
     {
@@ -10,6 +11,12 @@ const RoutesConfig = [
                 img: require('./assets/basic.png'),
                 id: 'BaseMap',
                 component: BaseMap,
+            },
+            {
+                title: 'Background地图',
+                img: require('./assets/basic.png'),
+                id: 'BackgroundMap',
+                component: Background,
             },
             {
                 title: '底图组件',

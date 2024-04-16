@@ -11,6 +11,7 @@ function PreView({ navigation }: any): React.JSX.Element {
                 <ParentComponent>
                     <SlotComp slot={SlotTypeEnum.leftBottom} key="xxx-Camera" insertSite={'start'}>
                         <Mapa.Camera />
+                        <Mapa.Background />
                     </SlotComp>
                 </ParentComponent>
                 {/* <Slot slot="rightTop" backgroundColor={'transparent'}>
