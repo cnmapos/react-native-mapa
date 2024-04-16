@@ -11,6 +11,8 @@ export const defaultSlotConfig: ContextType = {
         style: {
             left: 4,
             bottom: 4,
+            backgroundColor: 'green',
+
         },
         componentList: [],
         child: [],
@@ -20,6 +22,7 @@ export const defaultSlotConfig: ContextType = {
         style: {
             right: 4,
             bottom: 4,
+            backgroundColor: 'green',
         },
         visible: false,
         componentList: [],
@@ -47,6 +50,7 @@ export const defaultSlotConfig: ContextType = {
         style: {
             left: 0,
             top: 0,
+            backgroundColor: 'red',
         },
         visible: false,
         componentList: [],

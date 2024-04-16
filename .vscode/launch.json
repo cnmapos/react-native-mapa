@@ -1,6 +1,22 @@
 {
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+        {
+            "name": "Attach to Hermes application",
+            "request": "attach",
+            "type": "reactnativedirect",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "Debug Android - Experimental",
+            "request": "launch",
+            "type": "reactnative",
+            "cwd": "${workspaceFolder}",
+            "platform": "android"
+        },
         {
             "name": "Run Android Hermes",
             "request": "launch",
@@ -8,20 +24,6 @@
             "cwd": "${workspaceFolder}",
             "enableDebug": false,
             "platform": "android"
-        },
-        {
-            "name": "Debug Android",
-            "cwd": "${workspaceFolder}",
-            "type": "reactnative",
-            "request": "launch",
-            "platform": "android"
-        },
-        {
-            "name": "Debug iOS",
-            "cwd": "${workspaceFolder}",
-            "type": "reactnative",
-            "request": "launch",
-            "platform": "ios"
         }
     ]
 }
