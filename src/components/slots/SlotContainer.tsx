@@ -2,6 +2,7 @@ import React, { ReactNode, useReducer } from 'react';
 import { View } from 'react-native';
 import SlotContext, { defaultSlotConfig, SlotActionEnum, SlotContextType, slotReducer } from './slotContext';
 import { SlotTypeEnum } from './type';
+import { SlotParser } from './ParentComponent';
 
 function SlotContainer({ children }) {
     const [slots, dispatch] = useReducer(slotReducer, defaultSlotConfig);
@@ -56,12 +57,8 @@ function SlotContainer({ children }) {
                 removeComponent,
             }}
         >
-            <View style={{ flex: 1 }}>
-                {children({
-                    registerSlot,
-                    slots,
-                })}
-            </View>
+            {children}
+            <SlotParser slots={slots} />
         </SlotContext.Provider>
     );
 }

@@ -3,10 +3,12 @@ import { PositionStyle } from '../../types';
 import { ReactNode } from 'react';
 
 export enum SlotFixedLocation {
-    rightTop = 'rightTop',
-    leftTop = 'leftTop',
     rightBottom = 'rightBottom',
+    rightTop = 'rightTop',
     leftBottom = 'leftBottom',
+    leftTop = 'leftTop',
+    bottomCenter = 'bottomCenter',
+    topCenter = 'topCenter',
 }
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
@@ -32,6 +34,15 @@ export const SlotFixedStylesConfig: {
         left: 4,
         top: 4,
     },
+
+    bottomCenter: {
+        left: 0,
+        bottom: 0,
+    },
+    topCenter: {
+        left: 0,
+        top: 0,
+    },
 };
 
 export function pickSlotPosition(slot: keyof typeof SlotFixedLocation): PositionStyle {
@@ -46,6 +57,7 @@ type SlotPropsType = {
     // 屏幕高度的百分比
     height?: number;
     backgroundColor?: ColorValue;
+    style?: any;
 };
 
 /**
@@ -59,7 +71,7 @@ type SlotPropsType = {
  * @returns
  */
 export function Slot(props: SlotPropsType) {
-    const { children, slot, width = 0.2, height = 0.35, backgroundColor = 'white' } = props;
+    const { children, slot, width = 0.2, height = 0.35, backgroundColor = 'white', style = {} } = props;
 
     // TODO： 重构样式计算方式，支持更多的样式配置写入
     const styles = StyleSheet.create({
@@ -73,6 +85,7 @@ export function Slot(props: SlotPropsType) {
             flexDirection: 'column',
             backgroundColor,
             ...pickSlotPosition(slot),
+            ...style,
         },
         scrollView: {
             flex: 1,

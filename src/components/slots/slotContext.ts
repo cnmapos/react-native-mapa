@@ -2,7 +2,7 @@ import { createContext, ReactNode } from 'react';
 import { ParamsType, SlotItemType, SlotTypeEnum } from './type';
 import { generateUUID } from './common';
 
-type ContextType = {
+export type ContextType = {
     [k in SlotTypeEnum]: SlotItemType
 }
 
@@ -11,6 +11,8 @@ export const defaultSlotConfig: ContextType = {
         style: {
             left: 4,
             bottom: 4,
+            backgroundColor: 'green',
+
         },
         componentList: [],
         child: [],
@@ -20,6 +22,7 @@ export const defaultSlotConfig: ContextType = {
         style: {
             right: 4,
             bottom: 4,
+            backgroundColor: 'green',
         },
         visible: false,
         componentList: [],
@@ -47,6 +50,7 @@ export const defaultSlotConfig: ContextType = {
         style: {
             left: 0,
             top: 0,
+            backgroundColor: 'red',
         },
         visible: false,
         componentList: [],
@@ -143,7 +147,9 @@ export function slotReducer(store: ContextType, action: {
                     // 更新render child
                     const renderList: ReactNode[] = [];
                     componentList.forEach((item) => {
-                        renderList.push(item.children);
+                        if (item.visible) {
+                            renderList.push(item.children);
+                        }
                     });
 
                     slot.child = renderList;
