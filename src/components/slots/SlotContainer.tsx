@@ -57,7 +57,7 @@ function SlotContainer({ children }) {
                 removeComponent,
             }}
         >
-            <View style={{ flex: 1 }}>{children}</View>
+            {children}
             <SlotParser slots={slots} />
         </SlotContext.Provider>
     );

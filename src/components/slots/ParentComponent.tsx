@@ -147,14 +147,15 @@ export function SlotParser(props: { slots: ContextType }) {
     function pickParams(slots: ContextType, type: SlotTypeEnum, renderInfo: SlotLayoutType) {
         const info = slots[type];
         const ren = renderInfo[type];
+        const style = StyleSheet.create({
+            root: { ...info.style },
+        });
+
         return {
             key: type,
             type,
-            style: {
-                ...info.style,
-                // TODO use renderInfo 更新
-            },
-            visible: info.style,
+            style: style.root,
+            visible: info.visible,
         };
     }
 
@@ -235,7 +236,7 @@ export function SlotParser(props: { slots: ContextType }) {
 
     // version first
     return (
-        <SafeAreaView>
+        <>
             <SlotC
                 width={0}
                 height={0}
@@ -280,7 +281,7 @@ export function SlotParser(props: { slots: ContextType }) {
             >
                 {slots[SlotTypeEnum.bottomCenter].child}
             </SlotC>
-        </SafeAreaView>
+        </>
     );
 }
 
