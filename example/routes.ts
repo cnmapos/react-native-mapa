@@ -7,6 +7,8 @@ import ImageSource from './pages/ImageSource';
 import ImageShapeIcon from './pages/ImageShapeIcon';
 import ImageViewIcon from './pages/ImageViewIcon';
 import LineLayer from './pages/LineLayer';
+import FillLayer from './pages/FillLayer';
+import Marker from './pages/Marker';
 
 const RoutesConfig = [
     {
@@ -73,10 +75,22 @@ const RoutesConfig = [
                 component: ImageViewIcon,
             },
             {
+                title: 'Marker',
+                img: require('./assets/basic.png'),
+                id: 'Marker',
+                component: Marker,
+            },
+            {
                 title: 'Line Layer',
                 img: require('./assets/basic.png'),
                 id: 'LineLayer',
                 component: LineLayer,
+            },
+            {
+                title: 'Fill Layer',
+                img: require('./assets/basic.png'),
+                id: 'FillLayer',
+                component: FillLayer,
             },
             {
                 title: '栅格图层',

@@ -17,6 +17,7 @@ export { default as Image } from './components/image/Image';
 export { default as GeoJSONSource } from './components/GeoJSONSource';
 export { default as SymbolLayer } from './components/SymbolLayer';
 export { default as LineLayer } from './components/LineLayer';
+export { default as FillLayer } from './components/FilleLayer';
 
 export * from './components/slots';
 /**
