@@ -8,6 +8,8 @@ import ImageShapeIcon from './pages/ImageShapeIcon';
 import ImageViewIcon from './pages/ImageViewIcon';
 import LineLayer from './pages/LineLayer';
 
+import Slot from './pages/Slot';
+
 const RoutesConfig = [
     {
         title: '地图',
@@ -18,6 +20,14 @@ const RoutesConfig = [
                 id: 'BaseMap',
                 component: BaseMap,
             },
+
+            {
+                title: 'Slot',
+                img: require('./assets/basic.png'),
+                id: 'Slot-demo',
+                component: Slot,
+            },
+
             {
                 title: 'Camera',
                 img: require('./assets/basic.png'),
