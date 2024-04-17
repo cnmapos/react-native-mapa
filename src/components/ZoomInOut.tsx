@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import { MapContext } from '../modules/MapContext';
 // import Icon from 'react-native-vector-icons/FontAwesome';
@@ -42,8 +42,13 @@ export type ZoomInOutProps = PosBaseProps & {
 const ZoomInOut = (props: ZoomInOutProps) => {
     const { map } = useContext(MapContext);
 
-    const onZoomIn = () => map.zoomTo(zoomStep);
-    const onZoomOut = () => map.zoomTo(-zoomStep);
+    const onZoomIn = () => { 
+        // console.log('onZoomIn', map);
+        map.zoomTo(zoomStep)
+    };
+    const onZoomOut = () => {
+        map.zoomTo(-zoomStep)
+    };
 
     const containerStyle: StyleProp<ViewStyle> = props.style
         ? { position: 'absolute', ...props.style }

@@ -147,14 +147,14 @@ export function SlotParser(props: { slots: ContextType }) {
     function pickParams(slots: ContextType, type: SlotTypeEnum, renderInfo: SlotLayoutType) {
         const info = slots[type];
         const ren = renderInfo[type];
-        const style = StyleSheet.create({
-            root: { ...info.style },
-        });
+        // const style = StyleSheet.create({
+        //     root: { ...info.style },
+        // });
 
         return {
             key: type,
             type,
-            style: style.root,
+            style: { ...info.style },
             visible: info.visible,
         };
     }
@@ -238,16 +238,16 @@ export function SlotParser(props: { slots: ContextType }) {
     return (
         <>
             <SlotC
-                width={0}
-                height={0}
+                width={0.3}
+                height={0.3}
                 {...pickParams(slots, SlotTypeEnum.leftTop, renderInfo)}
                 onLayout={updateSlotLayout(SlotTypeEnum.leftTop)}
             >
                 {slots[SlotTypeEnum.leftTop].child}
             </SlotC>
             <SlotC
-                width={0}
-                height={0}
+                width={0.3}
+                height={0.3}
                 {...pickParams(slots, SlotTypeEnum.rightTop, renderInfo)}
                 onLayout={updateSlotLayout(SlotTypeEnum.rightTop)}
             >
@@ -256,8 +256,8 @@ export function SlotParser(props: { slots: ContextType }) {
 
             {/* 第一期先实现对底部插槽容器的动态更新！！ */}
             <SlotC
-                width={0}
-                height={0}
+                width={0.3}
+                height={0.3}
                 {...pickParams(slots, SlotTypeEnum.leftBottom, renderInfo)}
                 onLayout={updateSlotLayout(SlotTypeEnum.leftBottom)}
             >
@@ -274,8 +274,8 @@ export function SlotParser(props: { slots: ContextType }) {
 
             {/* bottomCenter slot */}
             <SlotC
-                width={0}
-                height={0}
+                width={1}
+                height={0.3}
                 {...pickParams(slots, SlotTypeEnum.bottomCenter, renderInfo)}
                 onLayout={handleBottomCenterLayout}
             >

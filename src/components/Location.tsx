@@ -1,7 +1,7 @@
 import { Button, Icon } from '@rneui/themed';
 import Mapbox from '@rnmapbox/maps';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
-import { LocationEvent, PositionStyle } from '..';
+import { LocationEvent, PositionSlot, PositionStyle } from '..';
 import { buttonSize } from '../config';
 import { useContext } from 'react';
 import { MapContext } from '../modules/MapContext';
@@ -25,7 +25,7 @@ export type LocationProps = {
      * 或者 'right-top'
      * ```
      */
-    style?: PositionStyle; // | PositionSlot;
+    style?: PositionStyle | PositionSlot;
     /**
      * 初始化时自动定位
      *
@@ -54,7 +54,7 @@ const Location = (props: LocationProps) => {
     const { visible = true, locateWhenInit = false, onChange } = props;
     const { map } = useContext(MapContext);
     const containerStyle: StyleProp<ViewStyle> = props.style
-        ? { position: 'absolute', ...props.style }
+        ? { ...(props.style as any), position: 'absolute' }
         : styles.container;
 
     const locate = async () => {

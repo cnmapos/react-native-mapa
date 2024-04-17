@@ -19,10 +19,10 @@ export class AmapPOIRequest extends RequestBase implements POIRequest {
                 suggestion,
                 pois: pois.map((poi: any) => ({
                     ...poi,
-                    location: poi.location.split(',').map((c) => Number(c)),
+                    location: poi.location.split(',').map((c: string) => Number(c)),
                     distance: Number(poi.distance),
-                    entrLocation: poi.entr_location?.split(',').map((c) => Number(c)),
-                    exitLocation: poi.exit_location?.split(',').map((c) => Number(c)),
+                    entrLocation: poi.entr_location?.split(',').map((c: string) => Number(c)),
+                    exitLocation: poi.exit_location?.split(',').map((c: string) => Number(c)),
                 })),
             } as ResResult<POIData>;
         } catch (err: any) {
