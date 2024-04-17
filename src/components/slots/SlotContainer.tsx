@@ -57,8 +57,8 @@ function SlotContainer({ children }) {
                 removeComponent,
             }}
         >
-            {children}
             <SlotParser slots={slots} />
+            {children}
         </SlotContext.Provider>
     );
 }
