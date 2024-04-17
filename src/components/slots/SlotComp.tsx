@@ -12,7 +12,7 @@ type SlotCompPropsType = {
     key?: string;
 };
 
-const SlotComp = ({ slot, key, visible, children, insertSite }: SlotCompPropsType) => {
+export const SlotComp = ({ slot, key, visible, children, insertSite }: SlotCompPropsType) => {
     const ctx = useContext(SlotContext);
 
     const uuid = key ? key : generateUUID();

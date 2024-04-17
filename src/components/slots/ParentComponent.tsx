@@ -4,7 +4,7 @@ import SlotContainer from './SlotContainer';
 import { ContextType } from './slotContext';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SlotItemType, SlotTypeEnum } from './type';
-import { PositionStyle } from '../../types';
+import { PositionLike } from '../../types';
 
 //
 const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
@@ -59,7 +59,7 @@ type SlotLayoutType = {
         height: number; // 插槽容器高度！！
         width: number; // 插槽容器宽度！！
         visible: boolean;
-    } & PositionStyle;
+    } & PositionLike;
 };
 
 enum SlotLayoutReducerActionEnum {
@@ -285,8 +285,8 @@ export function SlotParser(props: { slots: ContextType }) {
     );
 }
 
-const ParentComponent = ({ children }) => {
+export const ParentComponent = ({ children }) => {
     return <SlotContainer>{children}</SlotContainer>;
 };
 
-export default ParentComponent;
+// export default ParentComponent;

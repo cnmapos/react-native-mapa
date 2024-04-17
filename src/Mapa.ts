@@ -1,6 +1,8 @@
 import Mapbox from '@rnmapbox/maps';
 export * from './modules';
 export * from './types';
+export * from './components/slots';
+
 export { default as MapView, type MapViewProps } from './components/MapView';
 export { default as Camera, type CameraProps } from './components/Camera';
 export { default as ZoomInOut, type ZoomInOutProps } from './components/ZoomInOut';
@@ -18,7 +20,6 @@ export { default as GeoJSONSource } from './components/GeoJSONSource';
 export { default as SymbolLayer } from './components/SymbolLayer';
 export { default as LineLayer } from './components/LineLayer';
 
-export * from './components/slots';
 /**
  * 设置mapbox 的token
  * @category static
