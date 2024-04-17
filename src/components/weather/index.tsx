@@ -1,6 +1,6 @@
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import { ForecastWheatherObject, PositionStyle, RealWeatherObject, WeatherData, WeatherReuqest } from '../../Mapa';
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { BottomSheet, Text } from '@rneui/themed';
 import { AMapGeoRequest, AMapWeatherRequest, MapContext } from '../../Mapa';
 import Detail from './Detail';
@@ -18,7 +18,7 @@ export type WeatherProps = {
      * 定位图标是否在地图上显示
      * @defaultValue true
      */
-    visible: boolean;
+    visible?: boolean;
     /**
      * 天气请求接口扩展
      * 默认实现了amap的weather rest服务请求

@@ -1,4 +1,5 @@
-import { Address, City, Country, District, ParamsBase, PartialPick, Position, Province, ResResult } from './base';
+import { PartialPick } from '../base';
+import { Address, City, Country, District, ParamsBase, Position, Province, ResResult } from './base';
 
 /**
  * 地址编码请求参数

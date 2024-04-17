@@ -84,10 +84,3 @@ export type Page = {
 };
 
 export type ResResult<T> = T & ResBaseInfo;
-
-/**
- * Make partial properties in T optional
- */
-export type PartialPick<T, K extends keyof T> = {
-    [P in K]?: T[P];
-};

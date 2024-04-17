@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import Mapbox from '@rnmapbox/maps';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Magnetometer } from 'expo-sensors';
 
 /**

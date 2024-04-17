@@ -1,4 +1,4 @@
-import React, { ReactNode, useReducer, useState } from 'react';
+import React, { ReactNode, useReducer } from 'react';
 import { View } from 'react-native';
 import SlotContext, { defaultSlotConfig, SlotActionEnum, SlotContextType, slotReducer } from './slotContext';
 import { SlotTypeEnum } from './type';
