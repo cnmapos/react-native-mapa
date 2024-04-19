@@ -5,8 +5,8 @@ import { StyleIDs } from '../../types';
 const styleMap = {
     [StyleIDs.AmapVector]: amapVectorStyle,
     [StyleIDs.AmapSatellite]: amapSatellite,
-    [StyleIDs.MapboxVector]: 'Mapbox.StyleURL.Street',
-    [StyleIDs.MapboxSatellite]: 'Mapbox.StyleURL.Satellite',
+    [StyleIDs.MapboxVector]: 'mapbox://styles/mapbox/streets-v11',
+    [StyleIDs.MapboxSatellite]: 'mapbox://styles/mapbox/satellite-v9',
 };
 
 export function loadStyle(styleId: StyleIDs) {

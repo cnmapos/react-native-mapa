@@ -1,14 +1,43 @@
 import { View, StyleSheet, Image, Pressable } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { BottomSheet, Text, Header, Button } from '@rneui/themed';
-import { useState } from 'react';
+import { BottomSheet, Text, Header, Button, Avatar } from '@rneui/themed';
+import { useState, useContext, useEffect } from 'react';
 import { BackgroundLayer } from '@rnmapbox/maps';
+import { MapContext } from '../modules/MapContext';
+import { StyleIDs } from '../types';
+
+export type BackgroundListItem = {
+    /**
+     * 背景图层唯一id
+     */
+    id: string;
+    /**
+     * 背景图层名称
+     */
+    name: string;
+    /**
+     * 背景图层style的请求URL地址
+     */
+    styleURL?: string;
+    /**
+     * 背景图层的style配置对象
+     */
+    styleJSON?: Object;
+};
+
 /**
  * Background props
  *
  * @category Props
  */
-export type BackgroundProps = {};
+export type BackgroundProps = {
+    /**
+     * 背景图层列表
+     * @defaultValue [StyleIDs.AmapVector, StyleIDs.AmapSatellite, StyleIDs.MapboxVector, StyleIDs.MapboxSatellite]
+     */
+    list?: BackgroundListItem[];
+    defaultValue: BackgroundListItem.id;
+};
 
 /**
   @category Component
@@ -22,11 +51,21 @@ const Background = (props: BackgroundProps) => {
     const onClose = () => {
         setDetailVisible(false);
     };
+
+    const { list, defaultValue } = props;
+    const { map } = useContext(MapContext);
+
+    // 背景组件初始化时、根据默认选中的value、修改mapview的style
+    useEffect(() => {
+        const { styleJSON, styleURL } = list.filter((item) => item.id === defaultValue)[0];
+        map.updateStyle({ styleURL: styleURL || '', styleJSON: styleJSON || '' });
+    }, [list, defaultValue, map]);
+
     return (
         <View>
             <Icon name="layers-outline" style={styles.icon} onPress={onOpen} />
             <BottomSheet modalProps={{}} isVisible={detailVisible} containerStyle={styles.containerStyle}>
-                <BackgroundPanel onClose={onClose} />
+                <BackgroundPanel {...props} onClose={onClose} />
             </BottomSheet>
         </View>
     );
@@ -45,37 +84,29 @@ const styles = StyleSheet.create({
     },
 });
 
-const BackgroundPanel = (props: any) => {
+type BackgroundPanelProps = BackgroundProps & {
+    onClose: () => void;
+};
+const BackgroundPanel = (props: BackgroundPanelProps) => {
+    const { list, defaultValue } = props;
+    const { map } = useContext(MapContext);
+
+    const [currentBg, setCurrentBg] = useState(defaultValue);
+
+    useEffect(() => {
+        setCurrentBg(defaultValue);
+    }, [defaultValue]);
+
     const onClose = () => {
         props?.onClose();
     };
 
-    const list = [
-        {
-            id: 'baidu',
-            url: 'https://sj-fd.zol-img.com.cn/g5/M00/0D/00/ChMkJlf69rOIOrcpAABcJ73TnMcAAWxLwEXVeQAAFw_713.jpg',
-            text: '百度地图',
-        },
-        {
-            id: 'gaode',
-            url: 'https://avatars0.githubusercontent.com/u/32242596?s=460&u=1ea285743fc4b083f95d6ee0be2e7bb8dcfc676e&v=4',
-            text: '高德地图',
-        },
-        {
-            id: 'wx1',
-            url: 'https://avatars0.githubusercontent.com/u/32242596?s=460&u=1ea285743fc4b083f95d6ee0be2e7bb8dcfc676e&v=4',
-            text: '卫星地图',
-        },
-        {
-            id: 'wx2',
-            url: 'https://avatars0.githubusercontent.com/u/32242596?s=460&u=1ea285743fc4b083f95d6ee0be2e7bb8dcfc676e&v=4',
-            text: '卫星地图2',
-        },
-    ];
-
     const clickHandle = (id: string) => {
-        console.log(id);
+        const { styleJSON, styleURL } = props?.list?.filter((item) => item.id === id)[0];
+        map.updateStyle({ styleURL: styleURL || '', styleJSON: styleJSON || '' });
+        setCurrentBg(id);
     };
+
     return (
         <View style={backgroundPanelStyles.container}>
             <Header
@@ -90,15 +121,18 @@ const BackgroundPanel = (props: any) => {
             />
             <View>
                 <View style={backgroundPanelStyles.backgroundItemList}>
-                    {list.map((item) => {
+                    {props?.list?.map((item) => {
                         return (
                             <ImageWithText
                                 key={item.id}
                                 id={item.id}
                                 onClick={clickHandle}
-                                style={backgroundPanelStyles.backgroundItem}
+                                style={
+                                    (backgroundPanelStyles.backgroundItem,
+                                    currentBg === item.id ? backgroundPanelStyles.selected : {})
+                                }
                                 imgUrl={item.url}
-                                text={item.text}
+                                text={item.name}
                             />
                         );
                     })}
@@ -112,13 +146,18 @@ const ImageWithText = (props: { id: string; imgUrl: string; text: string; style:
     return (
         <View style={{ ...ImageWithTextStyles.wrapper, ...props.style }}>
             <Pressable onPress={() => props?.onClick(props.id)}>
-                <Image
-                    style={{ ...ImageWithTextStyles.image }}
-                    resizeMode="contain"
-                    source={{
-                        uri: props.imgUrl,
-                    }}
-                />
+                {props.imgUrl ? (
+                    <Image
+                        style={{ ...ImageWithTextStyles.image }}
+                        resizeMode="contain"
+                        source={{
+                            uri: props.imgUrl || '',
+                        }}
+                    />
+                ) : (
+                    <Avatar size={32} rounded title={props.text} containerStyle={{ backgroundColor: 'blue' }} />
+                )}
+
                 <Text>{props.text}</Text>
             </Pressable>
         </View>
@@ -166,5 +205,12 @@ const backgroundPanelStyles = StyleSheet.create({
         flexGrow: 0,
         flexShrink: 0,
         flexBasis: '25%',
+    },
+
+    selected: {
+        backgroundColor: 'pink',
+        // boxSizing: 'border-box',
+        // borderStyle: 'solid',
+        // borderColor: '#000',
     },
 });

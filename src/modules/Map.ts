@@ -70,4 +70,7 @@ export class Map implements MapViewInterface {
         duration = duration !== undefined ? duration : 100;
         this.camera?.flyTo(center, duration);
     }
+
+    // setting background layer
+    setBackground(style: Object | string) {}
 }
