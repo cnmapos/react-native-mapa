@@ -101,6 +101,7 @@ export interface MapViewInterface extends PropEventSource<MapEventNameAndProps> 
     zoomTo(step: number, duration?: number): void;
     flyTo(center: Position, duration?: number): void;
     getZoom(): Promise<number | undefined>;
+    setStyle(style: Object | string, options: Object): void;
 
     get locationManager(): LocationManager;
 }
