@@ -11,7 +11,7 @@ function PreView({navigation}: any): React.JSX.Element {
     const backgroundList: BackgroundListItem[] = [
         {
             id: 'AmapVector',
-            name: '高德矢量地图',
+            name: '高德矢量',
             styleJSON: {
                 version: '1.0.0',
                 name: 'AMap',
@@ -34,10 +34,12 @@ function PreView({navigation}: any): React.JSX.Element {
                     },
                 ],
             },
+            logoUrl:
+                'https://play-lh.googleusercontent.com/l3jypy2cfNXc6R3vWstSgWHqZz-WKn5K3HyDSjDehwoh8rrsXan1byG45TQzDTkZ3azG',
         },
         {
             id: 'AmapSatellite',
-            name: '高德卫星地图',
+            name: '高德卫星',
             styleJSON: {
                 version: '1.0.0',
                 name: 'AMap',
@@ -60,15 +62,17 @@ function PreView({navigation}: any): React.JSX.Element {
                     },
                 ],
             },
+            logoUrl:
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyXY77AHfx3UBMxU9HqeskpBqswohYCjMLmtR2NpA1dw&s',
         },
         {
             id: 'MapboxVector',
-            name: 'mapbox矢量地图',
+            name: 'mapbox矢量',
             styleURL: 'mapbox://styles/mapbox/dark-v10',
         },
         {
             id: 'Satellite',
-            name: 'mapbox卫星地图',
+            name: 'mapbox卫星',
             styleURL: 'mapbox://styles/mapbox/satellite-v9',
         },
     ];
@@ -78,7 +82,7 @@ function PreView({navigation}: any): React.JSX.Element {
                 <Slot slot="rightTop" backgroundColor={'transparent'}>
                     <Mapa.Background
                         list={backgroundList}
-                        defaultValue={'MapboxVector'}
+                        defaultValue={backgroundList[0].id}
                     />
                     <Mapa.Camera zoom={zoom} center={center} />
                 </Slot>

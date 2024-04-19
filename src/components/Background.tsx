@@ -1,10 +1,13 @@
-import { View, StyleSheet, Image, Pressable } from 'react-native';
+import { View, StyleSheet, Image, Pressable, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { BottomSheet, Text, Header, Button, Avatar } from '@rneui/themed';
 import { useState, useContext, useEffect } from 'react';
 import { BackgroundLayer } from '@rnmapbox/maps';
 import { MapContext } from '../modules/MapContext';
 import { StyleIDs } from '../types';
+
+const screenWidth = Dimensions.get('window').width;
+const itemWidth = screenWidth * 0.25; // 25% 的屏幕宽度
 
 export type BackgroundListItem = {
     /**
@@ -23,6 +26,10 @@ export type BackgroundListItem = {
      * 背景图层的style配置对象
      */
     styleJSON?: Object;
+    /**
+     * logo图像地址
+     */
+    logoUrl?: string;
 };
 
 /**
@@ -33,9 +40,13 @@ export type BackgroundListItem = {
 export type BackgroundProps = {
     /**
      * 背景图层列表
-     * @defaultValue [StyleIDs.AmapVector, StyleIDs.AmapSatellite, StyleIDs.MapboxVector, StyleIDs.MapboxSatellite]
+     * @defaultValue []
      */
-    list?: BackgroundListItem[];
+    list: BackgroundListItem[];
+    /**
+     * 背景图层列表
+     * @defaultValue ''
+     */
     defaultValue: BackgroundListItem.id;
 };
 
@@ -52,12 +63,16 @@ const Background = (props: BackgroundProps) => {
         setDetailVisible(false);
     };
 
-    const { list, defaultValue } = props;
+    const { list = [], defaultValue = '' } = props;
     const { map } = useContext(MapContext);
 
     // 背景组件初始化时、根据默认选中的value、修改mapview的style
     useEffect(() => {
-        const { styleJSON, styleURL } = list.filter((item) => item.id === defaultValue)[0];
+        const target = list.filter((item) => item.id === defaultValue)?.[0];
+        if (!target) {
+            return;
+        }
+        const { styleJSON, styleURL } = target;
         map.updateStyle({ styleURL: styleURL || '', styleJSON: styleJSON || '' });
     }, [list, defaultValue, map]);
 
@@ -119,65 +134,115 @@ const BackgroundPanel = (props: BackgroundPanelProps) => {
                     </Button>
                 }
             />
-            <View>
-                <View style={backgroundPanelStyles.backgroundItemList}>
-                    {props?.list?.map((item) => {
-                        return (
-                            <ImageWithText
-                                key={item.id}
-                                id={item.id}
-                                onClick={clickHandle}
-                                style={
-                                    (backgroundPanelStyles.backgroundItem,
-                                    currentBg === item.id ? backgroundPanelStyles.selected : {})
-                                }
-                                imgUrl={item.url}
-                                text={item.name}
-                            />
-                        );
-                    })}
-                </View>
+            <View style={backgroundPanelStyles.backgroundItemList}>
+                {props?.list?.map((item) => {
+                    return (
+                        <ImageWithText
+                            key={item.id}
+                            id={item.id}
+                            onClick={clickHandle}
+                            style={backgroundPanelStyles.backgroundItem}
+                            highlight={currentBg === item.id}
+                            imgUrl={item.logoUrl}
+                            text={item.name}
+                        />
+                    );
+                })}
             </View>
+            {/* <View>
+
+            </View> */}
         </View>
     );
 };
 
-const ImageWithText = (props: { id: string; imgUrl: string; text: string; style: Object; onClick: Function }) => {
+const ImageWithText = (props: {
+    id: string;
+    imgUrl: string;
+    text: string;
+    style: Object;
+    onClick: Function;
+    highlight: boolean;
+}) => {
     return (
-        <View style={{ ...ImageWithTextStyles.wrapper, ...props.style }}>
-            <Pressable onPress={() => props?.onClick(props.id)}>
+        <Pressable onPress={() => props?.onClick(props.id)}>
+            <View style={{ ...ImageWithTextStyles.wrapper, ...props.style }}>
                 {props.imgUrl ? (
                     <Image
-                        style={{ ...ImageWithTextStyles.image }}
+                        // style={{ ...ImageWithTextStyles.image }}
+                        style={
+                            props.highlight
+                                ? { ...ImageWithTextStyles.image, ...ImageWithTextStyles.imageHightlight }
+                                : ImageWithTextStyles.image
+                        }
                         resizeMode="contain"
                         source={{
-                            uri: props.imgUrl || '',
+                            uri: props.imgUrl,
                         }}
                     />
                 ) : (
-                    <Avatar size={32} rounded title={props.text} containerStyle={{ backgroundColor: 'blue' }} />
+                    <Avatar
+                        title={props.text}
+                        size={40}
+                        containerStyle={
+                            props.highlight
+                                ? { ...ImageWithTextStyles.avatarContainer, ...ImageWithTextStyles.avatarHighlight }
+                                : ImageWithTextStyles.avatarContainer
+                        }
+                    />
                 )}
-
-                <Text>{props.text}</Text>
-            </Pressable>
-        </View>
+                <Text
+                    style={
+                        props.highlight
+                            ? { ...ImageWithTextStyles.text, ...ImageWithTextStyles.textHighlight }
+                            : ImageWithTextStyles.text
+                    }
+                >
+                    {props.text}
+                </Text>
+            </View>
+        </Pressable>
     );
 };
 
 const ImageWithTextStyles = StyleSheet.create({
     wrapper: {
-        position: 'relative',
+        display: 'flex',
         alignItems: 'center',
     },
     image: {
-        width: '100%',
-        height: 50,
+        width: 40,
+        height: 40,
+        borderRadius: 4,
+    },
+    imageHightlight: {
+        borderWidth: 0.8,
+        borderColor: '#40a6f9',
+    },
+    avatarContainer: {
+        backgroundColor: '#BDBDBD',
+        borderRadius: 4,
+    },
+    avatarHighlight: {
+        borderStyle: 'solid',
+        borderWidth: 0.8,
+        borderColor: '#40a6f9',
+    },
+    text: {
+        textAlign: 'center',
+        fontSize: 14,
+        marginTop: 4,
+    },
+
+    textHighlight: {
+        color: '#008dff',
     },
 });
 
 const backgroundPanelStyles = StyleSheet.create({
     container: {
         backgroundColor: '#f7f7f7',
+        display: 'block',
     },
     header: {
         display: 'flex',
@@ -193,24 +258,13 @@ const backgroundPanelStyles = StyleSheet.create({
     backgroundItemList: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-
-        display: 'flex',
-        justifyContent: 'flex-start',
         backgroundColor: '#fff',
         borderRadius: 10,
-        margin: 4,
+        paddingTop: 10,
     },
 
     backgroundItem: {
-        flexGrow: 0,
-        flexShrink: 0,
-        flexBasis: '25%',
-    },
-
-    selected: {
-        backgroundColor: 'pink',
-        // boxSizing: 'border-box',
-        // borderStyle: 'solid',
-        // borderColor: '#000',
+        width: itemWidth,
+        marginBottom: 10,
     },
 });
