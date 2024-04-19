@@ -65,6 +65,10 @@ const Background = (props: BackgroundProps) => {
 
     const { list = [], defaultValue = '' } = props;
     const { map } = useContext(MapContext);
+    const [currentBg, setCurrentBg] = useState(defaultValue);
+    useEffect(() => {
+        setCurrentBg(defaultValue);
+    }, [defaultValue]);
 
     // 背景组件初始化时、根据默认选中的value、修改mapview的style
     useEffect(() => {
@@ -80,7 +84,7 @@ const Background = (props: BackgroundProps) => {
         <View>
             <Icon name="layers-outline" style={styles.icon} onPress={onOpen} />
             <BottomSheet modalProps={{}} isVisible={detailVisible} containerStyle={styles.containerStyle}>
-                <BackgroundPanel {...props} onClose={onClose} />
+                <BackgroundPanel {...props} currentBg={currentBg} setCurrentBg={setCurrentBg} onClose={onClose} />
             </BottomSheet>
         </View>
     );
@@ -101,19 +105,14 @@ const styles = StyleSheet.create({
 
 type BackgroundPanelProps = BackgroundProps & {
     onClose: () => void;
+    setCurrentBg: (id: string) => void;
 };
 const BackgroundPanel = (props: BackgroundPanelProps) => {
-    const { list, defaultValue } = props;
+    const { list, currentBg, setCurrentBg, onClose } = props;
     const { map } = useContext(MapContext);
 
-    const [currentBg, setCurrentBg] = useState(defaultValue);
-
-    useEffect(() => {
-        setCurrentBg(defaultValue);
-    }, [defaultValue]);
-
-    const onClose = () => {
-        props?.onClose();
+    const closeHandle = () => {
+        onClose();
     };
 
     const clickHandle = (id: string) => {
@@ -129,7 +128,7 @@ const BackgroundPanel = (props: BackgroundPanelProps) => {
                 backgroundColor={'#f7f7f7'}
                 leftComponent={<Text style={backgroundPanelStyles.headerText}>图层</Text>}
                 rightComponent={
-                    <Button type="clear" size="sm" onPress={onClose}>
+                    <Button type="clear" size="sm" onPress={closeHandle}>
                         <Icon style={backgroundPanelStyles.headerCloseBtn} name="close-outline" />
                     </Button>
                 }
@@ -149,9 +148,6 @@ const BackgroundPanel = (props: BackgroundPanelProps) => {
                     );
                 })}
             </View>
-            {/* <View>
-
-            </View> */}
         </View>
     );
 };
@@ -169,7 +165,6 @@ const ImageWithText = (props: {
             <View style={{ ...ImageWithTextStyles.wrapper, ...props.style }}>
                 {props.imgUrl ? (
                     <Image
-                        // style={{ ...ImageWithTextStyles.image }}
                         style={
                             props.highlight
                                 ? { ...ImageWithTextStyles.image, ...ImageWithTextStyles.imageHightlight }
