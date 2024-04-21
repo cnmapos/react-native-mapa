@@ -8,7 +8,7 @@ import Mapbox from '@rnmapbox/maps';
  * @category Props
  */
 export type FilleLayerProps = LayerProps & {
-    style: FillLayerStyleProps
+    style: FillLayerStyleProps;
 };
 
 /**
@@ -17,7 +17,7 @@ export type FilleLayerProps = LayerProps & {
 const FilleLayer = (props: FilleLayerProps) => {
     const { sourceId, minZoom, maxZoom } = props;
 
-    return <Mapbox.FillLayer { ...props } sourceID={sourceId} minZoomLevel={minZoom} maxZoomLevel={maxZoom} ></Mapbox.FillLayer>;
+    return <Mapbox.FillLayer {...props} sourceID={sourceId} minZoomLevel={minZoom} maxZoomLevel={maxZoom} />;
 };
 
 export default FilleLayer;

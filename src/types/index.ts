@@ -1,6 +1,6 @@
 import { CameraRef } from '@rnmapbox/maps/lib/typescript/src/components/Camera';
 import { LocationManager } from '../modules/LocationManager';
-import { Expression } from './styles';
+import { Expression, FilterExpression } from './styles';
 
 export * from './amap';
 export * from './styles';
@@ -37,6 +37,8 @@ export type Position = [number, number];
  * 屏幕坐标[x, y]
  */
 export type Point = [number, number];
+
+export type BBox = [number, number, number, number];
 
 export type LocationState = {
     heading?: number;
@@ -97,10 +99,20 @@ export interface MapViewInterface extends PropEventSource<MapEventNameAndProps> 
     getCoordinateFromView(location: Position): Promise<Position>;
     setCamera(rnCamera: CameraRef): void;
     setCenter(location: Position): void;
-    // on(event: 'onCameraChanged', listener: (e: any) => void): void;
     zoomTo(step: number, duration?: number): void;
     flyTo(center: Position, duration?: number): void;
     getZoom(): Promise<number | undefined>;
+    querySourceFeatures(
+        sourceId: string,
+        filter: FilterExpression,
+        layerIDs: string[]
+    ): Promise<GeoJSON.FeatureCollection>;
+
+    queryRenderFeatures(
+        bbox: BBox,
+        filter: FilterExpression | [],
+        layerIDs: string[] | null
+    ): Promise<GeoJSON.FeatureCollection>;
 
     get locationManager(): LocationManager;
 }
@@ -155,6 +167,11 @@ export type LayerProps = {
     id: string;
 
     /**
+     * 数据来源style图层映射
+     */
+    sourceLayerID?: string;
+
+    /**
      * 如果图层id已经存在，则不创建新图层
      */
     existing?: boolean;
@@ -168,6 +185,16 @@ export type LayerProps = {
      * 插入图层到指定index
      */
     layerIndex?: number;
+
+    /**
+     * 插入到aboveLayerID图层之上
+     */
+    aboveLayerID?: string;
+
+    /**
+     * 插入到aboveLayerID图层之下
+     */
+    belowLayerID?: string;
 
     /**
      *  Mapbox filter表达式

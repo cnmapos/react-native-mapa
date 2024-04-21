@@ -6,9 +6,12 @@ import POI from './pages/POI';
 import ImageSource from './pages/ImageSource';
 import ImageShapeIcon from './pages/ImageShapeIcon';
 import ImageViewIcon from './pages/ImageViewIcon';
+import VectorSource from './pages/VectorSource';
 import LineLayer from './pages/LineLayer';
 import FillLayer from './pages/FillLayer';
 import Marker from './pages/Marker';
+import FillExtrusionLayer from './pages/FillExtrusionLayer';
+import QueryFeature from './pages/QueryFeature';
 
 const RoutesConfig = [
     {
@@ -75,6 +78,12 @@ const RoutesConfig = [
                 component: ImageViewIcon,
             },
             {
+                title: 'Vector Source',
+                img: require('./assets/basic.png'),
+                id: 'VectorSource',
+                component: VectorSource,
+            },
+            {
                 title: 'Marker',
                 img: require('./assets/basic.png'),
                 id: 'Marker',
@@ -91,6 +100,18 @@ const RoutesConfig = [
                 img: require('./assets/basic.png'),
                 id: 'FillLayer',
                 component: FillLayer,
+            },
+            {
+                title: 'Fill Extrusion Layer',
+                img: require('./assets/basic.png'),
+                id: 'FillExtrussionLayer',
+                component: FillExtrusionLayer,
+            },
+            {
+                title: 'Query Features',
+                img: require('./assets/basic.png'),
+                id: 'QueryFeatures',
+                component: QueryFeature,
             },
             {
                 title: '栅格图层',

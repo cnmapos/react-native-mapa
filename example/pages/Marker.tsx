@@ -2,7 +2,7 @@ import {View, StyleSheet, Modal} from 'react-native';
 import Wrapper from '../components/Wrapper';
 import Mapa, {Position} from 'react-native-mapa';
 import React, {useState} from 'react';
-import {Button} from '@rneui/themed';
+import {Button, Dialog} from '@rneui/themed';
 import {Text} from '@rneui/base';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
@@ -38,20 +38,12 @@ const Marker = () => {
                     </Button>
                 </View>
             </Mapa.Marker>
-            <Modal
-                style={styles.modal}
-                animationType="slide"
-                transparent={false}
-                visible={modalVisible}>
-                <SafeAreaView>
-                    <View style={styles.modalContent}>
-                        <Text>{message} </Text>
-                        <Button onPress={() => setModalVisible(false)}>
-                            关闭
-                        </Button>
-                    </View>
-                </SafeAreaView>
-            </Modal>
+            <Dialog
+                isVisible={modalVisible}
+                onBackdropPress={() => setModalVisible(false)}>
+                <Dialog.Title title="Marker提示" />
+                <Text>{message} </Text>
+            </Dialog>
         </Wrapper>
     );
 };

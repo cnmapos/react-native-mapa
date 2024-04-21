@@ -1,6 +1,6 @@
 import Mapbox, { Camera } from '@rnmapbox/maps';
 import { zoomAnimationDuraton } from '../config';
-import { MapViewInterface, Position } from '../types';
+import { BBox, FilterExpression, MapViewInterface, Position } from '../types';
 import EventEmitter from 'eventemitter3';
 import { LocationManager } from './LocationManager';
 
@@ -69,5 +69,48 @@ export class Map implements MapViewInterface {
     async flyTo(center: Position, duration?: number) {
         duration = duration !== undefined ? duration : 100;
         this.camera?.flyTo(center, duration);
+    }
+
+    /**
+     * 按来源查询feature集合
+     *
+     * @param sourceId
+     * @param filter FilterExpression
+     * @param layerIDs 图层ID
+     * @returns Promise<GeoJSON.FeatureCollection>
+     */
+    async querySourceFeatures(
+        sourceId: string,
+        filter: FilterExpression | [] = [],
+        layerIDs: string[] = []
+    ): Promise<GeoJSON.FeatureCollection> {
+        const features: GeoJSON.Feature[] =
+            (await this.map?.querySourceFeatures(sourceId, filter, layerIDs))?.features || <GeoJSON.Feature[]>[];
+
+        return {
+            type: 'FeatureCollection',
+            features,
+        };
+    }
+
+    /**
+     * 按bbox查询可视区域feature集合
+     *
+     * @param bbox 查询范围，像素坐标范围
+     * @param filter FilterExpression
+     * @param layerIDs 图层ID
+     * @returns Promise<GeoJSON.FeatureCollection>
+     */
+    async queryRenderFeatures(
+        bbox: BBox,
+        filter: FilterExpression | [] = [],
+        layerIDs: string[] | null = null
+    ): Promise<GeoJSON.FeatureCollection> {
+        const features = (await this.map?.queryRenderedFeaturesInRect(bbox, filter, layerIDs))?.features || [];
+
+        return {
+            type: 'FeatureCollection',
+            features,
+        };
     }
 }
