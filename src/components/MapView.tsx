@@ -2,7 +2,7 @@ import Mapbox from '@rnmapbox/maps';
 import { StyleSheet, View } from 'react-native';
 import { ReactElement, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { MapContext } from '../modules/MapContext';
-import { Projection, StyleIDs, MapStyle, FilterExpression, BBox, OnPressEvent } from '../types';
+import { Projection, StyleIDs, MapStyle, FilterExpression, BBox, OnPressEvent, MapViewInterface } from '../types';
 import { loadStyle, styleFormat } from '../config/style';
 import React from 'react';
 import { Map } from '../modules/Map';
@@ -48,55 +48,20 @@ export type MapViewProps = {
  *
  * @category Component
  */
-const MapView = React.forwardRef((props: MapViewProps, ref: any) => {
-    const { children, style = StyleIDs.AmapVector, projection = 'mercator', onPress } = props;
+const MapView = React.forwardRef<MapViewInterface, MapViewProps>((props: MapViewProps, ref: any) => {
+    const { children, style = 'MapboxVector', projection = 'mercator', onPress } = props;
     const [rnMap, setRNMap] = useState<Mapbox.MapView | null>(null);
-    const [customStyles, setStyle] = useState<{ styleURL: ReturnType<typeof loadStyle>; styleJSON: string }>(() => {
+    const [customStyles, setStyle] = useState<{ styleURL?: string; styleJSON?: string }>(() => {
         return styleFormat(style);
     });
 
-    const mapRef = useRef<Map | null>(new Map(null));
+    const mapRef = useRef<Map>(new Map(null));
     // provide updateStyle function for Map instance to change style
     mapRef.current.updateStyle = ({ styleURL, styleJSON }) => {
         setStyle({ styleURL, styleJSON: (styleJSON && JSON.stringify(styleJSON)) || '' });
     };
 
-    useImperativeHandle(ref, () => ({
-        /**
-         * 按来源查询feature集合
-         *
-         * @param sourceId
-         * @param filter FilterExpression
-         * @param layerIDs 图层ID
-         * @returns Promise<GeoJSON.FeatureCollection>
-         */
-        querySourceFeatures: async (
-            sourceId: string,
-            filter: FilterExpression | [] = [],
-            layerIDs: string[] = []
-        ): Promise<GeoJSON.FeatureCollection> => {
-            const featureCollection = await mapRef.current!.querySourceFeatures(sourceId, filter, layerIDs);
-
-            return featureCollection;
-        },
-        /**
-         * 按bbox查询可视区域feature集合
-         *
-         * @param bbox 查询范围，像素坐标范围
-         * @param filter FilterExpression
-         * @param layerIDs 图层ID
-         * @returns Promise<GeoJSON.FeatureCollection>
-         */
-        queryRenderFeatures: async (
-            bbox: BBox,
-            filter: FilterExpression | [],
-            layerIDs: string[] | null
-        ): Promise<GeoJSON.FeatureCollection> => {
-            const featureCollection = await mapRef.current!.queryRenderFeatures(bbox, filter, layerIDs);
-
-            return featureCollection;
-        },
-    }));
+    useImperativeHandle<any, MapViewInterface>(ref, () => mapRef.current!);
 
     useEffect(() => {
         setStyle(styleFormat(style));

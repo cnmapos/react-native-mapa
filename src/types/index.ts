@@ -102,12 +102,27 @@ export interface MapViewInterface extends PropEventSource<MapEventNameAndProps> 
     zoomTo(step: number, duration?: number): void;
     flyTo(center: Position, duration?: number): void;
     getZoom(): Promise<number | undefined>;
+    /**
+     * 按来源查询feature集合
+     *
+     * @param sourceId
+     * @param filter FilterExpression
+     * @param layerIDs 图层ID
+     * @returns Promise<GeoJSON.FeatureCollection>
+     */
     querySourceFeatures(
         sourceId: string,
         filter: FilterExpression,
         layerIDs: string[]
     ): Promise<GeoJSON.FeatureCollection>;
-
+    /**
+     * 按bbox查询可视区域feature集合
+     *
+     * @param bbox 查询范围，像素坐标范围
+     * @param filter FilterExpression
+     * @param layerIDs 图层ID
+     * @returns Promise<GeoJSON.FeatureCollection>
+     */
     queryRenderFeatures(
         bbox: BBox,
         filter: FilterExpression | [],

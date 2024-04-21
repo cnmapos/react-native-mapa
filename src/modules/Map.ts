@@ -1,5 +1,5 @@
 import Mapbox, { Camera } from '@rnmapbox/maps';
-import { zoomAnimationDuraton } from '../config';
+import { styleFormat, zoomAnimationDuraton } from '../config';
 import { BBox, FilterExpression, MapViewInterface, Position } from '../types';
 import EventEmitter from 'eventemitter3';
 import { LocationManager } from './LocationManager';
@@ -112,5 +112,11 @@ export class Map implements MapViewInterface {
             type: 'FeatureCollection',
             features,
         };
+    }
+
+    updateStyle(style: string | Object): void {
+        const { styleJSON, styleURL } = styleFormat(style);
+
+        this.map?._setStyleURL({ styleJSON, styleURL });
     }
 }

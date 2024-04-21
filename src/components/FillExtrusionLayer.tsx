@@ -1,6 +1,7 @@
 import { View, StyleSheet } from 'react-native';
 import { FillExtrusionLayerStyleProps, LayerProps } from '..';
 import Mapbox from '@rnmapbox/maps';
+import { defaultMaxZoom, defaultMinZoom } from '../config';
 
 /**
  * 3D多边形图层，例如渲染建筑物
@@ -15,7 +16,7 @@ export type FillExtrusionLayerProps = LayerProps & {
   @category Component
  */
 const FillExtrusionLayer = (props: FillExtrusionLayerProps) => {
-    const { sourceId, minZoom = 1, maxZoom = 30 } = props;
+    const { sourceId, minZoom = defaultMinZoom, maxZoom = defaultMaxZoom } = props;
 
     return <Mapbox.FillExtrusionLayer {...props} sourceID={sourceId} minZoomLevel={minZoom} maxZoomLevel={maxZoom} />;
 };

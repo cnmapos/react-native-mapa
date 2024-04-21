@@ -13,6 +13,8 @@ import FillLayer from './pages/FillLayer';
 import Marker from './pages/Marker';
 import FillExtrusionLayer from './pages/FillExtrusionLayer';
 import QueryFeature from './pages/QueryFeature';
+import CircleLayer from './pages/CircleLayer';
+import ModelLayer from './pages/ModelLayer';
 
 const RoutesConfig = [
     {
@@ -121,16 +123,16 @@ const RoutesConfig = [
                 component: QueryFeature,
             },
             {
-                title: '栅格图层',
+                title: 'Circle Layer',
                 img: require('./assets/basic.png'),
+                id: 'CircleLayer',
+                component: CircleLayer,
             },
             {
-                title: '矢量图层',
+                title: 'Model Layer',
                 img: require('./assets/basic.png'),
-            },
-            {
-                title: '热力图',
-                img: require('./assets/basic.png'),
+                id: 'ModelLayer',
+                component: ModelLayer,
             },
         ],
     },
