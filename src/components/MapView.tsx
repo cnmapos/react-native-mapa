@@ -56,6 +56,10 @@ const MapView = React.forwardRef((props: MapViewProps, ref: any) => {
     });
 
     const mapRef = useRef<Map | null>(new Map(null));
+    // provide updateStyle function for Map instance to change style
+    mapRef.current.updateStyle = ({ styleURL, styleJSON }) => {
+        setStyle({ styleURL, styleJSON: (styleJSON && JSON.stringify(styleJSON)) || '' });
+    };
 
     useImperativeHandle(ref, () => ({
         /**
