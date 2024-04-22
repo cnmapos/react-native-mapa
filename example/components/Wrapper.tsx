@@ -1,13 +1,16 @@
 import {View, StyleSheet, SafeAreaView} from 'react-native';
 import {MapContext} from '../MapContext';
 import {Children, ReactElement} from 'react';
-import Mapa from 'react-native-mapa';
+import Mapa, {MapStyle, Projection, StyleIDs} from 'react-native-mapa';
+import React from 'react';
 /**
  * Wrapper props
  *
  * @category Props
  */
 export type WrapperProps = {
+    style?: MapStyle;
+    projection?: Projection;
     children: ReactElement | ReactElement[];
 };
 
@@ -15,10 +18,12 @@ export type WrapperProps = {
   @category Component
  */
 const Wrapper = (props: WrapperProps) => {
-    const {children} = props;
+    const {style = 'MapboxVector', projection = 'mercator', children} = props;
     return (
         <SafeAreaView style={styles.container}>
-            <Mapa.MapView>{children}</Mapa.MapView>
+            <Mapa.MapView projection={projection} style={style}>
+                {children}
+            </Mapa.MapView>
         </SafeAreaView>
     );
 };
