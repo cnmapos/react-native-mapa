@@ -33,8 +33,10 @@ export class Map implements MapViewInterface {
         return (await this.map?.getCoordinateFromView(location)) as any;
     }
 
-    async getVisibleBounds() {
-        return await this.map?.getVisibleBounds();
+    async getVisibleBounds(): Promise<[Position, Position] | undefined> {
+        const bounds = (await this.map?.getVisibleBounds()) as any;
+
+        return bounds;
     }
 
     off(event: any, listener: any): void {
