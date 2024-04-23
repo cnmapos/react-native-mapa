@@ -1,7 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native';
 import Mapbox from '@rnmapbox/maps';
-import React, { useEffect, useState } from 'react';
-import { Magnetometer } from 'expo-sensors';
+import React, { useContext, useEffect, useState } from 'react';
+import { MapContext } from '../modules/MapContext';
+import { Icon, Button } from '@rneui/themed';
+import { LocationEvent } from '../Mapa';
 
 /**
  * Compass props
@@ -24,6 +26,28 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: 'black',
     },
+    compass: {
+        width: 50,
+        height: 50,
+        borderRadius: 50,
+        borderWidth: 1,
+        borderColor: '#bfbfbf',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    arrow: {
+        width: 0,
+        height: 0,
+        backgroundColor: 'transparent',
+        borderLeftWidth: 10,
+        borderRightWidth: 10,
+        borderBottomWidth: 20,
+        borderStyle: 'solid',
+        borderTopColor: 'transparent',
+        borderLeftColor: 'transparent',
+        borderRightColor: 'transparent',
+        borderBottomColor: 'red',
+    },
 });
 
 /**
@@ -31,33 +55,34 @@ const styles = StyleSheet.create({
   @category Component
  */
 const Compass = (props: CompassProps) => {
-    const [heading, setHeading] = useState<number>(0);
+    const [heading, setHeading] = useState<number>(20);
+    const { map } = useContext(MapContext);
+
+    const onLocationChange = (event: LocationEvent) => {
+        //
+        console.log(event.coords.heading, '+++++++++++++++', event);
+        if (event.coords && event.coords.heading) {
+            setHeading(event.coords.heading);
+        }
+    };
 
     useEffect(() => {
-        const subscription = Magnetometer.addListener((event) => {
-            // const newHeading = result.magHeading;
-            const { y, x } = event;
-            const newHeading = Math.atan2(y, x) * (180 / Math.PI);
-            setHeading(newHeading);
-        });
+        map.locationManager.on('locationChange', onLocationChange);
 
-        Magnetometer.setUpdateInterval(100); // 设置更新频率
+        // Magnetometer.setUpdateInterval(100); // 设置更新频率
 
         return () => {
-            subscription.remove();
+            // subscription.remove();
+            //map.locationManager.off('locationChange', onLocationChange);
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // TODO: 本周沟通！！！
-    // 1、map 需要提供运行时注册回调的能力，比如：地图初始化完成：通知各组件注册的回调函数获取数据！！
-    // 2、底部组件不能在非 Map 下的应用，因此内部实际可以考虑使用 Mapbox 提供的基础组件进行封装！！！
-
     return (
-        <Mapbox.MarkerView coordinate={[]} anchor={{ x: 0.5, y: 0.5 }}>
-            <View style={[styles.compassContainer, { transform: [{ rotate: `${360 - heading}deg` }] }]}>
-                <Text style={styles.heading}>N</Text>
-            </View>
-        </Mapbox.MarkerView>
+        <View style={[styles.compass, { transform: [{ rotate: `${heading}deg` }] }]}>
+            <View style={[styles.arrow]} />
+            <Text style={styles.heading}>N</Text>
+        </View>
     );
 };
 
