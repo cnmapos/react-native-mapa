@@ -1,5 +1,5 @@
 import Mapbox from '@rnmapbox/maps';
-import { StyleSheet, View } from 'react-native';
+import { Dimensions, StyleSheet, View } from 'react-native';
 import { ReactElement, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { MapContext } from '../modules/MapContext';
 import { Projection, StyleIDs, MapStyle, FilterExpression, BBox, OnPressEvent, MapViewInterface } from '../types';
@@ -60,15 +60,29 @@ const MapView = React.forwardRef<MapViewInterface, MapViewProps>((props: MapView
             constructor() {
                 super(null);
             }
-
             updateStyle(stl: string | Object): void {
                 setStyle(styleFormat(stl));
                 console.log('stl', stl, customStyles);
             }
         })()
     );
+    // mapView pix layout
+    const [pixLayoutInfo, setLayoutInfo] = useState<{ width: number; height: number }>({
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').height,
+    });
 
     useImperativeHandle<any, MapViewInterface>(ref, () => mapRef.current!);
+
+    // 获取地图的像素尺寸, 默认地图全屏！！改代码！！
+    const getMapDimensions = () => {
+        const { width, height } = Dimensions.get('window');
+
+        setLayoutInfo({
+            width,
+            height,
+        });
+    };
 
     useEffect(() => {
         setStyle(styleFormat(style));
@@ -92,18 +106,21 @@ const MapView = React.forwardRef<MapViewInterface, MapViewProps>((props: MapView
                     logoEnabled={false}
                     zoomEnabled={true}
                     compassEnabled={false}
-                    scaleBarEnabled={false}
+                    scaleBarEnabled={true}
                     rotateEnabled={true} // 允许地图旋转
                     compassPosition={{
                         left: 2,
                         top: 5,
                     }}
+                    onLayout={getMapDimensions}
                     onPress={onPress}
                     onCameraChanged={(...args) => mapRef.current?.emit('onCameraChanged', ...args)}
                     onDidFinishLoadingMap={(...args) => mapRef.current?.emit('loaded', ...args)}
                     style={styles.map}
                 >
-                    <MapContext.Provider value={{ map: mapRef.current as any }}>{children}</MapContext.Provider>
+                    <MapContext.Provider value={{ map: mapRef.current as any, pixLayoutInfo }}>
+                        {children}
+                    </MapContext.Provider>
                 </Mapbox.MapView>
             </View>
         </View>

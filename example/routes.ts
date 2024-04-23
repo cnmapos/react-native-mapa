@@ -16,6 +16,8 @@ import QueryFeature from './pages/QueryFeature';
 import CircleLayer from './pages/CircleLayer';
 import ModelLayer from './pages/ModelLayer';
 
+import ScalebarView from './pages/Scalebar';
+
 const RoutesConfig = [
     {
         title: '地图',
@@ -43,6 +45,12 @@ const RoutesConfig = [
                 img: require('./assets/basic.png'),
                 id: 'ZoomInOut',
                 component: ZoomInOut,
+            },
+            {
+                title: 'Scalebar',
+                img: require('./assets/basic.png'),
+                id: 'Scalebar',
+                component: ScalebarView,
             },
             {
                 title: '底图组件',

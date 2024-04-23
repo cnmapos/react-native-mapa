@@ -1,4 +1,4 @@
-import Mapa, {Slot} from 'react-native-mapa';
+import Mapa, {Slot, Compass} from 'react-native-mapa';
 import {SafeAreaView} from 'react-native';
 import React from 'react';
 
@@ -10,6 +10,7 @@ function PreView({navigation}: any): React.JSX.Element {
         <SafeAreaView style={{height: '100%'}}>
             <Mapa.MapView projection={projection} style={styleID}>
                 <Mapa.Camera />
+                <Compass />
             </Mapa.MapView>
         </SafeAreaView>
     );

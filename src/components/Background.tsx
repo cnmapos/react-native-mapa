@@ -77,10 +77,19 @@ const Background = (props: BackgroundProps) => {
         map.updateStyle(target.style);
     }, [list, defaultValue, map]);
 
+    const backDropClickHandle = () => {
+        // 点击背景、需要关闭bottomsheet
+        setDetailVisible(false);
+    };
     return (
         <View>
             <Icon name="layers-outline" style={styles.icon} onPress={onOpen} />
-            <BottomSheet modalProps={{}} isVisible={detailVisible} containerStyle={styles.containerStyle}>
+            <BottomSheet
+                onBackdropPress={backDropClickHandle}
+                modalProps={{}}
+                isVisible={detailVisible}
+                containerStyle={styles.containerStyle}
+            >
                 <BackgroundPanel {...props} currentBg={currentBg} setCurrentBg={setCurrentBg} onClose={onClose} />
             </BottomSheet>
         </View>

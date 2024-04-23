@@ -115,6 +115,12 @@ export interface MapViewInterface extends PropEventSource<MapEventNameAndProps> 
         filter: FilterExpression,
         layerIDs: string[]
     ): Promise<GeoJSON.FeatureCollection>;
+
+    /**
+     * 获取可见视图区域的[ne, sw]
+     */
+    getVisibleBounds(): Promise<[Position, Position] | undefined>;
+
     /**
      * 按bbox查询可视区域feature集合
      *
@@ -123,6 +129,7 @@ export interface MapViewInterface extends PropEventSource<MapEventNameAndProps> 
      * @param layerIDs 图层ID
      * @returns Promise<GeoJSON.FeatureCollection>
      */
+
     queryRenderFeatures(
         bbox: BBox,
         filter: FilterExpression | [],
