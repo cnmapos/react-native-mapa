@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   @category Component
  */
 const Compass = (props: CompassProps) => {
-    const [heading, setHeading] = useState<number>(20);
+    const [heading, setHeading] = useState<number>(0);
     const { map } = useContext(MapContext);
 
     const onLocationChange = (event: LocationEvent) => {
