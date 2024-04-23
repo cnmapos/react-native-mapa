@@ -108,6 +108,8 @@ export interface MapViewInterface extends PropEventSource<MapEventNameAndProps> 
         layerIDs: string[]
     ): Promise<GeoJSON.FeatureCollection>;
 
+    getVisibleBounds(): Promise<[Position, Position] | undefined>;
+
     queryRenderFeatures(
         bbox: BBox,
         filter: FilterExpression | [],

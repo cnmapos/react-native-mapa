@@ -33,6 +33,10 @@ export class Map implements MapViewInterface {
         return (await this.map?.getCoordinateFromView(location)) as any;
     }
 
+    async getVisibleBounds() {
+        return await this.map?.getVisibleBounds();
+    }
+
     off(event: any, listener: any): void {
         this.emitter.off(event, listener);
     }
