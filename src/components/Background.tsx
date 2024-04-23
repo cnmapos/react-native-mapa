@@ -18,14 +18,12 @@ export type BackgroundListItem = {
      * 背景图层名称
      */
     name: string;
+
     /**
-     * 背景图层style的请求URL地址
+     * 背景图层style的请求URL地址或者配置对象
      */
-    styleURL?: string;
-    /**
-     * 背景图层的style配置对象
-     */
-    styleJSON?: Object;
+    style: string | Object;
+
     /**
      * logo图像地址
      */
@@ -47,7 +45,7 @@ export type BackgroundProps = {
      * 背景图层列表
      * @defaultValue ''
      */
-    defaultValue: BackgroundListItem.id;
+    defaultValue: string;
 };
 
 /**
@@ -76,8 +74,7 @@ const Background = (props: BackgroundProps) => {
         if (!target) {
             return;
         }
-        const { styleJSON, styleURL } = target;
-        map.updateStyle({ styleURL: styleURL || '', styleJSON: styleJSON || '' });
+        map.updateStyle(target.style);
     }, [list, defaultValue, map]);
 
     return (
@@ -105,6 +102,7 @@ const styles = StyleSheet.create({
 
 type BackgroundPanelProps = BackgroundProps & {
     onClose: () => void;
+    currentBg: string;
     setCurrentBg: (id: string) => void;
 };
 const BackgroundPanel = (props: BackgroundPanelProps) => {
@@ -116,8 +114,8 @@ const BackgroundPanel = (props: BackgroundPanelProps) => {
     };
 
     const clickHandle = (id: string) => {
-        const { styleJSON, styleURL } = props?.list?.filter((item) => item.id === id)[0];
-        map.updateStyle({ styleURL: styleURL || '', styleJSON: styleJSON || '' });
+        const { style } = list?.filter((item) => item.id === id)[0];
+        map.updateStyle(style);
         setCurrentBg(id);
     };
 

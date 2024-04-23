@@ -128,7 +128,7 @@ export interface MapViewInterface extends PropEventSource<MapEventNameAndProps> 
         filter: FilterExpression | [],
         layerIDs: string[] | null
     ): Promise<GeoJSON.FeatureCollection>;
-    updateStyle(style: { styleURL: string; styleJSON: object }): void;
+    updateStyle(style: string | Object): void;
 
     get locationManager(): LocationManager;
 }

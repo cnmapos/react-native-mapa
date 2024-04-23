@@ -114,9 +114,5 @@ export class Map implements MapViewInterface {
         };
     }
 
-    updateStyle(style: string | Object): void {
-        const { styleJSON, styleURL } = styleFormat(style);
-
-        this.map?._setStyleURL({ styleJSON, styleURL });
-    }
+    updateStyle(style: string | Object): void {}
 }
