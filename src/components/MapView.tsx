@@ -2,8 +2,8 @@ import Mapbox from '@rnmapbox/maps';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { ReactElement, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { MapContext } from '../modules/MapContext';
-import { Projection, StyleIDs, MapStyle, FilterExpression, BBox, OnPressEvent, MapViewInterface } from '../types';
-import { loadStyle, styleFormat } from '../config/style';
+import { Projection, MapStyle, MapViewInterface } from '../types';
+import { styleFormat } from '../config/style';
 import React from 'react';
 import { Map } from '../modules/Map';
 
@@ -33,6 +33,13 @@ export type MapViewProps = {
      * @returns {void}
      */
     onPress?: (feature: GeoJSON.Feature) => void;
+
+    /**
+     * 长按地图触发事件
+     * @param feature
+     * @returns
+     */
+    onLongPress?: (feature: GeoJSON.Feature) => void;
 };
 
 /**
@@ -62,7 +69,6 @@ const MapView = React.forwardRef<MapViewInterface, MapViewProps>((props: MapView
             }
             updateStyle(stl: string | Object): void {
                 setStyle(styleFormat(stl));
-                console.log('stl', stl, customStyles);
             }
         })()
     );

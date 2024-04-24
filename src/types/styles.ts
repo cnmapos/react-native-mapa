@@ -117,7 +117,9 @@ type ExpressionParameters =
     | 'feature-state'
     | 'sky-radial-progress'
     | 'line-progress'
-    | 'heatmap-density';
+    | 'heatmap-density'
+    | 'measure-light'
+    | 'raster-value';
 
 type ResolvedImageType = ImageSourcePropType | string;
 

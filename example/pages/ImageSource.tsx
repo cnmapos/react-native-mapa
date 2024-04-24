@@ -1,4 +1,4 @@
-import {StyleSheet, SafeAreaView} from 'react-native';
+import {SafeAreaView} from 'react-native';
 import Mapa from 'react-native-mapa';
 import React from 'react';
 import imageUrl from '../assets/taylor.png';
@@ -19,7 +19,6 @@ const ImageSource = () => {
         <SafeAreaView style={{height: '100%'}}>
             <Mapa.MapView>
                 <Mapa.Camera center={coordinates[0]} />
-                <Mapa.ZoomInOut />
                 <Mapa.ImageSource
                     coordinates={coordinates}
                     id={'test-10'}
