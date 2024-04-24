@@ -192,7 +192,7 @@ export type MapIdleEvent = {
         pitch: number;
     };
     gestures: { isGestureActive: boolean };
-    timestamp: number;
+    timestamp?: number | undefined;
 };
 
 export type LayerProps = {
