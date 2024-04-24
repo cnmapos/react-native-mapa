@@ -183,6 +183,18 @@ export type OnPressEvent = {
     point: Point;
 };
 
+export type MapIdleEvent = {
+    properties: {
+        center: GeoJSON.Position;
+        bounds: { ne: GeoJSON.Position; sw: GeoJSON.Position };
+        zoom: number;
+        heading: number;
+        pitch: number;
+    };
+    gestures: { isGestureActive: boolean };
+    timestamp: number;
+};
+
 export type LayerProps = {
     /**
      * layer唯一标识

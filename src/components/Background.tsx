@@ -2,9 +2,7 @@ import { View, StyleSheet, Image, Pressable, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { BottomSheet, Text, Header, Button, Avatar } from '@rneui/themed';
 import { useState, useContext, useEffect } from 'react';
-import { BackgroundLayer } from '@rnmapbox/maps';
 import { MapContext } from '../modules/MapContext';
-import { StyleIDs } from '../types';
 
 const screenWidth = Dimensions.get('window').width;
 const itemWidth = screenWidth * 0.25; // 25% 的屏幕宽度
@@ -149,7 +147,7 @@ const BackgroundPanel = (props: BackgroundPanelProps) => {
                             onClick={clickHandle}
                             style={backgroundPanelStyles.backgroundItem}
                             highlight={currentBg === item.id}
-                            imgUrl={item.logoUrl}
+                            imgUrl={item.logoUrl!}
                             text={item.name}
                         />
                     );
@@ -244,7 +242,6 @@ const ImageWithTextStyles = StyleSheet.create({
 const backgroundPanelStyles = StyleSheet.create({
     container: {
         backgroundColor: '#f7f7f7',
-        display: 'block',
     },
     header: {
         display: 'flex',

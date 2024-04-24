@@ -1,4 +1,3 @@
-import { StyleSheet } from 'react-native';
 import Mapbox from '@rnmapbox/maps';
 /**
  * Models props
@@ -22,7 +21,3 @@ const Models = (props: ModelsProps) => {
 };
 
 export default Models;
-
-const styles = StyleSheet.create({
-    container: {},
-});

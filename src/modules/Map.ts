@@ -1,5 +1,5 @@
 import Mapbox, { Camera } from '@rnmapbox/maps';
-import { styleFormat, zoomAnimationDuraton } from '../config';
+import { zoomAnimationDuraton } from '../config';
 import { BBox, FilterExpression, MapViewInterface, Position } from '../types';
 import EventEmitter from 'eventemitter3';
 import { LocationManager } from './LocationManager';

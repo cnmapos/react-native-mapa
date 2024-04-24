@@ -1,5 +1,3 @@
-import { View, StyleSheet } from 'react-native';
-import { MapContext } from '../MapContext';
 import { LayerSlot } from '../../types';
 import Mapbox, { RasterLayerStyle } from '@rnmapbox/maps';
 import { PartialPick } from '../../types/base';

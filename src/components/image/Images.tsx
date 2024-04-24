@@ -1,6 +1,6 @@
 import Mapbox from '@rnmapbox/maps';
-import { ReactElement, ReactNode } from 'react';
-import { View, StyleSheet, ImageSourcePropType } from 'react-native';
+import { ReactElement } from 'react';
+import { ImageSourcePropType } from 'react-native';
 import Image from './Image';
 import React from 'react';
 
@@ -52,7 +52,3 @@ const Images = (props: ImagesProps) => {
 };
 
 export default Images;
-
-const styles = StyleSheet.create({
-    container: {},
-});

@@ -6,12 +6,16 @@ function PreView({navigation}: any): React.JSX.Element {
     const projection = 'mercator';
     const styleID = 'MapboxVector';
 
+    const onMapIdle = (e: any) => {
+        console.log(e);
+    };
+
     return (
         <SafeAreaView style={{height: '100%'}}>
             <Mapa.MapView
                 projection={projection}
                 style={styleID}
-                onPress={onPress}>
+                onMapIdle={onMapIdle}>
                 <Mapa.Camera />
                 <Mapa.Compass />
             </Mapa.MapView>

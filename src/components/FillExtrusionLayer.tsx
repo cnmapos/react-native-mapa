@@ -1,4 +1,3 @@
-import { View, StyleSheet } from 'react-native';
 import { FillExtrusionLayerStyleProps, LayerProps } from '..';
 import Mapbox from '@rnmapbox/maps';
 import { defaultMaxZoom, defaultMinZoom } from '../config';

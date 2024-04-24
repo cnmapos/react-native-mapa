@@ -2,7 +2,7 @@ import Mapbox from '@rnmapbox/maps';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { ReactElement, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { MapContext } from '../modules/MapContext';
-import { Projection, MapStyle, MapViewInterface } from '../types';
+import { Projection, MapStyle, MapViewInterface, MapIdleEvent } from '../types';
 import { styleFormat } from '../config/style';
 import React from 'react';
 import { Map } from '../modules/Map';
@@ -29,8 +29,17 @@ export type MapViewProps = {
 
     /**
      * 地图点击事件
-     * @param {OnPressEvent} e
+     * @param feature 点击位置信息
      * @returns {void}
+     *
+     * @example
+     * ```
+     * {
+     *  "geometry": {"coordinates": [104.06190928823503, 30.657739121986168], "type": "Point"},
+     *  "properties": {"screenPointX": 197.3333282470703, "screenPointY": 372.3333333333333},
+     *  "type": "Feature"
+     * }
+     * ```
      */
     onPress?: (feature: GeoJSON.Feature) => void;
 
@@ -38,8 +47,24 @@ export type MapViewProps = {
      * 长按地图触发事件
      * @param feature
      * @returns
+     *
+     * @example
+     * ```
+     * {
+     *  "geometry": {"coordinates": [104.06190928823503, 30.657739121986168], "type": "Point"},
+     *  "properties": {"screenPointX": 197.3333282470703, "screenPointY": 372.3333333333333},
+     *  "type": "Feature"
+     * }
+     * ```
      */
     onLongPress?: (feature: GeoJSON.Feature) => void;
+
+    /**
+     * 当地图闲置时触发
+     * @param {MapIdleEvent} e
+     * @returns
+     */
+    onMapIdle?: (e: MapIdleEvent) => void;
 };
 
 /**
@@ -56,7 +81,7 @@ export type MapViewProps = {
  * @category Component
  */
 const MapView = React.forwardRef<MapViewInterface, MapViewProps>((props: MapViewProps, ref: any) => {
-    const { children, style = 'MapboxVector', projection = 'mercator', onPress } = props;
+    const { children, style = 'MapboxVector', projection = 'mercator', onPress, onLongPress, onMapIdle } = props;
     const [rnMap, setRNMap] = useState<Mapbox.MapView | null>(null);
     const [customStyles, setStyle] = useState<{ styleURL?: string; styleJSON?: string }>(() => {
         return styleFormat(style);
@@ -120,6 +145,8 @@ const MapView = React.forwardRef<MapViewInterface, MapViewProps>((props: MapView
                     }}
                     onLayout={getMapDimensions}
                     onPress={onPress}
+                    onLongPress={onLongPress}
+                    onMapIdle={onMapIdle}
                     onCameraChanged={(...args) => mapRef.current?.emit('onCameraChanged', ...args)}
                     onDidFinishLoadingMap={(...args) => mapRef.current?.emit('loaded', ...args)}
                     style={styles.map}
