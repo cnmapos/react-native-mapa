@@ -1,6 +1,6 @@
 import Mapbox from '@rnmapbox/maps';
 import { Dimensions, StyleSheet, View } from 'react-native';
-import { ReactElement, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { ReactElement, useEffect, useImperativeHandle, useLayoutEffect, useRef, useState } from 'react';
 import { MapContext } from '../modules/MapContext';
 import { Projection, StyleIDs, MapStyle, FilterExpression, BBox, OnPressEvent } from '../types';
 import { loadStyle, styleFormat } from '../config/style';
@@ -50,10 +50,11 @@ export type MapViewProps = {
  */
 const MapView = React.forwardRef((props: MapViewProps, ref: any) => {
     const { children, style = StyleIDs.AmapVector, projection = 'mercator', onPress } = props;
-    const [rnMap, setRNMap] = useState<Mapbox.MapView | null>(null);
     const [customStyles, setStyle] = useState<{ styleURL: ReturnType<typeof loadStyle>; styleJSON: string }>(() => {
         return styleFormat(style);
     });
+
+    const mapInsRef = useRef<Mapbox.MapView>(null);
 
     // mapView pix layout
     const [pixLayoutInfo, setLayoutInfo] = useState<{ width: number; height: number }>({
@@ -118,17 +119,16 @@ const MapView = React.forwardRef((props: MapViewProps, ref: any) => {
         setStyle(styleFormat(style));
     }, [style]);
 
-    useEffect(() => {
-        if (rnMap && mapRef.current) {
-            mapRef.current.setMap(rnMap);
-        }
-    }, [rnMap]);
+    useLayoutEffect(() => {
+        console.log('useLayoutEffect', mapRef.current);
+        mapRef.current?.setMap(mapInsRef.current);
+    }, []);
 
     return (
         <View style={styles.page}>
             <View style={styles.container}>
                 <Mapbox.MapView
-                    ref={(ref) => setRNMap(ref)}
+                    ref={mapInsRef}
                     styleURL={customStyles.styleURL}
                     styleJSON={customStyles.styleJSON}
                     projection={projection}
@@ -136,7 +136,7 @@ const MapView = React.forwardRef((props: MapViewProps, ref: any) => {
                     logoEnabled={false}
                     zoomEnabled={true}
                     compassEnabled={false}
-                    scaleBarEnabled={true}
+                    scaleBarEnabled={false}
                     rotateEnabled={true} // 允许地图旋转
                     compassPosition={{
                         left: 2,
@@ -144,7 +144,7 @@ const MapView = React.forwardRef((props: MapViewProps, ref: any) => {
                     }}
                     onLayout={getMapDimensions}
                     onPress={onPress}
-                    onCameraChanged={(...args) => mapRef.current?.emit('onCameraChanged', ...args)}
+                    onCameraChanged={(...args) => mapRef.current?.emit('cameraChanged', ...args)}
                     onDidFinishLoadingMap={(...args) => mapRef.current?.emit('loaded', ...args)}
                     style={styles.map}
                 >
