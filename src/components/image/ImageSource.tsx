@@ -1,5 +1,3 @@
-import { View, StyleSheet } from 'react-native';
-import { MapContext } from '../MapContext';
 import { Position } from '../../types';
 import { ReactElement } from 'react';
 import Mapbox from '@rnmapbox/maps';
@@ -38,7 +36,3 @@ const ImageSource = (props: ImageSourceProps) => {
 };
 
 export default ImageSource;
-
-const styles = StyleSheet.create({
-    container: {},
-});

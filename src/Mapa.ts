@@ -19,8 +19,11 @@ export { default as GeoJSONSource } from './components/GeoJSONSource';
 export { default as VectorSource } from './components/VectorSource';
 export { default as SymbolLayer } from './components/SymbolLayer';
 export { default as LineLayer } from './components/LineLayer';
-export { default as FillLayer } from './components/FilleLayer';
+export { default as FillLayer } from './components/FillLayer';
 export { default as FillExtrusionLayer } from './components/FillExtrusionLayer';
+export { default as CircleLayer } from './components/CircleLayer';
+export { default as Models } from './components/Models';
+export { default as ModelLayer } from './components/ModelLayer';
 // export { default as Scalebar } from './components/Scalebar';
 
 export * from './components/slots';

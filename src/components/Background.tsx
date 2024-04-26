@@ -2,9 +2,7 @@ import { View, StyleSheet, Image, Pressable, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { BottomSheet, Text, Header, Button, Avatar } from '@rneui/themed';
 import { useState, useContext, useEffect } from 'react';
-import { BackgroundLayer } from '@rnmapbox/maps';
 import { MapContext } from '../modules/MapContext';
-import { StyleIDs } from '../types';
 
 const screenWidth = Dimensions.get('window').width;
 const itemWidth = screenWidth * 0.25; // 25% 的屏幕宽度
@@ -18,14 +16,12 @@ export type BackgroundListItem = {
      * 背景图层名称
      */
     name: string;
+
     /**
-     * 背景图层style的请求URL地址
+     * 背景图层style的请求URL地址或者配置对象
      */
-    styleURL?: string;
-    /**
-     * 背景图层的style配置对象
-     */
-    styleJSON?: Object;
+    style: string | Object;
+
     /**
      * logo图像地址
      */
@@ -47,7 +43,7 @@ export type BackgroundProps = {
      * 背景图层列表
      * @defaultValue ''
      */
-    defaultValue: BackgroundListItem.id;
+    defaultValue: string;
 };
 
 /**
@@ -76,14 +72,22 @@ const Background = (props: BackgroundProps) => {
         if (!target) {
             return;
         }
-        const { styleJSON, styleURL } = target;
-        map.updateStyle({ styleURL: styleURL || '', styleJSON: styleJSON || '' });
+        map.updateStyle(target.style);
     }, [list, defaultValue, map]);
 
+    const backDropClickHandle = () => {
+        // 点击背景、需要关闭bottomsheet
+        setDetailVisible(false);
+    };
     return (
         <View>
             <Icon name="layers-outline" style={styles.icon} onPress={onOpen} />
-            <BottomSheet modalProps={{}} isVisible={detailVisible} containerStyle={styles.containerStyle}>
+            <BottomSheet
+                onBackdropPress={backDropClickHandle}
+                modalProps={{}}
+                isVisible={detailVisible}
+                containerStyle={styles.containerStyle}
+            >
                 <BackgroundPanel {...props} currentBg={currentBg} setCurrentBg={setCurrentBg} onClose={onClose} />
             </BottomSheet>
         </View>
@@ -105,6 +109,7 @@ const styles = StyleSheet.create({
 
 type BackgroundPanelProps = BackgroundProps & {
     onClose: () => void;
+    currentBg: string;
     setCurrentBg: (id: string) => void;
 };
 const BackgroundPanel = (props: BackgroundPanelProps) => {
@@ -116,8 +121,8 @@ const BackgroundPanel = (props: BackgroundPanelProps) => {
     };
 
     const clickHandle = (id: string) => {
-        const { styleJSON, styleURL } = props?.list?.filter((item) => item.id === id)[0];
-        map.updateStyle({ styleURL: styleURL || '', styleJSON: styleJSON || '' });
+        const { style } = list?.filter((item) => item.id === id)[0];
+        map.updateStyle(style);
         setCurrentBg(id);
     };
 
@@ -142,7 +147,7 @@ const BackgroundPanel = (props: BackgroundPanelProps) => {
                             onClick={clickHandle}
                             style={backgroundPanelStyles.backgroundItem}
                             highlight={currentBg === item.id}
-                            imgUrl={item.logoUrl}
+                            imgUrl={item.logoUrl!}
                             text={item.name}
                         />
                     );
@@ -237,7 +242,6 @@ const ImageWithTextStyles = StyleSheet.create({
 const backgroundPanelStyles = StyleSheet.create({
     container: {
         backgroundColor: '#f7f7f7',
-        display: 'block',
     },
     header: {
         display: 'flex',

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 
-const ContainerSlot = ({ children }) => {
+const ContainerSlot = ({ children }: any) => {
     const [, setBottomCenterHeight] = useState(0);
     const [bottomOffset, setBottomOffset] = useState(0);
 
-    const handleBottomCenterLayout = (event) => {
+    const handleBottomCenterLayout = (event: any) => {
         const { height } = event.nativeEvent.layout;
         setBottomCenterHeight(height);
     };

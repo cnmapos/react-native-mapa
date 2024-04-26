@@ -1,6 +1,5 @@
 import {View, StyleSheet, SafeAreaView} from 'react-native';
 import React, {useRef, useState} from 'react';
-import Wrapper from '../components/Wrapper';
 import Mapa, {
     FillLayerStyleProps,
     LineLayerStyleProps,

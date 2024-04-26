@@ -1,8 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
-import Mapbox from '@rnmapbox/maps';
 import React, { useContext, useEffect, useState } from 'react';
 import { MapContext } from '../modules/MapContext';
-import { Icon, Button } from '@rneui/themed';
 import { LocationEvent } from '../Mapa';
 
 /**

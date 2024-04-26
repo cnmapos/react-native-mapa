@@ -1,5 +1,3 @@
-import { View, StyleSheet } from 'react-native';
-import { MapContext } from '../MapContext';
 import { OnPressEvent } from '..';
 import React, { ReactElement, useImperativeHandle } from 'react';
 import Mapbox from '@rnmapbox/maps';
@@ -82,7 +80,3 @@ const GeoJSONSource = React.forwardRef((props: GeoJSONSourceProps, ref: any) => 
 });
 
 export default GeoJSONSource;
-
-const styles = StyleSheet.create({
-    container: {},
-});

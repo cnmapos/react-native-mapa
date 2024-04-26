@@ -1,6 +1,6 @@
 import amapVectorStyle from './amap.vector.json';
 import amapSatellite from './amap.satellite.json';
-import { StyleIDs } from '../../types';
+import { MapStyle, StyleIDs } from '../../types';
 
 const styleMap = {
     [StyleIDs.AmapVector]: amapVectorStyle,
@@ -9,25 +9,28 @@ const styleMap = {
     [StyleIDs.MapboxSatellite]: 'mapbox://styles/mapbox/satellite-v9',
 };
 
-export function loadStyle(styleId: StyleIDs) {
-    const style = styleMap[styleId];
-    if (!style) {
-        throw new Error('Style not supported.');
+export function loadStyle(styleId: MapStyle | string | Object) {
+    if (typeof styleId === 'string') {
+        const style = styleMap[styleId as MapStyle];
+        if (style) {
+            return style;
+        }
+        // 自定义mapbox://xxx格式底图
+        return styleId;
     }
 
-    return style as string;
+    return styleId as Object;
 }
 
 /**
  * 样式解析
  */
-export function styleFormat(style: StyleIDs): {
-    styleURL: ReturnType<typeof loadStyle>;
-    styleJSON: string;
+export function styleFormat(style: MapStyle | string | Object): {
+    styleURL?: string;
+    styleJSON?: string;
 } {
     const styleContent = loadStyle(style);
-    let styleURL: ReturnType<typeof loadStyle> = '',
-        styleJSON: string = '';
+    let styleURL: string | undefined, styleJSON: string | undefined;
 
     if (typeof styleContent === 'object') {
         styleJSON = JSON.stringify(styleContent);

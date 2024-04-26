@@ -1,4 +1,3 @@
-import { View, StyleSheet } from 'react-native';
 import { OnPressEvent } from '..';
 import Mapbox from '@rnmapbox/maps';
 import { useImperativeHandle, useRef } from 'react';
@@ -108,7 +107,3 @@ const VectorSource = React.forwardRef((props: VectorSourceProps, ref: any) => {
 });
 
 export default VectorSource;
-
-const styles = StyleSheet.create({
-    container: {},
-});
