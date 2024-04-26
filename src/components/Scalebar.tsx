@@ -15,7 +15,7 @@ export type ScalebarProps = {};
 const Scalebar = (props: ScalebarProps) => {
     const { map, pixLayoutInfo } = useContext(MapContext);
 
-    console.log(map, 'map===');
+    // console.log(map, 'map===');
 
     // 获取地图的可见区域边界框
     const getVisibleBounds = async () => {
@@ -30,7 +30,12 @@ const Scalebar = (props: ScalebarProps) => {
 
     useEffect(() => {
         console.log();
-    });
+        map.on('cameraChanged', (event) => {
+            console.log('map-emit__________', event);
+            getVisibleBounds();
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [map]);
 
     return <ScaleIndicator getVisibleBounds={getVisibleBounds} pixLayoutInfo={pixLayoutInfo} />;
 };
@@ -64,27 +69,29 @@ const ScaleIndicator = ({ getVisibleBounds, pixLayoutInfo }: ScaleIndicatorProps
         const { width: mapWidth, height: mapHeight } = pixLayoutInfo;
 
         const calculateScale = async () => {
-            const bounds = await getVisibleBounds();
-            if (bounds && mapWidth > 0 && mapHeight > 0) {
-                const { ne, sw } = bounds.geometry;
+            try {
+                const bounds = await getVisibleBounds();
+                if (bounds && mapWidth > 0 && mapHeight > 0) {
+                    const { ne, sw } = bounds.geometry;
 
-                // 计算地图宽度和高度在屏幕上的像素数量
-                const mapPixelWidth = mapWidth * 0.7; // 使用地图宽度的70%来计算比例尺
-                const mapPixelHeight = mapHeight * 0.7;
+                    // 计算地图宽度和高度在屏幕上的像素数量
+                    const mapPixelWidth = mapWidth * 0.7; // 使用地图宽度的70%来计算比例尺
+                    const mapPixelHeight = mapHeight * 0.7;
 
-                // 计算地图距离
-                const horizontalMapDistance = Math.abs(ne.longitude - sw.longitude);
-                const verticalMapDistance = Math.abs(ne.latitude - sw.latitude);
+                    // 计算地图距离
+                    const horizontalMapDistance = Math.abs(ne.longitude - sw.longitude);
+                    const verticalMapDistance = Math.abs(ne.latitude - sw.latitude);
 
-                // 计算水平和垂直的比例尺
-                const horizontalScale = horizontalMapDistance / mapPixelWidth;
-                const verticalScale = verticalMapDistance / mapPixelHeight;
+                    // 计算水平和垂直的比例尺
+                    const horizontalScale = horizontalMapDistance / mapPixelWidth;
+                    const verticalScale = verticalMapDistance / mapPixelHeight;
 
-                // 取平均值作为比例尺
-                const averageScale = (horizontalScale + verticalScale) / 2;
+                    // 取平均值作为比例尺
+                    const averageScale = (horizontalScale + verticalScale) / 2;
 
-                setScale(averageScale);
-            }
+                    setScale(averageScale);
+                }
+            } catch (error) {}
         };
 
         calculateScale();
