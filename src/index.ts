@@ -6,6 +6,6 @@
  * @categoryDescription Props
  * 组件属性
  */
-export * from './Mapa';
-import * as Mapa from './Mapa';
+export * from './mapa';
+import * as Mapa from './mapa';
 export default Mapa;

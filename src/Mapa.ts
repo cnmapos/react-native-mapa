@@ -25,6 +25,7 @@ export { default as CircleLayer } from './components/CircleLayer';
 export { default as Models } from './components/Models';
 export { default as ModelLayer } from './components/ModelLayer';
 // export { default as Scalebar } from './components/Scalebar';
+export { default as PolylinePaitner } from './components/painters/Polyline';
 
 export * from './components/slots';
 /**

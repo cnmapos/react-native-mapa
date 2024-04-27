@@ -66,6 +66,32 @@ export type CameraEvent = {
     pitch: number;
 };
 
+export type OnPressEvent = {
+    features: Array<GeoJSON.Feature>;
+    coordinates: Position;
+    point: Point;
+};
+
+export type MapIdleEvent = {
+    properties: {
+        center: GeoJSON.Position;
+        bounds: { ne: GeoJSON.Position; sw: GeoJSON.Position };
+        zoom: number;
+        heading: number;
+        pitch: number;
+    };
+    gestures: { isGestureActive: boolean };
+    timestamp?: number | undefined;
+};
+
+export type PressFeature = GeoJSON.Feature<
+    GeoJSON.Point,
+    {
+        screenPointX: number;
+        screenPointY: number;
+    }
+>;
+
 /**
  * Map loaded event props
  */
@@ -75,6 +101,7 @@ export interface MapEventNameAndProps {
     cameraChanged: CameraEvent;
     loaded: MapLoadedEvent;
     locationChanged: LocationEvent;
+    onPress: PressFeature;
 }
 
 export interface PropEventSource<T> {
@@ -176,24 +203,6 @@ export type LocationEvent = {
  * 图层插槽位置
  */
 export type LayerSlot = 'bottom' | 'middle' | 'top';
-
-export type OnPressEvent = {
-    features: Array<GeoJSON.Feature>;
-    coordinates: Position;
-    point: Point;
-};
-
-export type MapIdleEvent = {
-    properties: {
-        center: GeoJSON.Position;
-        bounds: { ne: GeoJSON.Position; sw: GeoJSON.Position };
-        zoom: number;
-        heading: number;
-        pitch: number;
-    };
-    gestures: { isGestureActive: boolean };
-    timestamp?: number | undefined;
-};
 
 export type LayerProps = {
     /**

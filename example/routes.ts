@@ -15,6 +15,7 @@ import FillExtrusionLayer from './pages/FillExtrusionLayer';
 import QueryFeature from './pages/QueryFeature';
 import CircleLayer from './pages/CircleLayer';
 import ModelLayer from './pages/ModelLayer';
+import PolylinePaintner from './pages/painters/Polyline';
 
 import ScalebarView from './pages/Scalebar';
 
@@ -150,6 +151,8 @@ const RoutesConfig = [
             {
                 title: '折线绘制',
                 img: require('./assets/basic.png'),
+                id: 'Polyline',
+                component: PolylinePaintner,
             },
             {
                 title: '圆形绘制',
