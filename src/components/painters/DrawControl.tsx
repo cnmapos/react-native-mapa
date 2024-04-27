@@ -29,5 +29,11 @@ const DrawControl = (props: DrawControlProps) => {
 export default DrawControl;
 
 const styles = StyleSheet.create({
-    container: {},
+    container: {
+        display: 'flex',
+        flexDirection: 'row',
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
 });

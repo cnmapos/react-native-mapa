@@ -8,13 +8,15 @@ export class PolylinePaitner {
 
     undo() {
         if (this.historyStask.length > 0) {
-            this.points = this.historyStask.pop()!;
+            this.historyStask.pop()!;
+            this.points = this.historyStask.at(-1) || [];
             this.onChange?.(this.points);
         }
     }
 
     addPoint(position: Position) {
         this.points.push(position);
+        this.historyStask.push([...this.points]);
         this.onChange?.(this.points);
     }
 
