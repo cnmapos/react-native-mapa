@@ -1,7 +1,15 @@
 import Mapa, {Slot} from 'react-native-mapa';
-import {SafeAreaView} from 'react-native';
+import {SafeAreaView, View, Text} from 'react-native';
 import {BackgroundListItem} from '../../src/components/Background';
 import React from 'react';
+
+function CustomView() {
+    return (
+        <View>
+            <Text>哈哈</Text>
+        </View>
+    );
+}
 
 function PreView({navigation}: any): React.JSX.Element {
     Mapa.setAccessToken(
@@ -83,8 +91,9 @@ function PreView({navigation}: any): React.JSX.Element {
                 <Slot slot="rightTop" backgroundColor={'transparent'}>
                     <Mapa.Background
                         list={backgroundList}
-                        defaultValue={backgroundList[0].id}
-                    />
+                        defaultValue={backgroundList[0].id}>
+                        <CustomView />
+                    </Mapa.Background>
                     <Mapa.Camera zoom={zoom} center={center} />
                 </Slot>
             </Mapa.MapView>

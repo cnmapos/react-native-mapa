@@ -159,7 +159,9 @@ const Background = (props: BackgroundProps) => {
                     currentBg={currentBg}
                     setCurrentBg={setCurrentBg}
                     onClose={onClose}
-                />
+                >
+                    {props.children}
+                </BackgroundPanel>
             </BottomSheet>
         </View>
     );
@@ -224,6 +226,7 @@ const BackgroundPanel = (props: BackgroundPanelProps) => {
                     );
                 })}
             </View>
+            <View>{props.children}</View>
         </View>
     );
 };
