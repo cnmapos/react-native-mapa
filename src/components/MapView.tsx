@@ -1,6 +1,6 @@
 import Mapbox from '@rnmapbox/maps';
 import { Dimensions, StyleSheet, View } from 'react-native';
-import { ReactElement, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { ReactElement, useEffect, useImperativeHandle, useLayoutEffect, useRef, useState } from 'react';
 import { MapContext } from '../modules/MapContext';
 import { Projection, MapStyle, MapViewInterface, MapIdleEvent, PressFeature } from '../types';
 import { styleFormat } from '../config/style';
@@ -82,7 +82,7 @@ export type MapViewProps = {
  */
 const MapView = React.forwardRef<MapViewInterface, MapViewProps>((props: MapViewProps, ref: any) => {
     const { children, style = 'MapboxVector', projection = 'mercator', onPress, onLongPress, onMapIdle } = props;
-    const [rnMap, setRNMap] = useState<Mapbox.MapView | null>(null);
+    const mapInsRef = useRef<Mapbox.MapView>(null);
     const [customStyles, setStyle] = useState<{ styleURL?: string; styleJSON?: string }>(() => {
         return styleFormat(style);
     });
@@ -124,17 +124,16 @@ const MapView = React.forwardRef<MapViewInterface, MapViewProps>((props: MapView
         setStyle(styleFormat(style));
     }, [style]);
 
-    useEffect(() => {
-        if (rnMap && mapRef.current) {
-            mapRef.current.setMap(rnMap);
-        }
-    }, [rnMap]);
+    useLayoutEffect(() => {
+        console.log('useLayoutEffect', mapRef.current);
+        mapRef.current?.setMap(mapInsRef.current);
+    }, []);
 
     return (
         <View style={styles.page}>
             <View style={styles.container}>
                 <Mapbox.MapView
-                    ref={(ref) => setRNMap(ref)}
+                    ref={mapInsRef}
                     styleURL={customStyles.styleURL}
                     styleJSON={customStyles.styleJSON}
                     projection={projection}
@@ -142,7 +141,7 @@ const MapView = React.forwardRef<MapViewInterface, MapViewProps>((props: MapView
                     logoEnabled={false}
                     zoomEnabled={true}
                     compassEnabled={false}
-                    scaleBarEnabled={true}
+                    scaleBarEnabled={false}
                     rotateEnabled={true} // 允许地图旋转
                     compassPosition={{
                         left: 2,
@@ -152,7 +151,7 @@ const MapView = React.forwardRef<MapViewInterface, MapViewProps>((props: MapView
                     onPress={onMapPress as any}
                     onLongPress={onLongPress as any}
                     onMapIdle={onMapIdle}
-                    onCameraChanged={(...args) => mapRef.current?.emit('onCameraChanged', ...args)}
+                    onCameraChanged={(...args) => mapRef.current?.emit('cameraChanged', ...args)}
                     onDidFinishLoadingMap={(...args) => mapRef.current?.emit('loaded', ...args)}
                     style={styles.map}
                 >
