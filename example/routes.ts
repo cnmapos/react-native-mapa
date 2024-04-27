@@ -13,6 +13,7 @@ import FillLayer from './pages/FillLayer';
 import Marker from './pages/Marker';
 import FillExtrusionLayer from './pages/FillExtrusionLayer';
 import QueryFeature from './pages/QueryFeature';
+import RasterLayer from './pages/RasterLayer';
 
 const RoutesConfig = [
     {
@@ -120,6 +121,13 @@ const RoutesConfig = [
                 id: 'QueryFeatures',
                 component: QueryFeature,
             },
+            {
+                title: 'RasterLayer',
+                img: require('./assets/basic.png'),
+                id: 'RasterLayer',
+                component: RasterLayer,
+            },
+
             {
                 title: '栅格图层',
                 img: require('./assets/basic.png'),
