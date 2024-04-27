@@ -8,22 +8,33 @@ import React from 'react';
  */
 const RasterLayer = () => {
     const style: RasterLayerStyleProps = {
-        rasterOpacity: 1,
+        rasterOpacity: 0.6,
+    };
+    // 腾讯地图 tms
+    const tx = {
+        tms: true,
+        tiles: [
+            'https://rt0.map.gtimg.com/tile/?z={z}&x={x}&y={y}&version=105&styleid=0',
+        ],
+    };
+    const gdwx = {
+        tms: false,
+        tiles: [
+            'https://webst03.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}',
+        ],
     };
     return (
         <Wrapper style={'MapboxVector'}>
             <Mapa.Camera zoom={7} minzoom={1} />
             <Mapa.ZoomInOut />
             <Mapa.RasterSource
-                id="stamen-watercolor"
+                id="test-raster-source"
                 tileSize={256}
-                tileUrlTemplates={[
-                    'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                    // 'https://webst03.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}',
-                ]}>
+                tms={gdwx.tms}
+                tileUrlTemplates={gdwx.tiles}>
                 <Mapa.RasterLayer
-                    id="stamen-watercolor-layer"
-                    sourceId="stamen-watercolor"
+                    id="test-raster-source-layer"
+                    sourceId="test-raster-source"
                     style={style}
                 />
             </Mapa.RasterSource>
