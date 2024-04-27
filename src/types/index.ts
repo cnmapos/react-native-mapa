@@ -102,18 +102,40 @@ export interface MapViewInterface extends PropEventSource<MapEventNameAndProps> 
     zoomTo(step: number, duration?: number): void;
     flyTo(center: Position, duration?: number): void;
     getZoom(): Promise<number | undefined>;
+    /**
+     * 按来源查询feature集合
+     *
+     * @param sourceId
+     * @param filter FilterExpression
+     * @param layerIDs 图层ID
+     * @returns Promise<GeoJSON.FeatureCollection>
+     */
     querySourceFeatures(
         sourceId: string,
         filter: FilterExpression,
         layerIDs: string[]
     ): Promise<GeoJSON.FeatureCollection>;
 
+    /**
+     * 获取可见视图区域的[ne, sw]
+     */
+    getVisibleBounds(): Promise<[Position, Position] | undefined>;
+
+    /**
+     * 按bbox查询可视区域feature集合
+     *
+     * @param bbox 查询范围，像素坐标范围
+     * @param filter FilterExpression
+     * @param layerIDs 图层ID
+     * @returns Promise<GeoJSON.FeatureCollection>
+     */
+
     queryRenderFeatures(
         bbox: BBox,
         filter: FilterExpression | [],
         layerIDs: string[] | null
     ): Promise<GeoJSON.FeatureCollection>;
-    updateStyle(style: { styleURL: string; styleJSON: object }): void;
+    updateStyle(style: string | Object): void;
 
     get locationManager(): LocationManager;
 }
@@ -159,6 +181,18 @@ export type OnPressEvent = {
     features: Array<GeoJSON.Feature>;
     coordinates: Position;
     point: Point;
+};
+
+export type MapIdleEvent = {
+    properties: {
+        center: GeoJSON.Position;
+        bounds: { ne: GeoJSON.Position; sw: GeoJSON.Position };
+        zoom: number;
+        heading: number;
+        pitch: number;
+    };
+    gestures: { isGestureActive: boolean };
+    timestamp?: number | undefined;
 };
 
 export type LayerProps = {

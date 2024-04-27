@@ -1,9 +1,9 @@
 import Mapbox from '@rnmapbox/maps';
-import { StyleSheet, View } from 'react-native';
+import { Dimensions, StyleSheet, View } from 'react-native';
 import { ReactElement, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { MapContext } from '../modules/MapContext';
-import { Projection, StyleIDs, MapStyle, FilterExpression, BBox, OnPressEvent } from '../types';
-import { loadStyle, styleFormat } from '../config/style';
+import { Projection, MapStyle, MapViewInterface, MapIdleEvent } from '../types';
+import { styleFormat } from '../config/style';
 import React from 'react';
 import { Map } from '../modules/Map';
 
@@ -29,10 +29,42 @@ export type MapViewProps = {
 
     /**
      * 地图点击事件
-     * @param {OnPressEvent} e
+     * @param feature 点击位置信息
      * @returns {void}
+     *
+     * @example
+     * ```
+     * {
+     *  "geometry": {"coordinates": [104.06190928823503, 30.657739121986168], "type": "Point"},
+     *  "properties": {"screenPointX": 197.3333282470703, "screenPointY": 372.3333333333333},
+     *  "type": "Feature"
+     * }
+     * ```
      */
     onPress?: (feature: GeoJSON.Feature) => void;
+
+    /**
+     * 长按地图触发事件
+     * @param feature
+     * @returns
+     *
+     * @example
+     * ```
+     * {
+     *  "geometry": {"coordinates": [104.06190928823503, 30.657739121986168], "type": "Point"},
+     *  "properties": {"screenPointX": 197.3333282470703, "screenPointY": 372.3333333333333},
+     *  "type": "Feature"
+     * }
+     * ```
+     */
+    onLongPress?: (feature: GeoJSON.Feature) => void;
+
+    /**
+     * 当地图闲置时触发
+     * @param {MapIdleEvent} e
+     * @returns
+     */
+    onMapIdle?: (e: MapIdleEvent) => void;
 };
 
 /**
@@ -48,55 +80,40 @@ export type MapViewProps = {
  *
  * @category Component
  */
-const MapView = React.forwardRef((props: MapViewProps, ref: any) => {
-    const { children, style = StyleIDs.AmapVector, projection = 'mercator', onPress } = props;
+const MapView = React.forwardRef<MapViewInterface, MapViewProps>((props: MapViewProps, ref: any) => {
+    const { children, style = 'MapboxVector', projection = 'mercator', onPress, onLongPress, onMapIdle } = props;
     const [rnMap, setRNMap] = useState<Mapbox.MapView | null>(null);
-    const [customStyles, setStyle] = useState<{ styleURL: ReturnType<typeof loadStyle>; styleJSON: string }>(() => {
+    const [customStyles, setStyle] = useState<{ styleURL?: string; styleJSON?: string }>(() => {
         return styleFormat(style);
     });
 
-    const mapRef = useRef<Map | null>(new Map(null));
-    // provide updateStyle function for Map instance to change style
-    mapRef.current.updateStyle = ({ styleURL, styleJSON }) => {
-        setStyle({ styleURL, styleJSON: (styleJSON && JSON.stringify(styleJSON)) || '' });
+    const mapRef = useRef<Map>(
+        new (class extends Map {
+            constructor() {
+                super(null);
+            }
+            updateStyle(stl: string | Object): void {
+                setStyle(styleFormat(stl));
+            }
+        })()
+    );
+    // mapView pix layout
+    const [pixLayoutInfo, setLayoutInfo] = useState<{ width: number; height: number }>({
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').height,
+    });
+
+    useImperativeHandle<any, MapViewInterface>(ref, () => mapRef.current!);
+
+    // 获取地图的像素尺寸, 默认地图全屏！！改代码！！
+    const getMapDimensions = () => {
+        const { width, height } = Dimensions.get('window');
+
+        setLayoutInfo({
+            width,
+            height,
+        });
     };
-
-    useImperativeHandle(ref, () => ({
-        /**
-         * 按来源查询feature集合
-         *
-         * @param sourceId
-         * @param filter FilterExpression
-         * @param layerIDs 图层ID
-         * @returns Promise<GeoJSON.FeatureCollection>
-         */
-        querySourceFeatures: async (
-            sourceId: string,
-            filter: FilterExpression | [] = [],
-            layerIDs: string[] = []
-        ): Promise<GeoJSON.FeatureCollection> => {
-            const featureCollection = await mapRef.current!.querySourceFeatures(sourceId, filter, layerIDs);
-
-            return featureCollection;
-        },
-        /**
-         * 按bbox查询可视区域feature集合
-         *
-         * @param bbox 查询范围，像素坐标范围
-         * @param filter FilterExpression
-         * @param layerIDs 图层ID
-         * @returns Promise<GeoJSON.FeatureCollection>
-         */
-        queryRenderFeatures: async (
-            bbox: BBox,
-            filter: FilterExpression | [],
-            layerIDs: string[] | null
-        ): Promise<GeoJSON.FeatureCollection> => {
-            const featureCollection = await mapRef.current!.queryRenderFeatures(bbox, filter, layerIDs);
-
-            return featureCollection;
-        },
-    }));
 
     useEffect(() => {
         setStyle(styleFormat(style));
@@ -120,18 +137,23 @@ const MapView = React.forwardRef((props: MapViewProps, ref: any) => {
                     logoEnabled={false}
                     zoomEnabled={true}
                     compassEnabled={false}
-                    scaleBarEnabled={false}
+                    scaleBarEnabled={true}
                     rotateEnabled={true} // 允许地图旋转
                     compassPosition={{
                         left: 2,
                         top: 5,
                     }}
+                    onLayout={getMapDimensions}
                     onPress={onPress}
+                    onLongPress={onLongPress}
+                    onMapIdle={onMapIdle}
                     onCameraChanged={(...args) => mapRef.current?.emit('onCameraChanged', ...args)}
                     onDidFinishLoadingMap={(...args) => mapRef.current?.emit('loaded', ...args)}
                     style={styles.map}
                 >
-                    <MapContext.Provider value={{ map: mapRef.current as any }}>{children}</MapContext.Provider>
+                    <MapContext.Provider value={{ map: mapRef.current as any, pixLayoutInfo }}>
+                        {children}
+                    </MapContext.Provider>
                 </Mapbox.MapView>
             </View>
         </View>

@@ -1,10 +1,9 @@
-import React, { ReactNode, useReducer } from 'react';
-import { View } from 'react-native';
+import React, { ReactElement, ReactNode, useReducer } from 'react';
 import SlotContext, { defaultSlotConfig, SlotActionEnum, SlotContextType, slotReducer } from './slotContext';
 import { SlotTypeEnum } from './type';
 import { SlotParser } from './ParentComponent';
 
-function SlotContainer({ children }) {
+function SlotContainer({ children }: { children: ReactElement | ReactElement[] }) {
     const [slots, dispatch] = useReducer(slotReducer, defaultSlotConfig);
 
     const registerSlot: SlotContextType['registerSlot'] = (

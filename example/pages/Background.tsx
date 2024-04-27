@@ -1,6 +1,7 @@
 import Mapa, {Slot} from 'react-native-mapa';
 import {SafeAreaView} from 'react-native';
 import {BackgroundListItem} from '../../src/components/Background';
+import React from 'react';
 
 function PreView({navigation}: any): React.JSX.Element {
     Mapa.setAccessToken(
@@ -12,7 +13,7 @@ function PreView({navigation}: any): React.JSX.Element {
         {
             id: 'AmapVector',
             name: '高德矢量',
-            styleJSON: {
+            style: {
                 version: '1.0.0',
                 name: 'AMap',
                 constants: {},
@@ -40,7 +41,7 @@ function PreView({navigation}: any): React.JSX.Element {
         {
             id: 'AmapSatellite',
             name: '高德卫星',
-            styleJSON: {
+            style: {
                 version: '1.0.0',
                 name: 'AMap',
                 constants: {},
@@ -68,12 +69,12 @@ function PreView({navigation}: any): React.JSX.Element {
         {
             id: 'MapboxVector',
             name: 'mapbox矢量',
-            styleURL: 'mapbox://styles/mapbox/dark-v10',
+            style: 'mapbox://styles/mapbox/dark-v10',
         },
         {
             id: 'Satellite',
             name: 'mapbox卫星',
-            styleURL: 'mapbox://styles/mapbox/satellite-v9',
+            style: 'mapbox://styles/mapbox/satellite-v9',
         },
     ];
     return (

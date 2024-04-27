@@ -14,6 +14,10 @@ import Marker from './pages/Marker';
 import FillExtrusionLayer from './pages/FillExtrusionLayer';
 import QueryFeature from './pages/QueryFeature';
 import RasterLayer from './pages/RasterLayer';
+import CircleLayer from './pages/CircleLayer';
+import ModelLayer from './pages/ModelLayer';
+
+import ScalebarView from './pages/Scalebar';
 
 const RoutesConfig = [
     {
@@ -42,6 +46,12 @@ const RoutesConfig = [
                 img: require('./assets/basic.png'),
                 id: 'ZoomInOut',
                 component: ZoomInOut,
+            },
+            {
+                title: 'Scalebar',
+                img: require('./assets/basic.png'),
+                id: 'Scalebar',
+                component: ScalebarView,
             },
             {
                 title: '底图组件',
@@ -133,12 +143,16 @@ const RoutesConfig = [
                 img: require('./assets/basic.png'),
             },
             {
-                title: '矢量图层',
+                title: 'Circle Layer',
                 img: require('./assets/basic.png'),
+                id: 'CircleLayer',
+                component: CircleLayer,
             },
             {
-                title: '热力图',
+                title: 'Model Layer',
                 img: require('./assets/basic.png'),
+                id: 'ModelLayer',
+                component: ModelLayer,
             },
         ],
     },

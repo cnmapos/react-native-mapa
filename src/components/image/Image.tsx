@@ -1,6 +1,5 @@
 import Mapbox from '@rnmapbox/maps';
-import React, { ReactElement, Ref, forwardRef, memo } from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { ReactElement, forwardRef, memo } from 'react';
 /**
  * Image props
  *

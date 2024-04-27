@@ -1,9 +1,9 @@
-import React, { CSSProperties, forwardRef, ReactNode, useReducer } from 'react';
+import React, { forwardRef, ReactElement, ReactNode, useReducer } from 'react';
 import { Dimensions, LayoutChangeEvent, StyleSheet, View, ViewStyle } from 'react-native';
 import SlotContainer from './SlotContainer';
 import { ContextType } from './slotContext';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { SlotItemType, SlotTypeEnum } from './type';
+import { SlotTypeEnum } from './type';
 import { PositionStyle } from '../../types';
 
 //
@@ -40,7 +40,7 @@ const SlotC = forwardRef(function SlotC(props: SlotCPropsType, ref) {
     });
 
     const handleLayoutChange = (event: LayoutChangeEvent) => {
-        const { height } = event.nativeEvent.layout;
+        // const { height } = event.nativeEvent.layout;
         // setBottomCenterHeight(height);
         if (onLayout) {
             onLayout(event);
@@ -48,14 +48,14 @@ const SlotC = forwardRef(function SlotC(props: SlotCPropsType, ref) {
     };
 
     return (
-        <SafeAreaView style={styles.container} onLayout={handleLayoutChange} ref={ref}>
+        <SafeAreaView style={styles.container} onLayout={handleLayoutChange} ref={ref as any}>
             <View style={styles.scrollView}>{children}</View>
         </SafeAreaView>
     );
 });
 
 type SlotLayoutType = {
-    [k in keyof typeof SlotTypeEnum]: {
+    [k in SlotTypeEnum]: {
         height: number; // 插槽容器高度！！
         width: number; // 插槽容器宽度！！
         visible: boolean;
@@ -128,25 +128,24 @@ function renderInfoReducer(
             break;
         //
     }
-
     store[slotType] = { ...oldLayout, ...newLayout };
 
     return store;
 }
 
-function slotLayoutTransform() {
-    const layout = {
-        width: 0,
-        height: 0,
-    };
+// function slotLayoutTransform() {
+//     const layout = {
+//         width: 0,
+//         height: 0,
+//     };
 
-    return layout;
-}
+//     return layout;
+// }
 
 export function SlotParser(props: { slots: ContextType }) {
     function pickParams(slots: ContextType, type: SlotTypeEnum, renderInfo: SlotLayoutType) {
         const info = slots[type];
-        const ren = renderInfo[type];
+        // const ren = renderInfo[type];
         // const style = StyleSheet.create({
         //     root: { ...info.style },
         // });
@@ -171,7 +170,7 @@ export function SlotParser(props: { slots: ContextType }) {
         const leftBottomSlotLayout = renderInfo[SlotTypeEnum.leftBottom];
         const rightBottomSlotLayout = renderInfo[SlotTypeEnum.rightBottom];
 
-        const { width, height } = event.nativeEvent.layout;
+        const { height } = event.nativeEvent.layout;
         //
 
         const expectLTSTop = height + leftBottomSlotLayout.height;
@@ -285,7 +284,7 @@ export function SlotParser(props: { slots: ContextType }) {
     );
 }
 
-const ParentComponent = ({ children }) => {
+const ParentComponent = ({ children }: { children: ReactElement | ReactElement[] }) => {
     return <SlotContainer>{children}</SlotContainer>;
 };
 

@@ -11,6 +11,7 @@
     "excludePrivate": true,
     "excludeProtected": true,
     "includeVersion": false,
-    "includes": ["./src"]
+    "includes": ["./src"],
+    "exclude": ["./example", "./lib"]
     // "plugin": ["typedoc-plugin-markdown"]
 }
