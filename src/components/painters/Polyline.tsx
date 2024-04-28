@@ -1,12 +1,11 @@
 import { CircleLayerStyleProps, LineLayerStyleProps, Position, PressFeature, SymbolLayerStyleProps } from '@/types';
-import { CircleLayer, GeoJSONSource, Image, Images, LineLayer, MapContext, SymbolLayer } from '../../mapa';
+import { CircleLayer, GeoJSONSource, Images, LineLayer, MapContext, SymbolLayer } from '../../mapa';
 
 import { useContext, useEffect, useRef, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import DrawControl from './DrawControl';
 import { PolylinePaitner } from '../../modules/painters/PolylinePaitner';
 import { createLineFeature, createPointFeature } from '../../utils/common';
-import { Icon } from '@rneui/themed';
 import anchorImage from '../../assets/plus.png';
 
 enum FeatureType {

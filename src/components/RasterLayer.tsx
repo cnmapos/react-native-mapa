@@ -1,5 +1,4 @@
-import { View, StyleSheet } from 'react-native';
-import { MapContext } from '../MapContext';
+import { StyleSheet } from 'react-native';
 import { RasterLayerStyleProps, LayerProps } from '..';
 import Mapbox from '@rnmapbox/maps';
 /**
