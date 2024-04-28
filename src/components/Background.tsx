@@ -53,7 +53,7 @@ export const defaultBackgroundList: BackgroundListItem[] = [
     {
         id: 'AmapVector',
         name: '高德矢量',
-        styleJSON: {
+        style: {
             version: '1.0.0',
             name: 'AMap',
             constants: {},
@@ -81,7 +81,7 @@ export const defaultBackgroundList: BackgroundListItem[] = [
     {
         id: 'AmapSatellite',
         name: '高德卫星',
-        styleJSON: {
+        style: {
             version: '1.0.0',
             name: 'AMap',
             constants: {},
@@ -106,12 +106,12 @@ export const defaultBackgroundList: BackgroundListItem[] = [
     {
         id: 'MapboxVector',
         name: 'mapbox矢量',
-        styleURL: 'mapbox://styles/mapbox/dark-v10',
+        style: 'mapbox://styles/mapbox/dark-v10',
     },
     {
         id: 'Satellite',
         name: 'mapbox卫星',
-        styleURL: 'mapbox://styles/mapbox/satellite-v9',
+        style: 'mapbox://styles/mapbox/satellite-v9',
     },
 ];
 const Background = (props: BackgroundProps) => {
