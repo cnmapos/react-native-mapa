@@ -20,7 +20,3 @@ const RasterLayer = (props: RasterLayerProps) => {
 };
 
 export default RasterLayer;
-
-const styles = StyleSheet.create({
-    container: {},
-});

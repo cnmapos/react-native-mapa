@@ -1,27 +1,25 @@
-import { Position } from '@/types';
+import { Position, ShapePainter } from '@/types';
 
-export class PolylinePaitner {
+export class PolygonPainter implements ShapePainter {
     private points: Position[] = [];
     private historyStask: Position[][] = [];
 
-    onChange?: (points: Position[]) => void;
+    onChange?: ((points: Position[]) => void) | undefined;
 
-    undo() {
+    undo(): void {
         if (this.historyStask.length > 0) {
             this.historyStask.pop()!;
             this.points = this.historyStask.at(-1) || [];
             this.onChange?.(this.points);
         }
     }
-
-    addPoint(position: Position) {
+    addPoint(position: Position): void {
         this.points.push(position);
         this.historyStask.push([...this.points]);
         this.onChange?.(this.points);
     }
-
     getData() {
-        if (this.points.length < 2) {
+        if (this.points.length < 3) {
             return false;
         }
 

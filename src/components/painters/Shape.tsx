@@ -1,12 +1,24 @@
-import { CircleLayerStyleProps, LineLayerStyleProps, Position, PressFeature, SymbolLayerStyleProps } from '@/types';
-import { CircleLayer, GeoJSONSource, Images, LineLayer, MapContext, SymbolLayer } from '../../mapa';
-
-import { useContext, useEffect, useRef, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import DrawControl from './DrawControl';
-import { PolylinePainter } from '../../modules/painters/PolylinePainter';
-import { createLineFeature, createPointFeature } from '../../utils/common';
+import { View, StyleSheet } from 'react-native';
+import {
+    CircleLayerStyleProps,
+    FillLayerStyleProps,
+    LineLayerStyleProps,
+    Position,
+    PressFeature,
+    ShapePainter,
+    SymbolLayerStyleProps,
+} from '@/types';
+import { ReactElement, useContext, useEffect, useRef, useState } from 'react';
+import { createPointFeature } from '@/utils/common';
+import { MapContext } from '@/modules';
+import Images from '../image/Images';
 import anchorImage from '../../assets/plus.png';
+import GeoJSONSource from '../GeoJSONSource';
+import LineLayer from '../LineLayer';
+import CircleLayer from '../CircleLayer';
+import SymbolLayer from '../SymbolLayer';
+import DrawControl from './DrawControl';
+import FillLayer from '../FillLayer';
 
 enum FeatureType {
     Data = 0,
@@ -29,16 +41,25 @@ const defaultAnchorStyle: SymbolLayerStyleProps = {
     iconSize: 1,
 };
 
+const defaultFillStyle: FillLayerStyleProps = {
+    fillColor: '#f00',
+    fillOpacity: 0.5,
+};
+
 /**
- * Polyline props
+ * Shape props
  *
  * @category Props
  */
-export type PolylineProps = {
+export type ShapeProps = {
     id: number | string;
+    paintner: ShapePainter;
+    toFeatures: (data: any) => GeoJSON.Feature[];
+    children?: ReactElement | ReactElement[];
     lineStyle?: LineLayerStyleProps;
     symbolStyle?: SymbolLayerStyleProps;
     anchorStyle?: SymbolLayerStyleProps;
+    fillStyle?: FillLayerStyleProps;
     onFinish?: (e: Position[]) => void;
     onError?: (e: { message: string }) => void;
 };
@@ -46,12 +67,16 @@ export type PolylineProps = {
 /**
   @category Component
  */
-const Polyline = (props: PolylineProps) => {
+const Shape = (props: ShapeProps) => {
     const {
         id,
         lineStyle = defaultLineStyle,
         symbolStyle = defaultSymbolStyle,
         anchorStyle = defaultAnchorStyle,
+        fillStyle = defaultFillStyle,
+        paintner,
+        children,
+        toFeatures,
         onFinish: onDrawFinish,
         onError,
     } = props;
@@ -59,17 +84,13 @@ const Polyline = (props: PolylineProps) => {
     const [features, setFeatures] = useState<GeoJSON.Feature[]>([]);
     const displayFeatures = async (points: Position[]) => {
         const drawingFeatures: GeoJSON.Feature[] = [];
-        if (points.length) {
-            drawingFeatures.push(...points.map((p) => createPointFeature(p, { type: FeatureType.Data })));
-            drawingFeatures.push(createLineFeature(points, { type: FeatureType.Data }));
-        }
+        drawingFeatures.push(...toFeatures(points));
         // 在地图中心位置添加锚点
         const center = await map.getCenter();
         drawingFeatures.push(createPointFeature(center, { type: FeatureType.Anchor }));
-        console.log('display', JSON.stringify(drawingFeatures));
         setFeatures(drawingFeatures);
     };
-    const polylinePainter = useRef(new PolylinePainter());
+    const polylinePainter = useRef(paintner);
     polylinePainter.current.onChange = displayFeatures;
 
     const onUndo = () => {
@@ -101,32 +122,44 @@ const Polyline = (props: PolylineProps) => {
     const layerID = `polyline-layer-${id}`;
     const pointLayerID = `point-layer-${id}`;
     const anchorLayerID = `anchor-layer-${id}`;
+    const fillLayerID = `fill-layer-${id}`;
 
     return (
         <>
             <Images images={{ anchor: anchorImage }} />
             <GeoJSONSource id={sourceID} url={{ type: 'FeatureCollection', features: features }}>
-                <LineLayer
-                    filter={['==', ['get', 'type'], FeatureType.Data]}
-                    slot="top"
-                    id={layerID}
-                    sourceId={sourceID}
-                    style={lineStyle}
-                />
-                <CircleLayer
-                    filter={['==', ['get', 'type'], FeatureType.Data]}
-                    slot="top"
-                    id={pointLayerID}
-                    sourceId={sourceID}
-                    style={symbolStyle}
-                />
-                <SymbolLayer
-                    filter={['==', ['get', 'type'], FeatureType.Anchor]}
-                    slot="top"
-                    id={anchorLayerID}
-                    sourceId={sourceID}
-                    style={anchorStyle}
-                />
+                {children || (
+                    <>
+                        <LineLayer
+                            filter={['==', ['get', 'type'], FeatureType.Data]}
+                            slot="top"
+                            id={layerID}
+                            sourceId={sourceID}
+                            style={lineStyle}
+                        />
+                        <CircleLayer
+                            filter={['==', ['get', 'type'], FeatureType.Data]}
+                            slot="top"
+                            id={pointLayerID}
+                            sourceId={sourceID}
+                            style={symbolStyle}
+                        />
+                        <SymbolLayer
+                            filter={['==', ['get', 'type'], FeatureType.Anchor]}
+                            slot="top"
+                            id={anchorLayerID}
+                            sourceId={sourceID}
+                            style={anchorStyle}
+                        />
+                        <FillLayer
+                            slot="top"
+                            id={fillLayerID}
+                            sourceId={sourceID}
+                            filter={['==', ['get', 'type'], FeatureType.Data]}
+                            style={fillStyle}
+                        />
+                    </>
+                )}
             </GeoJSONSource>
             <View style={styles.control}>
                 <DrawControl onUndo={onUndo} onAdd={onAdd} onFinish={onFinish} />
@@ -135,7 +168,7 @@ const Polyline = (props: PolylineProps) => {
     );
 };
 
-export default Polyline;
+export default Shape;
 
 const styles = StyleSheet.create({
     control: {

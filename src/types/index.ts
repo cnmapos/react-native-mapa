@@ -257,3 +257,10 @@ export type LayerProps = {
 
     slot?: LayerSlot;
 };
+
+export interface ShapePainter {
+    onChange?: (points: Position[]) => void;
+    undo(): void;
+    addPoint(position: Position): void;
+    getData(): any;
+}

@@ -3,28 +3,28 @@ import React, {useState} from 'react';
 import Wrapper from '../../components/Wrapper';
 import Mapa, {Position} from 'react-native-mapa';
 import {Dialog, Text} from '@rneui/themed';
-
 /**
- * Polyline props
+ * Polygon props
  *
  * @category Props
  */
-export type PolylineProps = {};
+export type PolygonProps = {};
 
 /**
   @category Component
  */
-const Polyline = () => {
+const Polygon = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [message, setMessage] = useState<string>();
     const onFinish = (data: Position[]) => {
         setMessage(data.map(p => p.join(' ')).join(','));
         setModalVisible(true);
     };
+
     return (
         <Wrapper>
             <Mapa.Camera zoom={10} />
-            <Mapa.PolylinePainter id={'test'} onFinish={onFinish} />
+            <Mapa.PolygnPainter id={'test'} onFinish={onFinish} />
             <Dialog
                 isVisible={modalVisible}
                 onBackdropPress={() => setModalVisible(false)}>
@@ -35,7 +35,7 @@ const Polyline = () => {
     );
 };
 
-export default Polyline;
+export default Polygon;
 
 const styles = StyleSheet.create({
     container: {},

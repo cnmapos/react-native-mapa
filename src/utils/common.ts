@@ -31,3 +31,19 @@ export function createLineFeature(
         },
     };
 }
+
+export function createPolygonFeature(
+    points: Position[],
+    properties?: { [key: string | number]: any }
+): GeoJSON.Feature<GeoJSON.Polygon> {
+    return {
+        type: 'Feature',
+        geometry: {
+            type: 'Polygon',
+            coordinates: [points],
+        },
+        properties: {
+            ...properties,
+        },
+    };
+}
