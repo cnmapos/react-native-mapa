@@ -11,12 +11,12 @@ const RasterLayer = () => {
         rasterOpacity: 0.6,
     };
     // 腾讯地图 tms
-    const tx = {
-        tms: true,
-        tiles: [
-            'https://rt0.map.gtimg.com/tile/?z={z}&x={x}&y={y}&version=105&styleid=0',
-        ],
-    };
+    // const tx = {
+    //     tms: true,
+    //     tiles: [
+    //         'https://rt0.map.gtimg.com/tile/?z={z}&x={x}&y={y}&version=105&styleid=0',
+    //     ],
+    // };
     const gdwx = {
         tms: false,
         tiles: [
