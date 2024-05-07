@@ -1,7 +1,7 @@
 import { View, StyleSheet, Image, Pressable, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { BottomSheet, Text, Header, Button, Avatar } from '@rneui/themed';
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, ReactElement } from 'react';
 import { MapContext } from '../modules/MapContext';
 
 const screenWidth = Dimensions.get('window').width;
@@ -44,6 +44,8 @@ export type BackgroundProps = {
      * @defaultValue ''
      */
     defaultValue: string;
+
+    children?: ReactElement | ReactElement[];
 };
 
 /**

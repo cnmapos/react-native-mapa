@@ -1,30 +1,34 @@
 import {StyleSheet} from 'react-native';
-import React, {useState} from 'react';
 import Wrapper from '../../components/Wrapper';
 import Mapa, {Position} from 'react-native-mapa';
 import {Dialog, Text} from '@rneui/themed';
-
-/**
- * Polyline props
- *
- * @category Props
- */
-export type PolylineProps = {};
+import {useState} from 'react';
+import React from 'react';
 
 /**
   @category Component
  */
-const Polyline = () => {
+
+const Circle = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [message, setMessage] = useState<string>();
     const onFinish = (data: Position[]) => {
         setMessage(data.map(p => p.join(' ')).join(','));
         setModalVisible(true);
     };
+    const onError = (error: {message: string}) => {
+        setMessage(error.message);
+        setModalVisible(true);
+    };
+
     return (
         <Wrapper>
             <Mapa.Camera zoom={10} />
-            <Mapa.PolylinePainter id={'test'} onFinish={onFinish} />
+            <Mapa.CirclePainter
+                id={'test'}
+                onFinish={onFinish}
+                onError={onError}
+            />
             <Dialog
                 isVisible={modalVisible}
                 onBackdropPress={() => setModalVisible(false)}>
@@ -35,4 +39,8 @@ const Polyline = () => {
     );
 };
 
-export default Polyline;
+export default Circle;
+
+const styles = StyleSheet.create({
+    container: {},
+});

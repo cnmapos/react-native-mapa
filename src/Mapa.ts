@@ -29,6 +29,8 @@ export { default as ModelLayer } from './components/ModelLayer';
 // export { default as Scalebar } from './components/Scalebar';
 export { default as PolylinePainter } from './components/painters/Polyline';
 export { default as PolygnPainter } from './components/painters/Polygon';
+export { default as CirclePainter } from './components/painters/Circle';
+export { default as RectanglePainter } from './components/painters/Rectangle';
 
 export * from './components/slots';
 /**

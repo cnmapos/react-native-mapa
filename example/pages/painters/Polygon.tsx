@@ -20,11 +20,19 @@ const Polygon = () => {
         setMessage(data.map(p => p.join(' ')).join(','));
         setModalVisible(true);
     };
+    const onError = (error: {message: string}) => {
+        setMessage(error.message);
+        setModalVisible(true);
+    };
 
     return (
         <Wrapper>
             <Mapa.Camera zoom={10} />
-            <Mapa.PolygnPainter id={'test'} onFinish={onFinish} />
+            <Mapa.PolygnPainter
+                id={'test'}
+                onFinish={onFinish}
+                onError={onError}
+            />
             <Dialog
                 isVisible={modalVisible}
                 onBackdropPress={() => setModalVisible(false)}>

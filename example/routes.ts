@@ -16,7 +16,10 @@ import QueryFeature from './pages/QueryFeature';
 import RasterLayer from './pages/RasterLayer';
 import CircleLayer from './pages/CircleLayer';
 import ModelLayer from './pages/ModelLayer';
-import PolylinePaintner from './pages/painters/Polyline';
+import PolylinePainter from './pages/painters/Polyline';
+import PolygonPainter from './pages/painters/Polygon';
+import CirclePainter from './pages/painters/Circle';
+import RectanglePainter from './pages/painters/Rectangle';
 
 import ScalebarView from './pages/Scalebar';
 
@@ -164,15 +167,24 @@ const RoutesConfig = [
                 title: '折线绘制',
                 img: require('./assets/basic.png'),
                 id: 'Polyline',
-                component: PolylinePaintner,
+                component: PolylinePainter,
+            },
+            {
+                title: '面绘制',
+                img: require('./assets/basic.png'),
+                id: 'Polygon',
+                component: PolygonPainter,
             },
             {
                 title: '圆形绘制',
                 img: require('./assets/basic.png'),
+                id: 'Circle',
+                component: CirclePainter,
             },
             {
-                title: '多边形绘制',
+                title: '矩形绘制',
                 img: require('./assets/basic.png'),
+                component: RectanglePainter,
             },
             {
                 title: '贝塞尔曲线绘制',
