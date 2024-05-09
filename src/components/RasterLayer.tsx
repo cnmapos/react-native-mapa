@@ -1,5 +1,3 @@
-import { View, StyleSheet } from 'react-native';
-import { MapContext } from '../MapContext';
 import { RasterLayerStyleProps, LayerProps } from '..';
 import Mapbox from '@rnmapbox/maps';
 /**
@@ -21,7 +19,3 @@ const RasterLayer = (props: RasterLayerProps) => {
 };
 
 export default RasterLayer;
-
-const styles = StyleSheet.create({
-    container: {},
-});

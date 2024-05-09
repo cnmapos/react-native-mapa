@@ -1,7 +1,5 @@
-import { View, StyleSheet } from 'react-native';
-import { OnPressEvent } from '..';
 import Mapbox from '@rnmapbox/maps';
-import { useImperativeHandle, useRef } from 'react';
+import { useRef } from 'react';
 import React from 'react';
 /**
  * RasterSource props
@@ -79,7 +77,3 @@ const RasterSource = React.forwardRef((props: RasterSourceProps, ref: any) => {
 });
 
 export default RasterSource;
-
-const styles = StyleSheet.create({
-    container: {},
-});
