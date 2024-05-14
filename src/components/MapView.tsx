@@ -136,7 +136,7 @@ const MapView = React.forwardRef<MapViewInterface, MapViewProps>((props: MapView
                     logoEnabled={false}
                     zoomEnabled={true}
                     compassEnabled={false}
-                    scaleBarEnabled={false}
+                    scaleBarEnabled={true}
                     rotateEnabled={true} // 允许地图旋转
                     compassPosition={{
                         left: 2,
