@@ -29,9 +29,9 @@
     "start": "react-native start --inspect",
     "test": "jest",
     "doc:watch": "typedoc --watch",
-    "doc:dev": "ws -d docs",
+    "doc:dev": "ws -d dhtml",
     "doc:md": "typedoc --out specs --plugin typedoc-plugin-markdown",
-    "doc:start": "yarn run typedoc && ws -d docs",
+    "doc:start": "yarn run typedoc && ws -d dhtml",
     "prepare": "husky && bob build"
   },
   "dependencies": {

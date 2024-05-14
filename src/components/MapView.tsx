@@ -125,8 +125,7 @@ const MapView = React.forwardRef<MapViewInterface, MapViewProps>((props: MapView
     }, [style]);
 
     useLayoutEffect(() => {
-        console.log('useLayoutEffect', mapRef.current);
-        mapRef.current?.setMap(mapInsRef.current);
+        mapRef.current?.setMap(mapInsRef.current!);
     }, []);
 
     return (

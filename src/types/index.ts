@@ -53,6 +53,9 @@ export type Projection = 'mercator' | 'globe';
 
 export type BoundsLike = [number, number, number, number];
 
+/**
+ * 范围边界
+ */
 export type Bounds = BoundsLike & { sw: PositionLike; ne: PositionLike };
 
 /**
@@ -160,7 +163,7 @@ export interface MapViewInterface extends PropEventSource<MapEventNameAndProps> 
     queryRenderFeatures(
         bbox: BBox,
         filter: FilterExpression | [],
-        layerIDs: string[] | null
+        layerIDs?: string[]
     ): Promise<GeoJSON.FeatureCollection>;
     updateStyle(style: string | Object): void;
 

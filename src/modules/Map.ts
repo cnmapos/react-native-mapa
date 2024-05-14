@@ -110,7 +110,7 @@ export class Map implements MapViewInterface {
     async queryRenderFeatures(
         bbox: BBox,
         filter: FilterExpression | [] = [],
-        layerIDs: string[] | null = null
+        layerIDs?: string[]
     ): Promise<GeoJSON.FeatureCollection> {
         const features = (await this.map?.queryRenderedFeaturesInRect(bbox, filter, layerIDs))?.features || [];
 

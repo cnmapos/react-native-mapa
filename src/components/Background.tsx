@@ -29,28 +29,28 @@ export type BackgroundListItem = {
 };
 
 /**
- * Background props
+ * Background属性
  *
  * @category Props
  */
 export type BackgroundProps = {
     /**
      * 背景图层列表
-     * @defaultValue []
+     * @defaultValue 默认包含高德矢量、高德卫星、Mapbox矢量、Mapbox卫星图
      */
     list: BackgroundListItem[];
     /**
      * 背景图层列表
-     * @defaultValue ''
+     * @defaultValue 高德矢量
      */
     defaultValue: string;
 
+    /**
+     * 图层列表面板组件扩展
+     */
     children?: ReactElement | ReactElement[];
 };
 
-/**
-  @category Component
- */
 export const defaultBackgroundList: BackgroundListItem[] = [
     {
         id: 'AmapVector',
@@ -116,6 +116,11 @@ export const defaultBackgroundList: BackgroundListItem[] = [
         style: 'mapbox://styles/mapbox/satellite-v9',
     },
 ];
+
+/**
+ * 背景图层组件
+  @category Component
+ */
 const Background = (props: BackgroundProps) => {
     const [detailVisible, setDetailVisible] = useState(false);
 
