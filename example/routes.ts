@@ -13,8 +13,13 @@ import FillLayer from './pages/FillLayer';
 import Marker from './pages/Marker';
 import FillExtrusionLayer from './pages/FillExtrusionLayer';
 import QueryFeature from './pages/QueryFeature';
+import RasterLayer from './pages/RasterLayer';
 import CircleLayer from './pages/CircleLayer';
 import ModelLayer from './pages/ModelLayer';
+import PolylinePainter from './pages/painters/Polyline';
+import PolygonPainter from './pages/painters/Polygon';
+import CirclePainter from './pages/painters/Circle';
+import RectanglePainter from './pages/painters/Rectangle';
 
 import ScalebarView from './pages/Scalebar';
 
@@ -131,6 +136,17 @@ const RoutesConfig = [
                 component: QueryFeature,
             },
             {
+                title: 'RasterLayer',
+                img: require('./assets/basic.png'),
+                id: 'RasterLayer',
+                component: RasterLayer,
+            },
+
+            {
+                title: '栅格图层',
+                img: require('./assets/basic.png'),
+            },
+            {
                 title: 'Circle Layer',
                 img: require('./assets/basic.png'),
                 id: 'CircleLayer',
@@ -150,14 +166,25 @@ const RoutesConfig = [
             {
                 title: '折线绘制',
                 img: require('./assets/basic.png'),
+                id: 'Polyline',
+                component: PolylinePainter,
+            },
+            {
+                title: '面绘制',
+                img: require('./assets/basic.png'),
+                id: 'Polygon',
+                component: PolygonPainter,
             },
             {
                 title: '圆形绘制',
                 img: require('./assets/basic.png'),
+                id: 'Circle',
+                component: CirclePainter,
             },
             {
-                title: '多边形绘制',
+                title: '矩形绘制',
                 img: require('./assets/basic.png'),
+                component: RectanglePainter,
             },
             {
                 title: '贝塞尔曲线绘制',

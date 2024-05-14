@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
 import { MapContext } from '../modules/MapContext';
-import { LocationEvent } from '../Mapa';
+import { LocationEvent } from '../mapa';
 
 /**
  * Compass props

@@ -1,7 +1,7 @@
 import { View, StyleSheet, Image, Pressable, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { BottomSheet, Text, Header, Button, Avatar } from '@rneui/themed';
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, useImperativeHandle, forwardRef, ReactNode } from 'react';
 import { MapContext } from '../modules/MapContext';
 
 const screenWidth = Dimensions.get('window').width;
@@ -29,6 +29,13 @@ export type BackgroundListItem = {
 };
 
 /**
+ * 自定义渲染函数的参数、也就是提供给他的功能
+ *
+ * @category Props
+ */
+export type CustomRenderProps = {};
+
+/**
  * Background props
  *
  * @category Props
@@ -44,12 +51,89 @@ export type BackgroundProps = {
      * @defaultValue ''
      */
     defaultValue: string;
+
+    /**
+     * 自定义面板、自己定义面板渲染成什么样子
+     * @defaultValue null
+     */
+    renderPanel?: (ref, list) => ReactNode;
+
+    /**
+     * 用默认的面板、但是支持自定义背景图层列表的样式渲染
+     * @defaultValue null
+     */
+    renderItem?: () => ReactNode;
 };
 
 /**
   @category Component
  */
-const Background = (props: BackgroundProps) => {
+export const defaultBackgroundList: BackgroundListItem[] = [
+    {
+        id: 'AmapVector',
+        name: '高德矢量',
+        style: {
+            version: '1.0.0',
+            name: 'AMap',
+            constants: {},
+            sources: {
+                amap: {
+                    type: 'raster',
+                    tiles: [
+                        'https://webrd04.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=7&x={x}&y={y}&z={z}',
+                    ],
+                },
+            },
+            sprite: '',
+            glyphs: '',
+            layers: [
+                {
+                    id: 'amap',
+                    source: 'amap',
+                    type: 'raster',
+                },
+            ],
+        },
+        logoUrl:
+            'https://play-lh.googleusercontent.com/l3jypy2cfNXc6R3vWstSgWHqZz-WKn5K3HyDSjDehwoh8rrsXan1byG45TQzDTkZ3azG',
+    },
+    {
+        id: 'AmapSatellite',
+        name: '高德卫星',
+        style: {
+            version: '1.0.0',
+            name: 'AMap',
+            constants: {},
+            sources: {
+                amap: {
+                    type: 'raster',
+                    tiles: ['https://webst04.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}'],
+                },
+            },
+            sprite: '',
+            glyphs: '',
+            layers: [
+                {
+                    id: 'amap',
+                    source: 'amap',
+                    type: 'raster',
+                },
+            ],
+        },
+        logoUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyXY77AHfx3UBMxU9HqeskpBqswohYCjMLmtR2NpA1dw&s',
+    },
+    {
+        id: 'MapboxVector',
+        name: 'mapbox矢量',
+        style: 'mapbox://styles/mapbox/dark-v10',
+    },
+    {
+        id: 'Satellite',
+        name: 'mapbox卫星',
+        style: 'mapbox://styles/mapbox/satellite-v9',
+    },
+];
+const Background = forwardRef((props: BackgroundProps, ref) => {
     const [detailVisible, setDetailVisible] = useState(false);
 
     const onOpen = async () => {
@@ -59,7 +143,7 @@ const Background = (props: BackgroundProps) => {
         setDetailVisible(false);
     };
 
-    const { list = [], defaultValue = '' } = props;
+    const { list = defaultBackgroundList, defaultValue = defaultBackgroundList[0].id } = props;
     const { map } = useContext(MapContext);
     const [currentBg, setCurrentBg] = useState(defaultValue);
     useEffect(() => {
@@ -69,6 +153,7 @@ const Background = (props: BackgroundProps) => {
     // 背景组件初始化时、根据默认选中的value、修改mapview的style
     useEffect(() => {
         const target = list.filter((item) => item.id === defaultValue)?.[0];
+        console.log('defaultValue change', defaultValue);
         if (!target) {
             return;
         }
@@ -79,6 +164,43 @@ const Background = (props: BackgroundProps) => {
         // 点击背景、需要关闭bottomsheet
         setDetailVisible(false);
     };
+
+    useImperativeHandle(ref, () => {
+        return {
+            // 打开关闭面板
+            close() {
+                setDetailVisible(false);
+            },
+            open() {
+                setDetailVisible(true);
+            },
+
+            // 切换背景
+            changeBg(id: string) {
+                const target = list?.filter((item) => item.id === id)[0];
+                if (!target) {
+                    return;
+                }
+                map.updateStyle(target.style);
+                setCurrentBg(id);
+            },
+
+            // 获取当前背景
+            getCurrentBg() {
+                return currentBg;
+            },
+        };
+    });
+
+    const updateCurrentBg = (id) => {
+        const target = list?.filter((item) => item.id === id)[0];
+        if (!target) {
+            return;
+        }
+        map.updateStyle(target.style);
+        setCurrentBg(id);
+    };
+
     return (
         <View>
             <Icon name="layers-outline" style={styles.icon} onPress={onOpen} />
@@ -88,11 +210,25 @@ const Background = (props: BackgroundProps) => {
                 isVisible={detailVisible}
                 containerStyle={styles.containerStyle}
             >
-                <BackgroundPanel {...props} currentBg={currentBg} setCurrentBg={setCurrentBg} onClose={onClose} />
+                {/* 如果用户传了panel、则用用户自己的panel渲染、只负责给他提供props供他使用 */}
+
+                {props.renderPanel ? (
+                    props.renderPanel(ref, list)
+                ) : (
+                    <BackgroundPanel
+                        list={list}
+                        renderItem={props.renderItem || null}
+                        defaultValue={defaultValue}
+                        currentBg={currentBg}
+                        setCurrentBg={updateCurrentBg}
+                        onClose={onClose}
+                    />
+                )}
+                {/* 如果用户传了list组件、没传panel组件、则用我们的panel、在我们panel内渲染他提供的list */}
             </BottomSheet>
         </View>
     );
-};
+});
 
 export default Background;
 const styles = StyleSheet.create({
@@ -107,22 +243,28 @@ const styles = StyleSheet.create({
     },
 });
 
+const RenderItemWrapperHoc = (render, item, currentBg, onClick) => {
+    return (
+        <Pressable key={item.id} onPress={() => onClick(item.id)}>
+            <View>{render(item, currentBg === item.id)}</View>
+        </Pressable>
+    );
+};
 type BackgroundPanelProps = BackgroundProps & {
     onClose: () => void;
     currentBg: string;
     setCurrentBg: (id: string) => void;
+    renderItem?: (item: BackgroundListItem) => ReactNode;
+    children?: ReactNode;
 };
 const BackgroundPanel = (props: BackgroundPanelProps) => {
-    const { list, currentBg, setCurrentBg, onClose } = props;
-    const { map } = useContext(MapContext);
+    const { currentBg, setCurrentBg, onClose, renderItem } = props;
 
     const closeHandle = () => {
         onClose();
     };
 
     const clickHandle = (id: string) => {
-        const { style } = list?.filter((item) => item.id === id)[0];
-        map.updateStyle(style);
         setCurrentBg(id);
     };
 
@@ -140,7 +282,9 @@ const BackgroundPanel = (props: BackgroundPanelProps) => {
             />
             <View style={backgroundPanelStyles.backgroundItemList}>
                 {props?.list?.map((item) => {
-                    return (
+                    return renderItem ? (
+                        RenderItemWrapperHoc(renderItem, item, currentBg, clickHandle)
+                    ) : (
                         <ImageWithText
                             key={item.id}
                             id={item.id}
@@ -153,6 +297,7 @@ const BackgroundPanel = (props: BackgroundPanelProps) => {
                     );
                 })}
             </View>
+            <View>{props.children}</View>
         </View>
     );
 };

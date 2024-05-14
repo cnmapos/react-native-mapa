@@ -73,4 +73,5 @@ npm install typedoc-plugin-markdown@next --save-dev
 -   1. 设置默认中心坐标
 -   2. 支持地图的源梳理
 -   3. 目前的demo方式初次构建的index还是在根目录下，暂时在根目录下新建index.js文件引入demo/index.js
--   4.执行typedoc报"Cannot find module 'react-native-mapa' or its corresponding type declarations."错误
+-   4. 执行typedoc报"Cannot find module 'react-native-mapa' or its corresponding type declarations."错误
+-   5. 项目的路径最好不要带空格、否则在本地构建时会出问题

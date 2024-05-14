@@ -2,7 +2,7 @@ import Mapbox from '@rnmapbox/maps';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { ReactElement, useEffect, useImperativeHandle, useLayoutEffect, useRef, useState } from 'react';
 import { MapContext } from '../modules/MapContext';
-import { Projection, MapStyle, MapViewInterface, MapIdleEvent } from '../types';
+import { Projection, MapStyle, MapViewInterface, MapIdleEvent, PressFeature } from '../types';
 import { styleFormat } from '../config/style';
 import React from 'react';
 import { Map } from '../modules/Map';
@@ -41,7 +41,7 @@ export type MapViewProps = {
      * }
      * ```
      */
-    onPress?: (feature: GeoJSON.Feature) => void;
+    onPress?: (feature: PressFeature) => void;
 
     /**
      * 长按地图触发事件
@@ -57,7 +57,7 @@ export type MapViewProps = {
      * }
      * ```
      */
-    onLongPress?: (feature: GeoJSON.Feature) => void;
+    onLongPress?: (feature: PressFeature) => void;
 
     /**
      * 当地图闲置时触发
@@ -103,6 +103,11 @@ const MapView = React.forwardRef<MapViewInterface, MapViewProps>((props: MapView
         height: Dimensions.get('window').height,
     });
 
+    const onMapPress = (e: PressFeature) => {
+        onPress?.(e);
+        mapRef.current.emit('onPress', e);
+    };
+
     useImperativeHandle<any, MapViewInterface>(ref, () => mapRef.current!);
 
     // 获取地图的像素尺寸, 默认地图全屏！！改代码！！
@@ -143,8 +148,8 @@ const MapView = React.forwardRef<MapViewInterface, MapViewProps>((props: MapView
                         top: 5,
                     }}
                     onLayout={getMapDimensions}
-                    onPress={onPress}
-                    onLongPress={onLongPress}
+                    onPress={onMapPress as any}
+                    onLongPress={onLongPress as any}
                     onMapIdle={onMapIdle}
                     onCameraChanged={(...args) => mapRef.current?.emit('cameraChanged', ...args)}
                     onDidFinishLoadingMap={(...args) => mapRef.current?.emit('loaded', ...args)}

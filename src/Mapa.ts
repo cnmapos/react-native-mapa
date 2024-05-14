@@ -17,14 +17,20 @@ export { default as Images } from './components/image/Images';
 export { default as Image } from './components/image/Image';
 export { default as GeoJSONSource } from './components/GeoJSONSource';
 export { default as VectorSource } from './components/VectorSource';
+export { default as RasterSource } from './components/RasterSource';
 export { default as SymbolLayer } from './components/SymbolLayer';
 export { default as LineLayer } from './components/LineLayer';
 export { default as FillLayer } from './components/FillLayer';
 export { default as FillExtrusionLayer } from './components/FillExtrusionLayer';
+export { default as RasterLayer } from './components/RasterLayer';
 export { default as CircleLayer } from './components/CircleLayer';
 export { default as Models } from './components/Models';
 export { default as ModelLayer } from './components/ModelLayer';
 // export { default as Scalebar } from './components/Scalebar';
+export { default as PolylinePainter } from './components/painters/Polyline';
+export { default as PolygnPainter } from './components/painters/Polygon';
+export { default as CirclePainter } from './components/painters/Circle';
+export { default as RectanglePainter } from './components/painters/Rectangle';
 
 export * from './components/slots';
 /**

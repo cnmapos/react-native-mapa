@@ -1,7 +1,20 @@
 import Mapa, {Slot} from 'react-native-mapa';
-import {SafeAreaView} from 'react-native';
+import {SafeAreaView, View, Text, Dimensions} from 'react-native';
 import {BackgroundListItem} from '../../src/components/Background';
-import React from 'react';
+import React, {useRef} from 'react';
+const screenWidth = Dimensions.get('window').width;
+const itemWidth = screenWidth * 0.25; // 25% 的屏幕宽度
+// import {Button} from '@rneui/themed';
+
+// function CustomView(props) {
+//     const {onClick} = props;
+//     return (
+//         <View>
+//             <Button onPress={onClick}> 关闭 </Button>
+//             <Text>哈哈</Text>
+//         </View>
+//     );
+// }
 
 function PreView({navigation}: any): React.JSX.Element {
     Mapa.setAccessToken(
@@ -77,13 +90,43 @@ function PreView({navigation}: any): React.JSX.Element {
             style: 'mapbox://styles/mapbox/satellite-v9',
         },
     ];
+    const ref = useRef(null);
+
+    // const renderCustomPanel = ref => {
+    //     const click = () => {
+    //         ref.current.close();
+    //     };
+    //     return <CustomView onClick={click} />;
+    // };
+
+    const renderListItem = (item, active) => {
+        return (
+            <View
+                style={{
+                    marginBottom: 10,
+                    width: itemWidth,
+                }}>
+                <Text
+                    style={{
+                        color: active ? 'red' : '#000',
+                        textAlign: 'center',
+                    }}>
+                    {item.name}
+                </Text>
+            </View>
+        );
+    };
+
     return (
         <SafeAreaView style={{height: '100%'}}>
             <Mapa.MapView>
                 <Slot slot="rightTop" backgroundColor={'transparent'}>
                     <Mapa.Background
+                        ref={ref}
                         list={backgroundList}
                         defaultValue={backgroundList[0].id}
+                        // renderPanel={renderCustomPanel}
+                        // renderItem={renderListItem}
                     />
                     <Mapa.Camera zoom={zoom} center={center} />
                 </Slot>
