@@ -29,13 +29,6 @@ export type BackgroundListItem = {
 };
 
 /**
- * 自定义渲染函数的参数、也就是提供给他的功能
- *
- * @category Props
- */
-export type CustomRenderProps = {};
-
-/**
  * Background props
  *
  * @category Props
@@ -56,7 +49,15 @@ export type BackgroundProps = {
      * 自定义面板、自己定义面板渲染成什么样子
      * @defaultValue null
      */
-    renderPanel?: (ref, list) => ReactNode;
+    renderPanel?: (
+        operation: {
+            close: () => void;
+            open: () => void;
+            changeBg: (id: BackgroundListItem['id']) => void;
+            getCurrentBg: () => string;
+        },
+        list: BackgroundListItem[]
+    ) => ReactNode;
 
     /**
      * 用默认的面板、但是支持自定义背景图层列表的样式渲染
@@ -133,6 +134,7 @@ export const defaultBackgroundList: BackgroundListItem[] = [
         style: 'mapbox://styles/mapbox/satellite-v9',
     },
 ];
+
 const Background = forwardRef((props: BackgroundProps, ref) => {
     const [detailVisible, setDetailVisible] = useState(false);
 
@@ -145,7 +147,7 @@ const Background = forwardRef((props: BackgroundProps, ref) => {
 
     const { list = defaultBackgroundList, defaultValue = defaultBackgroundList[0].id } = props;
     const { map } = useContext(MapContext);
-    const [currentBg, setCurrentBg] = useState(defaultValue);
+    const [currentBg, setCurrentBg] = useState<string>(defaultValue);
     useEffect(() => {
         setCurrentBg(defaultValue);
     }, [defaultValue]);
@@ -153,7 +155,6 @@ const Background = forwardRef((props: BackgroundProps, ref) => {
     // 背景组件初始化时、根据默认选中的value、修改mapview的style
     useEffect(() => {
         const target = list.filter((item) => item.id === defaultValue)?.[0];
-        console.log('defaultValue change', defaultValue);
         if (!target) {
             return;
         }
@@ -165,34 +166,38 @@ const Background = forwardRef((props: BackgroundProps, ref) => {
         setDetailVisible(false);
     };
 
+    const close = () => {
+        setDetailVisible(false);
+    };
+    const open = () => {
+        setDetailVisible(true);
+    };
+
+    // 切换背景
+    const changeBg = (id: BackgroundListItem['id']) => {
+        const target = list?.filter((item) => item.id === id)[0];
+        if (!target) {
+            return;
+        }
+        map.updateStyle(target.style);
+        setCurrentBg(id);
+    };
+
+    // 获取当前背景
+    const getCurrentBg = () => {
+        return currentBg;
+    };
+
     useImperativeHandle(ref, () => {
         return {
-            // 打开关闭面板
-            close() {
-                setDetailVisible(false);
-            },
-            open() {
-                setDetailVisible(true);
-            },
-
-            // 切换背景
-            changeBg(id: string) {
-                const target = list?.filter((item) => item.id === id)[0];
-                if (!target) {
-                    return;
-                }
-                map.updateStyle(target.style);
-                setCurrentBg(id);
-            },
-
-            // 获取当前背景
-            getCurrentBg() {
-                return currentBg;
-            },
+            close,
+            open,
+            changeBg,
+            getCurrentBg,
         };
     });
 
-    const updateCurrentBg = (id) => {
+    const updateCurrentBg = (id: string) => {
         const target = list?.filter((item) => item.id === id)[0];
         if (!target) {
             return;
@@ -211,9 +216,16 @@ const Background = forwardRef((props: BackgroundProps, ref) => {
                 containerStyle={styles.containerStyle}
             >
                 {/* 如果用户传了panel、则用用户自己的panel渲染、只负责给他提供props供他使用 */}
-
                 {props.renderPanel ? (
-                    props.renderPanel(ref, list)
+                    props.renderPanel(
+                        {
+                            close,
+                            open,
+                            changeBg,
+                            getCurrentBg,
+                        },
+                        list
+                    )
                 ) : (
                     <BackgroundPanel
                         list={list}
@@ -243,18 +255,29 @@ const styles = StyleSheet.create({
     },
 });
 
-const RenderItemWrapperHoc = (render, item, currentBg, onClick) => {
+const RenderItemWrapperHoc = (
+    render: BackgroundPanelProps['renderItem'],
+    item: BackgroundListItem,
+    currentBg: BackgroundListItem['id'],
+    onClick: (id: BackgroundListItem['id']) => void
+) => {
     return (
         <Pressable key={item.id} onPress={() => onClick(item.id)}>
             <View>{render(item, currentBg === item.id)}</View>
         </Pressable>
     );
 };
-type BackgroundPanelProps = BackgroundProps & {
+
+/**
+ * BackgroundPanelProps props
+ *
+ * @category Props
+ */
+export type BackgroundPanelProps = BackgroundProps & {
     onClose: () => void;
     currentBg: string;
     setCurrentBg: (id: string) => void;
-    renderItem?: (item: BackgroundListItem) => ReactNode;
+    renderItem?: (item: BackgroundListItem, active: boolean) => ReactNode;
     children?: ReactNode;
 };
 const BackgroundPanel = (props: BackgroundPanelProps) => {

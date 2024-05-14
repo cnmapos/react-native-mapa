@@ -4,17 +4,17 @@ import {BackgroundListItem} from '../../src/components/Background';
 import React, {useRef} from 'react';
 const screenWidth = Dimensions.get('window').width;
 const itemWidth = screenWidth * 0.25; // 25% 的屏幕宽度
-// import {Button} from '@rneui/themed';
+import {Button} from '@rneui/themed';
 
-// function CustomView(props) {
-//     const {onClick} = props;
-//     return (
-//         <View>
-//             <Button onPress={onClick}> 关闭 </Button>
-//             <Text>哈哈</Text>
-//         </View>
-//     );
-// }
+function CustomView(props) {
+    const {onClick} = props;
+    return (
+        <View>
+            <Button onPress={onClick}> 关闭 </Button>
+            <Text>哈哈</Text>
+        </View>
+    );
+}
 
 function PreView({navigation}: any): React.JSX.Element {
     Mapa.setAccessToken(
@@ -92,12 +92,12 @@ function PreView({navigation}: any): React.JSX.Element {
     ];
     const ref = useRef(null);
 
-    // const renderCustomPanel = ref => {
-    //     const click = () => {
-    //         ref.current.close();
-    //     };
-    //     return <CustomView onClick={click} />;
-    // };
+    const renderCustomPanel = ({close}) => {
+        const click = () => {
+            close();
+        };
+        return <CustomView onClick={click} />;
+    };
 
     const renderListItem = (item, active) => {
         return (
@@ -126,7 +126,7 @@ function PreView({navigation}: any): React.JSX.Element {
                         list={backgroundList}
                         defaultValue={backgroundList[0].id}
                         // renderPanel={renderCustomPanel}
-                        // renderItem={renderListItem}
+                        renderItem={renderListItem}
                     />
                     <Mapa.Camera zoom={zoom} center={center} />
                 </Slot>
