@@ -16,6 +16,7 @@ import QueryFeature from './pages/QueryFeature';
 import RasterLayer from './pages/RasterLayer';
 import CircleLayer from './pages/CircleLayer';
 import ModelLayer from './pages/ModelLayer';
+import HeatmapLayer from './pages/HeatmapLayer';
 
 import ScalebarView from './pages/Scalebar';
 
@@ -136,6 +137,12 @@ const RoutesConfig = [
                 img: require('./assets/basic.png'),
                 id: 'RasterLayer',
                 component: RasterLayer,
+            },
+            {
+                title: 'HeatmapLayer',
+                img: require('./assets/basic.png'),
+                id: 'HeatmapLayer',
+                component: HeatmapLayer,
             },
 
             {

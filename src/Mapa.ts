@@ -26,6 +26,7 @@ export { default as RasterLayer } from './components/RasterLayer';
 export { default as CircleLayer } from './components/CircleLayer';
 export { default as Models } from './components/Models';
 export { default as ModelLayer } from './components/ModelLayer';
+export { default as HeatmapLayer } from './components/HeatmapLayer';
 // export { default as Scalebar } from './components/Scalebar';
 
 export * from './components/slots';
