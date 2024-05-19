@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { MapContext } from '../modules/MapContext';
 import React from 'react';
@@ -33,7 +33,7 @@ const unitAbbr = {
     mile: 'mi',
     foot: 'ft',
     'nautical-mile': 'nm',
-};
+} as const;
 
 /**
   @category Component
@@ -48,7 +48,7 @@ const Scalebar = (props: ScalebarProps) => {
     const [isShow, setIsShow] = useState<boolean>(true);
     // 获取地图的可见区域边界框
 
-    const _update = (latitude, zoomLevel) => {
+    const _update = (latitude: number, zoomLevel: number) => {
         console.log('&&&_update', latitude, zoomLevel);
 
         const { maxWidth, unit } = props.options ?? defaultOptions;
@@ -91,21 +91,23 @@ const Scalebar = (props: ScalebarProps) => {
     const _setScale = (maxWidth: number, maxDistance: number, unit: string) => {
         const distance = getRoundNum(maxDistance);
         const ratio = distance / maxDistance;
+
         setScaleInfo({
             width: maxWidth * ratio,
-            scale: `${distance}${unitAbbr[unit]}`,
+            scale: `${distance}${unitAbbr[unit] ?? 'km'}`,
         });
     };
 
     // 渲染
     const onShow = () => {
-        const calculateScale = async (latitude, zoomLevel) => {
+        const calculateScale = async (latitude: number[], zoomLevel: number) => {
             try {
                 _update(latitude[1], zoomLevel);
             } catch (error) {}
         };
 
         map.on('cameraChanged', (event) => {
+            // @ts-ignore
             const { center, zoom } = event.properties;
             calculateScale(center, zoom);
         });
