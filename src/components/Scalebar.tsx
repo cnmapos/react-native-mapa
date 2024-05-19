@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { MapContext } from '../modules/MapContext';
 import React from 'react';
-import { Position } from '../types';
+import { isNumber } from '@rnmapbox/maps/src/utils';
 /**
  * Scalebar props
  *
@@ -40,7 +40,6 @@ const unitAbbr = {
  */
 const Scalebar = (props: ScalebarProps) => {
     const { map, pixLayoutInfo } = useContext(MapContext);
-    const [scale, setScale] = useState<string>('');
     const [scaleInfo, setScaleInfo] = useState<{
         width: number;
         scale: string;
@@ -62,6 +61,10 @@ const Scalebar = (props: ScalebarProps) => {
 
         const metersPerPixel =
             (Math.cos((latitude * Math.PI) / 180) * 2 * Math.PI * earthRadius) / (tileSize * Math.pow(2, zoomLevel));
+
+        if (!isNumber(maxWidth)) {
+            throw new Error('maxWidth type need number');
+        }
 
         const maxMeters = metersPerPixel * maxWidth;
         // The real distance corresponding to 100px scale length is rounded off to
@@ -96,14 +99,16 @@ const Scalebar = (props: ScalebarProps) => {
 
     // 渲染
     const onShow = () => {
-        // this._map = map;
-        // this._language = map.getLanguage();
-        // this._container = DOM.create('div', 'mapboxgl-ctrl mapboxgl-ctrl-scale', map.getContainer());
-        // this._container.dir = 'auto';
-        // // $FlowFixMe[method-unbinding]
-        // this._map.on('move', this._update);
-        // this._update();
-        // return this._container;
+        const calculateScale = async (latitude, zoomLevel) => {
+            try {
+                _update(latitude[1], zoomLevel);
+            } catch (error) {}
+        };
+
+        map.on('cameraChanged', (event) => {
+            const { center, zoom } = event.properties;
+            calculateScale(center, zoom);
+        });
     };
 
     // remove scaleBar
@@ -127,41 +132,17 @@ const Scalebar = (props: ScalebarProps) => {
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.visible]);
+    }, [props.visible, map]);
 
     useEffect(() => {
-        const { width: mapWidth, height: mapHeight } = pixLayoutInfo;
-
-        const calculateScale = async (bounds: { ne: Position; sw: Position }, latitude, zoomLevel) => {
-            console.log('---', mapHeight, mapWidth, bounds);
-
-            try {
-                // const bounds = await getVisibleBounds();
-                if (bounds && mapWidth && mapHeight) {
-                    _update(latitude[1], zoomLevel);
-
-                    setScale(scale1);
-                }
-            } catch (error) {}
-        };
-
-        // calculateScale();
-
-        map.on('cameraChanged', (event) => {
-            console.log('map-emit__________', event);
-
-            const { center, zoom, bounds } = event.properties;
-
-            calculateScale(bounds, center, zoom);
-        });
-
+        onShow();
         return () => {
             //setScale(null); // 清除比例尺状态
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [map, pixLayoutInfo]);
+    }, [map]);
 
-    return <ScaleIndicator scaleInfo={scaleInfo} pixLayoutInfo={pixLayoutInfo} />;
+    return isShow && <ScaleIndicator scaleInfo={scaleInfo} pixLayoutInfo={pixLayoutInfo} />;
 };
 
 type ScaleIndicatorProps = {
