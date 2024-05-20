@@ -20,6 +20,7 @@ import PolylinePainter from './pages/painters/Polyline';
 import PolygonPainter from './pages/painters/Polygon';
 import CirclePainter from './pages/painters/Circle';
 import RectanglePainter from './pages/painters/Rectangle';
+import HeatmapLayer from './pages/HeatmapLayer';
 
 import ScalebarView from './pages/Scalebar';
 
@@ -140,6 +141,12 @@ const RoutesConfig = [
                 img: require('./assets/basic.png'),
                 id: 'RasterLayer',
                 component: RasterLayer,
+            },
+            {
+                title: 'HeatmapLayer',
+                img: require('./assets/basic.png'),
+                id: 'HeatmapLayer',
+                component: HeatmapLayer,
             },
 
             {

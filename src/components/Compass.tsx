@@ -66,9 +66,6 @@ const Compass = (props: CompassProps) => {
 
     useEffect(() => {
         map.locationManager.on('locationChange', onLocationChange);
-
-        // Magnetometer.setUpdateInterval(100); // 设置更新频率
-
         return () => {
             // subscription.remove();
             //map.locationManager.off('locationChange', onLocationChange);

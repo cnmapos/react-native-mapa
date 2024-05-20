@@ -2,14 +2,19 @@ import { useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { MapContext } from '../modules/MapContext';
 import React from 'react';
-import { Position } from '../types';
+import { isNumber } from '@rnmapbox/maps/src/utils';
 /**
- * Scalebar props
- *
+ * ScaleBar Props
  * @category Props
  */
 export type ScalebarProps = {
+    /**
+     * 是否显示，可选，默认 `true`
+     */
     visible?: boolean;
+    /**
+     * 配置项可选，默认值参见 `defaultOptions`
+     */
     options?: Options;
 };
 
@@ -21,6 +26,13 @@ type Options = {
     unit?: Unit;
 };
 
+/**
+ * @defaultValue default options value
+ * options 可选配置项 maxWidth 和距离单位 metric
+ * `maxWidth: 100`
+    `unit: 'metric'`
+ *
+ */
 const defaultOptions: Options = {
     maxWidth: 100,
     unit: 'metric',
@@ -33,9 +45,28 @@ const unitAbbr = {
     mile: 'mi',
     foot: 'ft',
     'nautical-mile': 'nm',
-};
+} as const;
 
 /**
+ * @example
+ * ```
+ * import Mapa, {Scalebar} from 'react-native-mapa';
+import {SafeAreaView} from 'react-native';
+import React from 'react';
+
+function ScalebarView(): React.JSX.Element {
+    return (
+        <SafeAreaView style={{height: '100%'}}>
+            <Mapa.MapView>
+                <Scalebar />
+            </Mapa.MapView>
+        </SafeAreaView>
+    );
+}
+
+export default ScalebarView;
+
+ * ```
   @category Component
  */
 const Scalebar = (props: ScalebarProps) => {
@@ -48,7 +79,7 @@ const Scalebar = (props: ScalebarProps) => {
     const [isShow, setIsShow] = useState<boolean>(true);
     // 获取地图的可见区域边界框
 
-    const _update = (latitude, zoomLevel) => {
+    const _update = (latitude: number, zoomLevel: number) => {
         console.log('&&&_update', latitude, zoomLevel);
 
         const { maxWidth, unit } = props.options ?? defaultOptions;
@@ -61,6 +92,10 @@ const Scalebar = (props: ScalebarProps) => {
 
         const metersPerPixel =
             (Math.cos((latitude * Math.PI) / 180) * 2 * Math.PI * earthRadius) / (tileSize * Math.pow(2, zoomLevel));
+
+        if (!isNumber(maxWidth)) {
+            throw new Error('maxWidth type need number');
+        }
 
         const maxMeters = metersPerPixel * maxWidth;
         // The real distance corresponding to 100px scale length is rounded off to
@@ -87,22 +122,26 @@ const Scalebar = (props: ScalebarProps) => {
     const _setScale = (maxWidth: number, maxDistance: number, unit: string) => {
         const distance = getRoundNum(maxDistance);
         const ratio = distance / maxDistance;
+
         setScaleInfo({
             width: maxWidth * ratio,
-            scale: `${distance}${unitAbbr[unit]}`,
+            scale: `${distance}${unitAbbr[unit] ?? 'km'}`,
         });
     };
 
     // 渲染
     const onShow = () => {
-        // this._map = map;
-        // this._language = map.getLanguage();
-        // this._container = DOM.create('div', 'mapboxgl-ctrl mapboxgl-ctrl-scale', map.getContainer());
-        // this._container.dir = 'auto';
-        // // $FlowFixMe[method-unbinding]
-        // this._map.on('move', this._update);
-        // this._update();
-        // return this._container;
+        const calculateScale = async (latitude: number[], zoomLevel: number) => {
+            try {
+                _update(latitude[1], zoomLevel);
+            } catch (error) {}
+        };
+
+        map.on('cameraChanged', (event) => {
+            // @ts-ignore
+            const { center, zoom } = event.properties;
+            calculateScale(center, zoom);
+        });
     };
 
     // remove scaleBar
@@ -126,39 +165,17 @@ const Scalebar = (props: ScalebarProps) => {
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.visible]);
+    }, [props.visible, map]);
 
     useEffect(() => {
-        const { width: mapWidth, height: mapHeight } = pixLayoutInfo;
-
-        const calculateScale = async (bounds: { ne: Position; sw: Position }, latitude, zoomLevel) => {
-            console.log('---', mapHeight, mapWidth, bounds);
-
-            try {
-                // const bounds = await getVisibleBounds();
-                if (bounds && mapWidth && mapHeight) {
-                    _update(latitude[1], zoomLevel);
-                }
-            } catch (error) {}
-        };
-
-        // calculateScale();
-
-        map.on('cameraChanged', (event) => {
-            console.log('map-emit__________', event);
-
-            const { center, zoom, bounds } = event;
-
-            calculateScale(bounds, center, zoom);
-        });
-
+        onShow();
         return () => {
             //setScale(null); // 清除比例尺状态
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [map, pixLayoutInfo]);
+    }, [map]);
 
-    return <ScaleIndicator scaleInfo={scaleInfo} pixLayoutInfo={pixLayoutInfo} />;
+    return isShow && <ScaleIndicator scaleInfo={scaleInfo} pixLayoutInfo={pixLayoutInfo} />;
 };
 
 type ScaleIndicatorProps = {
