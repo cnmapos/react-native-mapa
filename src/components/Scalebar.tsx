@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { MapContext } from '../modules/MapContext';
 import React from 'react';
-import { isNumber } from '@rnmapbox/maps/src/utils';
+import { isNumber } from 'lodash';
 /**
  * ScaleBar Props
  * @category Props
@@ -39,13 +39,13 @@ const defaultOptions: Options = {
 };
 
 // 单位
-const unitAbbr = {
+const unitAbbr: { [key in string]: string } = {
     kilometer: 'km',
     meter: 'm',
     mile: 'mi',
     foot: 'ft',
     'nautical-mile': 'nm',
-} as const;
+};
 
 /**
  * @example

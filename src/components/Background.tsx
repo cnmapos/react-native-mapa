@@ -229,7 +229,7 @@ const Background = forwardRef((props: BackgroundProps, ref) => {
                 ) : (
                     <BackgroundPanel
                         list={list}
-                        renderItem={props.renderItem || null}
+                        renderItem={props.renderItem || undefined}
                         defaultValue={defaultValue}
                         currentBg={currentBg}
                         setCurrentBg={updateCurrentBg}
@@ -263,7 +263,7 @@ const RenderItemWrapperHoc = (
 ) => {
     return (
         <Pressable key={item.id} onPress={() => onClick(item.id)}>
-            <View>{render(item, currentBg === item.id)}</View>
+            <View>{render?.(item, currentBg === item.id)}</View>
         </Pressable>
     );
 };
