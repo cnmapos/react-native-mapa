@@ -4,12 +4,17 @@ import { MapContext } from '../modules/MapContext';
 import React from 'react';
 import { isNumber } from '@rnmapbox/maps/src/utils';
 /**
- * Scalebar props
- *
+ * ScaleBar Props
  * @category Props
  */
 export type ScalebarProps = {
+    /**
+     * 是否显示，可选，默认 `true`
+     */
     visible?: boolean;
+    /**
+     * 配置项可选，默认值参见 `defaultOptions`
+     */
     options?: Options;
 };
 
@@ -21,6 +26,13 @@ type Options = {
     unit?: Unit;
 };
 
+/**
+ * @defaultValue default options value
+ * options 可选配置项 maxWidth 和距离单位 metric
+ * `maxWidth: 100`
+    `unit: 'metric'`
+ * 
+ */
 const defaultOptions: Options = {
     maxWidth: 100,
     unit: 'metric',
@@ -36,6 +48,25 @@ const unitAbbr = {
 } as const;
 
 /**
+ * @example
+ * ```
+ * import Mapa, {Scalebar} from 'react-native-mapa';
+import {SafeAreaView} from 'react-native';
+import React from 'react';
+
+function ScalebarView(): React.JSX.Element {
+    return (
+        <SafeAreaView style={{height: '100%'}}>
+            <Mapa.MapView>
+                <Scalebar />
+            </Mapa.MapView>
+        </SafeAreaView>
+    );
+}
+
+export default ScalebarView;
+
+ * ```
   @category Component
  */
 const Scalebar = (props: ScalebarProps) => {
