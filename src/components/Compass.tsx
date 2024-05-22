@@ -8,7 +8,9 @@ import { LocationEvent } from '../mapa';
  *
  * @category Props
  */
-export type CompassProps = {};
+export type CompassProps = {
+    visibled?: boolean;
+};
 
 const styles = StyleSheet.create({
     compassContainer: {
@@ -54,6 +56,17 @@ const styles = StyleSheet.create({
  */
 const Compass = (props: CompassProps) => {
     const [heading, setHeading] = useState<number>(0);
+    const [rotateStyle, setRotateStyle] = useState<any>(
+        StyleSheet.create({
+            ratate: {
+                transform: [
+                    {
+                        rotate: `0deg`,
+                    },
+                ],
+            },
+        })
+    );
     const { map } = useContext(MapContext);
 
     const onLocationChange = (event: LocationEvent) => {
@@ -61,6 +74,20 @@ const Compass = (props: CompassProps) => {
         console.log(event.coords.heading, '+++++++++++++++', event);
         if (event.coords && event.coords.heading) {
             setHeading(event.coords.heading);
+
+            const rotateDeg = `${event.coords.heading * (180 / Math.PI)}deg`;
+
+            setRotateStyle(
+                StyleSheet.create({
+                    ratate: {
+                        transform: [
+                            {
+                                rotate: rotateDeg,
+                            },
+                        ],
+                    },
+                })
+            );
         }
     };
 
@@ -74,9 +101,10 @@ const Compass = (props: CompassProps) => {
     }, []);
 
     return (
-        <View style={[styles.compass, { transform: [{ rotate: `${heading}deg` }] }]}>
+        <View style={[styles.compass, rotateStyle.rotate]}>
             <View style={[styles.arrow]} />
             <Text style={styles.heading}>N</Text>
+            <Text>{heading}</Text>
         </View>
     );
 };

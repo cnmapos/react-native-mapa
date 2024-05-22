@@ -23,6 +23,7 @@ import RectanglePainter from './pages/painters/Rectangle';
 import HeatmapLayer from './pages/HeatmapLayer';
 
 import ScalebarView from './pages/Scalebar';
+import CompassView from './pages/Compass';
 
 const RoutesConfig = [
     {
@@ -57,6 +58,12 @@ const RoutesConfig = [
                 img: require('./assets/basic.png'),
                 id: 'Scalebar',
                 component: ScalebarView,
+            },
+            {
+                title: 'Compass',
+                img: require('./assets/basic.png'),
+                id: 'Compass',
+                component: CompassView,
             },
             {
                 title: '底图组件',
