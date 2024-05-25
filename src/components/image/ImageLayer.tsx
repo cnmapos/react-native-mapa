@@ -49,6 +49,9 @@ export type ImageLayerProps = {
      */
     maxZoom?: number;
 
+    /**
+     * style
+     */
     style: ImageLayerStyleProps;
 };
 

@@ -207,6 +207,9 @@ export type LocationEvent = {
  */
 export type LayerSlot = 'bottom' | 'middle' | 'top';
 
+/**
+ * LayerProps
+ */
 export type LayerProps = {
     /**
      * layer唯一标识

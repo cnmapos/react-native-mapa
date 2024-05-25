@@ -1,4 +1,4 @@
-import { FillExtrusionLayerStyleProps, LayerProps } from '..';
+import { FillExtrusionLayerStyleProps, LayerProps } from '../types';
 import Mapbox from '@rnmapbox/maps';
 import { defaultMaxZoom, defaultMinZoom } from '../config';
 
