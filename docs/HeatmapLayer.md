@@ -1,33 +1,42 @@
 ```tsx
-import Mapa, {RasterLayerStyleProps} from 'react-native-mapa';
+import Mapa from 'react-native-mapa';
 // 或者import { MapView, Camera } from 'react-native-mapa';
 
-const style: RasterLayerStyleProps = {
-    rasterOpacity: 0.6,
-};
-const gdwx = {
-    tms: false,
-    tiles: [
-        'https://webst03.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}',
-    ],
-};
 <Mapa.MapView>
     <Mapa.Camera pitch={60} />
-    <Mapa.RasterSource
-        id="test-raster-source"
-        tileSize={256}
-        tms={gdwx.tms}
-        tileUrlTemplates={gdwx.tiles}>
-        <Mapa.RasterLayer
-            id="test-raster-source-layer"
-            sourceId="test-raster-source"
-            style={style}
+    <Mapa.GeoJSONSource
+        id="earthquakes"
+        url="https://www.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson">
+        <Mapa.HeatmapLayer
+            id="earthquakes"
+            sourceId="earthquakes"
+            style={{
+                heatmapRadius: radio,
+                heatmapRadiusTransition: {duration: 1000, delay: 100},
+                heatmapColor: [
+                    'interpolate',
+                    ['linear'],
+                    ['heatmap-density'],
+                    0,
+                    'rgba(33,102,172,0)',
+                    0.2,
+                    'rgb(103,169,207)',
+                    0.4,
+                    'rgb(209,229,240)',
+                    0.6,
+                    'rgb(253,219,199)',
+                    0.8,
+                    'rgb(239,138,98)',
+                    1,
+                    'rgb(178,24,43)',
+                ],
+            }}
         />
-    </Mapa.RasterSource>
+    </Mapa.GeoJSONSource>
 </Mapa.MapView>
 ```
 
-# RasterLayer
+# HeatmapLayer
 
 ## Props
 ### id
@@ -98,6 +107,6 @@ Mapbox filter表达式
 
 ### style
 
-> **style**: [`RasterLayerStyleProps`](RasterLayerStyleProps.md)
+> **style**: [`HeatmapLayerStyleProps`](HeatmapLayerStyleProps.md)
 
-栅格图层渲染样式自定义配置
+热力图层渲染样式自定义配置
