@@ -59,23 +59,33 @@ const RoutesConfig = [
                 component: ScalebarView,
             },
             {
-                title: '底图组件',
-                img: require('./assets/basic.png'),
-            },
-            {
-                title: '控件',
-                img: require('./assets/basic.png'),
-            },
-            {
-                title: 'POI搜索',
-                img: require('./assets/basic.png'),
-                component: POI,
-            },
-            {
                 title: '天气',
                 img: require('./assets/basic.png'),
                 id: 'Weather',
                 component: Weather,
+            },
+            {
+                title: 'POI',
+                img: require('./assets/basic.png'),
+                id: 'POIFinder',
+                component: POI,
+            },
+        ],
+    },
+    {
+        title: '图层',
+        data: [
+            {
+                title: 'Image Source',
+                img: require('./assets/basic.png'),
+                id: 'ImageSource',
+                component: ImageSource,
+            },
+            {
+                title: 'Image Shape Icon',
+                img: require('./assets/basic.png'),
+                id: 'ImageShapeIcon',
+                component: ImageShapeIcon,
             },
         ],
     },
