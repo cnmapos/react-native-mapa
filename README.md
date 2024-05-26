@@ -1,77 +1,137 @@
-# API 文档
+# React Native Map SDK for iOS and Android
 
-https://gitee.com/heavigo/maps/tree/main/docs
+react-native-mapa是一款开源的React Native地图组件，支持iOS和Android。
 
-# UI组件
-使用的是https://reactnativeelements.com/
-支持的图标列表：https://oblador.github.io/react-native-vector-icons/
+## 成为react-native-mapa的核心开发者
+react-native-mapa面相开源，我们欢迎任何感兴趣的开发者加入社区, 进入[留言区](http://xxxx)。
 
-开发时使用@rneui/base的Icon图标,依赖react-native-vector-icons。
-- 使用react-native-vector-icons是需要配置使用xcode配置xcodeproj项目文件，配置流程可查看[官方文档](https://github.com/oblador/react-native-vector-icons?tab=readme-ov-file#bundled-icon-sets)
-- 使用方式如下
+---
+
+<table>
+<tr>
+    <td colspan="2">
+        <img src="./src/assets/demo/mapview.png"/>
+    </td>
+    <td colspan="2">
+        <img src="./src/assets/demo/background.png" />
+    </td>
+    <td colspan="2">
+        <img src="./src/assets/demo/poi.png" />
+    </td>
+</tr>
+<tr>
+</tr>
+
+<tr>
+    <td colspan="2">
+        <img src="./src/assets/demo/draw.png"/>
+    </td>
+    <td colspan="2">
+        <img src="./src/assets/demo/query.png" />
+    </td>
+    <td colspan="2">
+        <img src="./src/assets/demo/poi.png" />
+    </td>
+</tr>
+<tr>
+</tr>
+
+
+</table>
+
+---
+
+## Prerequisite
+react-native-mapa底层依赖mapbox，因此需要提供`Mapbox Access Token`。
+
+## Dependencies
+
+- [node](https://nodejs.org)
+- [npm](https://www.npmjs.com/)
+- [React Native](https://facebook.github.io/react-native/) (0.70+)
+
+## Installation
+
+查看安装文档[Installation](INSTALL.md)
+
+## Run Project
+
+#### IOS
 ```
-import { Icon } from '@rneui/themed';
+# YARN
+yarn run ios
 
-<Icon name="accessibility" type={'ionicon'} size={30} color="#900" />
-<Icon name="accessibility-outline" type={'ionicon'} size={30} color="#900" />
+# NPM
+npm run ios
 ```
-- 如上代码在使用的前提是在项目中加入FontAwesome字体，要使用其他字体时也需要做相应的配置，已支持的字体以及代码可查看[react-native-vector-icons directory](https://oblador.github.io/react-native-vector-icons/)
--- 增加新的字体之后，需要执行以下指令之后才能正常显示图标
+#### Android
 ```
-yarn install
-cd ios
-pod install
-```
-Icon支持的字体库包含
-```
-export declare type IconType = 'material' | 'material-community' | 'simple-line-icon' | 'zocial' | 'font-awesome' | 'octicon' | 'ionicon' | 'foundation' | 'evilicon' | 'entypo' | 'antdesign' | 'font-awesome-5' | string;
+# YARN
+yarn run android
+
+# NPM
+npm run android
 
 ```
-
-# 文档生成
-
-`typedoc`API 文档生成使用`typedoc`，生成结果为静态 html 文件，可直接执行。如果为组件添加注释，可查看[官网](https://typedoc.org/guides/overview/)。
-
-执行命令`yarn run doc:gen`生成 API 文档。执行命令`yarn run doc:start`启动本地服务查看生成的 API 文档。
-
-如果想生成 markdown 文件，安装插件 typedoc-plugin-markdown
-
+## Example
 ```
-npm install typedoc-plugin-markdown@next --save-dev
+import Mapa from 'react-native-mapa';
+import {SafeAreaView, StyleSheet} from 'react-native';
+import React from 'react';
+
+function Mapview({}: any): React.JSX.Element {
+    const projection = 'mercator';
+    const styleID = 'MapboxVector';
+
+    return (
+        <SafeAreaView style={styles.container}>
+            <Mapa.MapView projection={projection} style={styleID}>
+                <Mapa.Camera />
+                <Mapa.Compass />
+            </Mapa.MapView>
+        </SafeAreaView>
+    );
+}
+
+export default Mapview;
+
+const styles = StyleSheet.create({
+    container: {
+        height: '100%',
+    },
+});
 ```
 
-并在 typedoc.json 文件添加插件配置项:
+## DOCUMENTTATION
+#### Components
+- [Mapview](./docs//MapView.md)
+- [Camera](./docs//Camera.md)
+- [Background](./docs/Background.md)?
+- [Location](./docs//LineLayer.md)
+- [ZoomInOut](./docs/ZoomInOut.md)
+- [Compass](./docs/Compass.md)？
+- [Scalebar](./docs/Scalebar.md)？
+- [POIFinder](./docs/POIFinder.md)
+- [Weather](./docs//Weather.md)？
+- [Images](./docs/image/Images.md)
+- [Image](./docs/image/Image.md)
+- [Marker](./docs/Marker.md)
+- [PolylinePainter](./docs/PolylinePainter.md)？
+- [PolygonPainter](./docs/PolygonPainter.md)？
+- [CirclePainter](./docs/CirclePainter.md)？
+- [RectanglePainter](./docs/RectanglePainter.md)？
 
-```
-"plugin": ["typedoc-plugin-markdown"]
-```
+#### Sources
+- [VectorSource](./docs/VectorSource.md)
+- [RasterSource](./docs/RasterSource.md)
+- [GeoJSONSource](./docs/GeoJSONSource.md)
+- [ImageSource](./docs/image/ImageSource.md)
 
-#执行指令
-
--   `yarn run doc:gen`: 热启动 html 文档生成
--   `yarn run doc:`: 启动文档本地服务，可在浏览器查看
--   `yarn run doc:start`: 生成文档并启动本地服务
--   `yarn run doc:md`: 生成 markdown 格式文档，保存在 specs 目录
-
-# amap web service API
-目前通过typescript定义的服务接口以及数据结构如下(目录types/amap):
-- poi: POI周边搜索、POI关键词搜索、多边形搜索、根据POI ID搜索
-- geo: 地理位置编码、逆地理位置编码
-- tip: POI搜索提示
-- ip: 根据IP搜索地址信息
-- event: 实时事件搜索
-- district: 行政区域搜索
-- weather: 实时天气、天气预报
-
-在开发过程中当需要用到以上数据时，需要在modules/amap目录下实现具体接口，目前已实现接口：
-- poi: POI周边搜索
-
-# 打包构建
-使用react-native-builder-bob打包构建项目:https://callstack.github.io/react-native-builder-bob/build
-
-# Issues
--   1. 设置默认中心坐标
--   2. 支持地图的源梳理
--   3. 目前的demo方式初次构建的index还是在根目录下，暂时在根目录下新建index.js文件引入demo/index.js
--   4. 执行typedoc报"Cannot find module 'react-native-mapa' or its corresponding type declarations."错误
--   5. 项目的路径最好不要带空格、否则在本地构建时会出问题
+#### Layers
+- [LineLayer](./docs/LineLayer.md)
+- [FillLayer](./docs/FillLayer.md)
+- [SymbolLayer](./docs/SymbolLayer.md)
+- [RasterLayer](./docs/RasterLayer.md)
+- [CircleLayer](./docs/CircleLayer.md)
+- [FillExtrusionLayer](./docs/FillExtrusionLayer.md)
+- [ModelLayer](./docs/ModelLayer.md)

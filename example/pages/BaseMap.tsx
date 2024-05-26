@@ -1,21 +1,14 @@
 import Mapa from 'react-native-mapa';
-import {SafeAreaView} from 'react-native';
+import {SafeAreaView, StyleSheet} from 'react-native';
 import React from 'react';
 
-function PreView({navigation}: any): React.JSX.Element {
+function Mapview({}: any): React.JSX.Element {
     const projection = 'mercator';
     const styleID = 'MapboxVector';
 
-    const onMapIdle = (e: any) => {
-        console.log(e);
-    };
-
     return (
-        <SafeAreaView style={{height: '100%'}}>
-            <Mapa.MapView
-                projection={projection}
-                style={styleID}
-                onMapIdle={onMapIdle}>
+        <SafeAreaView style={styles.container}>
+            <Mapa.MapView projection={projection} style={styleID}>
                 <Mapa.Camera />
                 <Mapa.Compass />
             </Mapa.MapView>
@@ -23,4 +16,10 @@ function PreView({navigation}: any): React.JSX.Element {
     );
 }
 
-export default PreView;
+export default Mapview;
+
+const styles = StyleSheet.create({
+    container: {
+        height: '100%',
+    },
+});

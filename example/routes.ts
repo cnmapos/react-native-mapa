@@ -84,6 +84,29 @@ const RoutesConfig = [
                 id: 'Weather',
                 component: Weather,
             },
+            {
+                title: 'POI',
+                img: require('./assets/basic.png'),
+                id: 'POIFinder',
+                component: POI,
+            },
+        ],
+    },
+    {
+        title: '图层',
+        data: [
+            {
+                title: 'Image Source',
+                img: require('./assets/basic.png'),
+                id: 'ImageSource',
+                component: ImageSource,
+            },
+            {
+                title: 'Image Shape Icon',
+                img: require('./assets/basic.png'),
+                id: 'ImageShapeIcon',
+                component: ImageShapeIcon,
+            },
         ],
     },
     {

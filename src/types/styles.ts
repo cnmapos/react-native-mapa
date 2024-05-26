@@ -426,6 +426,9 @@ type AnchorEnumValues = 'map' | 'viewport';
 
 type Enum<EnumType, EnumValues> = EnumType | EnumValues;
 
+/**
+ * FillLayerStyleProps
+ */
 export interface FillLayerStyleProps {
     /**
      * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
@@ -501,6 +504,10 @@ export interface FillLayerStyleProps {
      */
     fillEmissiveStrengthTransition?: Transition;
 }
+
+/***
+ * LineLayerStyleProps
+ */
 export interface LineLayerStyleProps {
     /**
      * The display of line endings.
@@ -629,6 +636,10 @@ export interface LineLayerStyleProps {
      */
     lineEmissiveStrengthTransition?: Transition;
 }
+
+/**
+ * SymbolLayerStyleProps
+ */
 export interface SymbolLayerStyleProps {
     /**
      * Label placement relative to its geometry.
@@ -1050,6 +1061,10 @@ export interface SymbolLayerStyleProps {
      */
     iconImageCrossFadeTransition?: Transition;
 }
+
+/**
+ * CircleLayerStyleProps
+ */
 export interface CircleLayerStyleProps {
     /**
      * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
@@ -1198,6 +1213,10 @@ export interface HeatmapLayerStyleProps {
      */
     heatmapOpacityTransition?: Transition;
 }
+
+/**
+ * FillExtrusionLayerStyleProps
+ */
 export interface FillExtrusionLayerStyleProps {
     /**
      * Whether this layer is displayed.
@@ -1393,6 +1412,10 @@ export interface FillExtrusionLayerStyleProps {
      */
     fillExtrusionCutoffFadeRange?: Value<number>;
 }
+
+/**
+ * RasterLayerStyleProps
+ */
 export interface RasterLayerStyleProps {
     /**
      * Whether this layer is displayed.
@@ -1540,6 +1563,10 @@ export interface HillshadeLayerStyleProps {
      */
     hillshadeAccentColorTransition?: Transition;
 }
+
+/**
+ * ModelLayerStyleProps
+ */
 export interface ModelLayerStyleProps {
     /**
      * Whether this layer is displayed.

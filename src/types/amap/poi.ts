@@ -286,7 +286,7 @@ export type POIObject = Pick<Address, 'address'> &
 /**
  * 周边POI信息
  */
-export interface POIData {
+export type POIData = {
     count: number;
     suggestion: {
         keywords: string[];
@@ -303,7 +303,7 @@ export interface POIData {
             })[];
     };
     pois: POIObject[];
-}
+};
 
 /**
  * POI搜索接口

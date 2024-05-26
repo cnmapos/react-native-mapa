@@ -15,11 +15,6 @@ export type WeatherProps = {
      */
     akey: string;
     /**
-     * 定位图标是否在地图上显示
-     * @defaultValue true
-     */
-    visible?: boolean;
-    /**
      * 天气请求接口扩展
      * 默认实现了amap的weather rest服务请求
      */
@@ -51,7 +46,6 @@ const Weather = (props: WeatherProps) => {
         request = new AMapWeatherRequest({
             key: akey,
         }),
-        visible = true,
         detailEle: DettailEle = Detail,
     } = props;
     const containerStyle: StyleProp<ViewStyle> = props.style
@@ -95,7 +89,7 @@ const Weather = (props: WeatherProps) => {
         setDetailVisible(false);
     };
 
-    return visible ? (
+    return (
         <View style={containerStyle}>
             <Text onPress={onOpen}>
                 {realWeather?.[0]?.city}:{realWeather[0]?.temperature}:{realWeather[0]?.weather}
@@ -104,7 +98,7 @@ const Weather = (props: WeatherProps) => {
                 <DettailEle data={{ lives: realWeather, forecasts: forecastWeather }} onClose={onClose} />
             </BottomSheet>
         </View>
-    ) : null;
+    );
 };
 
 export default Weather;
