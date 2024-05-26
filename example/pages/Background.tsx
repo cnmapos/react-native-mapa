@@ -126,7 +126,7 @@ function PreView({navigation}: any): React.JSX.Element {
                         list={backgroundList}
                         defaultValue={backgroundList[0].id}
                         // renderPanel={renderCustomPanel}
-                        renderItem={renderListItem}
+                        // renderItem={renderListItem}
                     />
                     <Mapa.Camera zoom={zoom} center={center} />
                 </Slot>
