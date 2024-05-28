@@ -1,10 +1,8 @@
-# Type POIData
-
-> **POIData**: `Object`
+# POIData
 
 周边POI信息
 
-## Type declaration
+## Props
 
 ### count
 
@@ -25,7 +23,3 @@
 ### pois
 
 > **pois**: [`POIObject`](POIObject.md)[]
-
-## Source
-
-poi.ts:289

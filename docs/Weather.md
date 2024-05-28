@@ -4,7 +4,7 @@ import Mapa from 'react-native-mapa';
 
  <Mapa.MapView>
     <Mapa.Camera />
-    <Mapa.Weather akey={'64bdebe6239a3a398443b2af4ba6085e'} />
+    <Mapa.Weather akey={'XXX'} />
 </Mapa.MapView>
 ```
 
@@ -18,7 +18,7 @@ Weather REST请求key
 
 ### request?
 
-> **`optional`** **request**: [`WeatherReuqest`](../interfaces/WeatherReuqest.md)
+> **`optional`** **request**: [`WeatherReuqest`](WeatherReuqest.md)
 
 天气请求接口扩展
 默认实现了amap的weather rest服务请求

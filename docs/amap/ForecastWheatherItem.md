@@ -1,16 +1,10 @@
-**react-native-mapa** • [Readme](../README.md) \| [API](../globals.md)
-
-***
-
-[react-native-mapa](../README.md) / ForecastWheatherItem
-
-# Type alias: ForecastWheatherItem
+# ForecastWheatherItem
 
 > **ForecastWheatherItem**: `Object`
 
 未来天气详细项
 
-## Type declaration
+## Props
 
 ### date
 
@@ -71,7 +65,3 @@
 > **nightpower**: `string`
 
 晚上风力
-
-## Source
-
-weather.ts:66

@@ -42,6 +42,9 @@ export type Address = {
     address: string;
 };
 
+/**
+ * 接口请求公共参数
+ */
 export type ParamsBase = {
     /**
      * 查询key
@@ -54,6 +57,9 @@ export type ParamsBase = {
     sig?: string;
 };
 
+/**
+ * ResBaseInfo
+ */
 export type ResBaseInfo = {
     /**
      * 1：成功；0：失败
@@ -83,4 +89,7 @@ export type Page = {
     offset: number;
 };
 
+/**
+ * Request返回结果
+ */
 export type ResResult<T> = T & ResBaseInfo;

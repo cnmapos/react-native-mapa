@@ -1,16 +1,10 @@
-**react-native-mapa** • [Readme](../README.md) \| [API](../globals.md)
+# WeatherParams
 
-***
+> **WeatherParams**: [`ParamsBase`](ParamsBase.md) & `Object`
 
-[react-native-mapa](../README.md) / WeatherParams
+天气查询参数, Object属性定义在Props
 
-# Type alias: WeatherParams
-
-> **WeatherParams**: `ParamsBase` & `Object`
-
-天气查询参数
-
-## Type declaration
+## Props
 
 ### city
 
@@ -34,7 +28,3 @@ all:返回预报天气
 ```ts
 base
 ```
-
-## Source
-
-weather.ts:6

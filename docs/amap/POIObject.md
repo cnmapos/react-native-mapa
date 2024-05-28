@@ -1,4 +1,4 @@
-# Type POIObject
+# POIObject
 
 > **POIObject**: `Pick`\<`Address`, `"address"`\> & `Pick`\<`District`, `"adcode"`\> & `Object`
 

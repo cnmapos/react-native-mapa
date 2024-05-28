@@ -106,6 +106,9 @@ export type ForecastWheatherItem = {
     nightpower: string;
 };
 
+/**
+ * WeatherData
+ */
 export type WeatherData = {
     lives?: RealWeatherObject[];
     forecasts?: ForecastWheatherObject[];
@@ -115,5 +118,10 @@ export type WeatherData = {
  * 天气接口
  */
 export interface WeatherReuqest {
+    /**
+     * 获取天气预报信息
+     * @param {WeatherParams} params 请求参数
+     * @returns {Promise<ResResult<WeatherData>>}
+     */
     weather(params: WeatherParams): Promise<ResResult<WeatherData>>;
 }
