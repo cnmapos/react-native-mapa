@@ -27,7 +27,29 @@ ScaleBar Props
 
 > **`optional`** **options**: `Options`
 
-配置项可选，默认值参见 `defaultOptions`
+options 可选配置中类型修饰如下：
+
+```ts
+type Options = {
+    maxWidth?: number;
+    unit?: Unit;
+};
+```
+
+maxWidth: 表示比例尺的最大宽度（注意并不是渲染的长度，比例尺的渲染具体长度是根据比例尺计算得到的，maWidth 用于指定上限）.` maxWidth default 100`
+
+unit: 表示 Scalebar 计算方式 可选值为 `'imperial' | 'metric' | 'nautical'`, 默认 `'metric'` .
+
+> 配置项可选，默认值参见 `defaultOptions`
+
+**defaultOptions** 值如下：
+
+```ts
+{
+    maxWidth: 100,
+    unit: 'metric',
+}
+```
 
 ## Example
 
