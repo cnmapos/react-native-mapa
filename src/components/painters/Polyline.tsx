@@ -1,5 +1,5 @@
 import Shape from './Shape';
-import { FillLayerStyleProps, LineLayerStyleProps, Position, SymbolLayerStyleProps } from '@/types';
+import { LineLayerStyleProps, Position, SymbolLayerStyleProps } from '@/types';
 import { PolylinePainter } from '../../modules/painters/PolylinePainter';
 import { createLineFeature, createPointFeature } from '../../utils/common';
 import { ReactElement } from 'react';
@@ -12,9 +12,9 @@ export type PolylineProps = {
     id: number | string;
     children?: ReactElement | ReactElement[];
     lineStyle?: LineLayerStyleProps;
-    symbolStyle?: SymbolLayerStyleProps;
+    outCircleStyle?: SymbolLayerStyleProps;
+    innerCircleStyle?: SymbolLayerStyleProps;
     anchorStyle?: SymbolLayerStyleProps;
-    fillStyle?: FillLayerStyleProps;
     onFinish?: (e: Position[]) => void;
     onError?: (e: { message: string }) => void;
 };
@@ -23,7 +23,7 @@ export type PolylineProps = {
   @category Component
  */
 const Polyline = (props: PolylineProps) => {
-    const { id, onError, onFinish } = props;
+    const { id, onError, onFinish, ...styles } = props;
     const paitner = new PolylinePainter();
 
     const toFeatures = async (points: Position[]) => {
@@ -38,7 +38,9 @@ const Polyline = (props: PolylineProps) => {
         return drawingFeatures;
     };
 
-    return <Shape id={id} paintner={paitner} toFeatures={toFeatures} onError={onError} onFinish={onFinish} />;
+    return (
+        <Shape id={id} {...styles} paintner={paitner} toFeatures={toFeatures} onError={onError} onFinish={onFinish} />
+    );
 };
 
 export default Polyline;

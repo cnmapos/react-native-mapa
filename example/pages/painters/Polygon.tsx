@@ -28,7 +28,7 @@ const Polygon = () => {
     return (
         <Wrapper>
             <Mapa.Camera zoom={10} />
-            <Mapa.PolygnPainter
+            <Mapa.PolygonPainter
                 id={'test'}
                 onFinish={onFinish}
                 onError={onError}

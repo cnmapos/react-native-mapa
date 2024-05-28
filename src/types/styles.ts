@@ -1172,6 +1172,10 @@ export interface CircleLayerStyleProps {
      */
     circleEmissiveStrengthTransition?: Transition;
 }
+
+/**
+ * HeatmapLayerStyleProps
+ */
 export interface HeatmapLayerStyleProps {
     /**
      * Whether this layer is displayed.

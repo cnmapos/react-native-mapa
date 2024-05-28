@@ -11,7 +11,7 @@ ZoomInOut
 
 ## Props
 
-### step?
+### step
 
 > **`optional`** **step**: `number`
 
@@ -23,7 +23,7 @@ ZoomInOut
 1
 ```
 
-### duration?
+### duration
 
 > **`optional`** **duration**: `number`
 
@@ -35,7 +35,7 @@ ZoomInOut
 100
 ```
 
-### style?
+### style
 
 > **`optional`** **style**: `PositionStyle`
 

@@ -37,10 +37,9 @@ POI请求延迟周期
 
 ### request
 
-> **`optional`** **request**: [`POIRequest`](./POIRequest.md)
+> **`optional`** **request**: [`POIRequest`](POIRequest.md)
 
-POI请求接口扩展
-默认实现了amap的web rest服务请求，支持实现POI接口自定义扩展
+POI请求接口定义：默认实现了amap的web rest服务请求，支持按POI接口自定义扩展
 
 ### listEle()
 
@@ -64,7 +63,7 @@ POI结果列表自定义组件
 
 • **props\.count**: `number`
 
-• **props\.pois**: [`POIObject`](./amap/POIObject.md)[]
+• **props\.pois**: [`POIObject`](./amap/POIObject.md)
 
 • **props\.keyboards**: `string`
 

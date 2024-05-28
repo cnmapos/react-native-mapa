@@ -29,7 +29,7 @@ export { default as ModelLayer, type ModelLayerProps } from './components/ModelL
 export { default as HeatmapLayer, type HeatmapLayerProps } from './components/HeatmapLayer';
 // export { default as Scalebar } from './components/Scalebar';
 export { default as PolylinePainter, type PolylineProps } from './components/painters/Polyline';
-export { default as PolygnPainter, type PolygonProps } from './components/painters/Polygon';
+export { default as PolygonPainter, type PolygonProps } from './components/painters/Polygon';
 export { default as CirclePainter, type CircleProps } from './components/painters/Circle';
 export { default as RectanglePainter, type RectangleProps } from './components/painters/Rectangle';
 

@@ -12,7 +12,6 @@ export type PolygonProps = {
     id: number | string;
     children?: ReactElement | ReactElement[];
     lineStyle?: LineLayerStyleProps;
-    symbolStyle?: SymbolLayerStyleProps;
     outCircleStyle?: SymbolLayerStyleProps;
     innerCircleStyle?: SymbolLayerStyleProps;
     anchorStyle?: SymbolLayerStyleProps;
@@ -25,7 +24,7 @@ export type PolygonProps = {
   @category Component
  */
 const Polygon = (props: PolygonProps) => {
-    const { id, onError, onFinish } = props;
+    const { id, onError, onFinish, ...styles } = props;
     const painter = new PolygonPainter();
 
     const toFeatures = async (points: Position[]) => {
@@ -43,7 +42,9 @@ const Polygon = (props: PolygonProps) => {
         return drawingFeatures;
     };
 
-    return <Shape id={id} paintner={painter} toFeatures={toFeatures} onError={onError} onFinish={onFinish} />;
+    return (
+        <Shape id={id} {...styles} paintner={painter} toFeatures={toFeatures} onError={onError} onFinish={onFinish} />
+    );
 };
 
 export default Polygon;

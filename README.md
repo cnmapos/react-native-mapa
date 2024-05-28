@@ -116,10 +116,6 @@ const styles = StyleSheet.create({
 - [Images](./docs/image/Images.md)
 - [Image](./docs/image/Image.md)
 - [Marker](./docs/Marker.md)
-- [PolylinePainter](./docs/PolylinePainter.md)？
-- [PolygonPainter](./docs/PolygonPainter.md)？
-- [CirclePainter](./docs/CirclePainter.md)？
-- [RectanglePainter](./docs/RectanglePainter.md)？
 
 #### Sources
 - [VectorSource](./docs/VectorSource.md)
@@ -135,3 +131,9 @@ const styles = StyleSheet.create({
 - [CircleLayer](./docs/CircleLayer.md)
 - [FillExtrusionLayer](./docs/FillExtrusionLayer.md)
 - [ModelLayer](./docs/ModelLayer.md)
+
+#### Draw
+- [PolylinePainter](./docs/painter/PolylinePainter.md)
+- [PolygonPainter](./docs/painter/PolygonPainter.md)
+- [CirclePainter](./docs/painter/CirclePainter.md)
+- [RectanglePainter](./docs/painter/RectanglePainter.md)

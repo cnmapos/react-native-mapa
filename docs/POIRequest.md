@@ -6,7 +6,7 @@ POI搜索接口
 
 ### searchByKey()
 
-> **searchByKey**(`params`): `Promise`\<`ResResult`\<[`POIData`](POIData.md)\>\>
+> **searchByKey**(`params`): `Promise`\<`ResResult`\<[`POIData`](./amap/POIData.md)\>\>
 
 关键词搜索
 
