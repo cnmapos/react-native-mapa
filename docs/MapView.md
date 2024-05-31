@@ -11,7 +11,7 @@ import Mapa from 'react-native-mapa';
 ## Props
 ### projection?
 
-> **`optional`** **projection**: [`Projection`](./Projection.md)
+> **`optional`** **projection**: `"mercator"` \| `"globe"`
 
 坐标投影系
 
@@ -20,6 +20,8 @@ import Mapa from 'react-native-mapa';
 > **`optional`** **style**: `'AmapSatellite' | 'AmapSatellite' | 'MapboxVector' | 'MapboxSatellite'`
 
 地图样式，支持高德矢量地图、高德卫星图、Mapbox矢量地图、mapbox卫星地图，默认显示高德矢量地图。
+
+如果想自定义底图，可通过[`Background`](Background.md)组件实现。
 
 ### onPress()
 
@@ -33,7 +35,7 @@ import Mapa from 'react-native-mapa';
 
 点击位置信息
 
-#### Example
+##### Example
 
 ```
 {
@@ -80,7 +82,6 @@ import Mapa from 'react-native-mapa';
 
 获取地图视图中心坐标```[lng, lat]```
  #### Returns ```Promise<Position>```
-#### arguments
 
 ### getPointInView(location: Position): Promise```<Position>```;
 根据经纬度获取视图坐标
@@ -97,6 +98,7 @@ import Mapa from 'react-native-mapa';
  | Name | Type | Required | Description  |
 | ---- | :--: | :------: | :----------: |
 | location | `Position` | ✓ | 视图坐标[x, y] |
+
 ### setCenter(location: Position);
 设置中心坐标
  #### Returns void
@@ -104,6 +106,25 @@ import Mapa from 'react-native-mapa';
  | Name | Type | Required | Description  |
 | ---- | :--: | :------: | :----------: |
 location | `Position` | ✓ | 经纬度坐标[lng, lat] |
+
+### setSourceVisibility(visible: boolean, sourceId: string, sourceLayerId: string | null): void;
+设置source是否可见
+#### Returns void
+#### arguments
+ | Name | Type | Required | Description  |
+| ---- | :--: | :------: | :----------: |
+visible | `boolean` | ✓ | 是否可见 |
+sourceId | `string` | ✓ | 来源id |
+sourceLayerId | `string` |  | 来源图层id，如果为null则设置所有图层可见性
+
+### zoomTo(step: number, duration?: number): void;
+#### Returns void
+#### arguments
+ | Name | Type | Required | Description  |
+| ---- | :--: | :------: | :----------: |
+step | `number` | ✓ | zoom步长, 例如1表示zoom+1,-1表示zoom - 1 |
+duration | `number` |  | 动画过渡时间，默认100毫秒 |
+
 ### flyTo(center: Position, duration?: number)
 设置中心坐标并飞行到该位置
  #### Returns void

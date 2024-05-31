@@ -1,11 +1,12 @@
 import { Button, Icon } from '@rneui/themed';
 import Mapbox from '@rnmapbox/maps';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
-import { LocationEvent, PositionSlot, PositionStyle } from '..';
+import { LocationEvent, PositionSlot } from '..';
 import { buttonSize } from '../config';
 import { useContext } from 'react';
 import { MapContext } from '../modules/MapContext';
 import React from 'react';
+import MSlot from './slots/MSlot';
 
 /**
  * Location props
@@ -16,16 +17,19 @@ export type LocationProps = {
      * 定位图标是否在地图上显示
      * @defaultValue true
      */
-    visible: boolean;
+    visible?: boolean;
     /**
-     * 默认显示在屏幕右下角，可设置style自定义位置
+     * 设置定位图标显示位置
+     *
+     * @defaultValue 'right'
+     *
      * @example
      * ```
      * { right: 5, bottom: 5 }
-     * 或者 'right-top'
+     * 或者 'right'
      * ```
      */
-    style?: PositionStyle | PositionSlot;
+    style?: PositionSlot | StyleProp<ViewStyle>;
     /**
      * 初始化时自动定位
      *
@@ -51,11 +55,11 @@ export type LocationProps = {
  * @category Component
  */
 const Location = (props: LocationProps) => {
-    const { visible = true, locateWhenInit = false, onChange } = props;
+    const { visible = true, locateWhenInit = false, onChange, style = 'right' } = props;
     const { map } = useContext(MapContext);
-    const containerStyle: StyleProp<ViewStyle> = props.style
-        ? { ...(props.style as any), position: 'absolute' }
-        : styles.container;
+    // const containerStyle: StyleProp<ViewStyle> = props.style
+    //     ? { ...(props.style as any), position: 'absolute' }
+    //     : styles.container;
 
     const locate = async () => {
         const location = await map?.locationManager.getLastKnownLocation();
@@ -81,14 +85,14 @@ const Location = (props: LocationProps) => {
         await locate();
     };
     return (
-        <View style={containerStyle}>
+        <MSlot style={style}>
             <View>
                 <Button type="outline" style={styles.button} size="md" onPress={onPress}>
                     <Icon name="locate" type="ionicon" size={buttonSize} />
                 </Button>
             </View>
             <Mapbox.LocationPuck visible={visible} puckBearing={'heading'} puckBearingEnabled={true} />
-        </View>
+        </MSlot>
     );
 };
 

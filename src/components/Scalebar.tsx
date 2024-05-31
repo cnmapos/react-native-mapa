@@ -1,8 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { MapContext } from '../modules/MapContext';
 import React from 'react';
 import { isNumber } from 'lodash';
+import MSlot from './slots/MSlot';
+import { PositionSlot } from '..';
 /**
  * ScaleBar Props
  * @category Props
@@ -16,6 +18,19 @@ export type ScalebarProps = {
      * 配置项可选，默认值参见 `defaultOptions`
      */
     options?: Options;
+
+    /**
+     * 设置显示位置
+     *
+     * @defaultValue 'bottom'
+     *
+     * @example
+     * ```
+     * { right: 5, bottom: 5 }
+     * 或者 'right'
+     * ```
+     */
+    style?: PositionSlot | StyleProp<ViewStyle>;
 };
 
 // 支持的类型
@@ -175,7 +190,13 @@ const Scalebar = (props: ScalebarProps) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [map]);
 
-    return isShow && <ScaleIndicator scaleInfo={scaleInfo} pixLayoutInfo={pixLayoutInfo} />;
+    return (
+        isShow && (
+            <MSlot style={props.style || 'bottom'}>
+                <ScaleIndicator scaleInfo={scaleInfo} pixLayoutInfo={pixLayoutInfo} />
+            </MSlot>
+        )
+    );
 };
 
 type ScaleIndicatorProps = {
@@ -190,12 +211,9 @@ type ScaleIndicatorProps = {
 };
 
 const ScaleIndicator = ({ scaleInfo }: ScaleIndicatorProps) => {
-    const { width, scale } = scaleInfo;
+    const { width = 40, scale } = scaleInfo;
     const styles = StyleSheet.create({
         container: {
-            position: 'absolute',
-            bottom: 16,
-            left: 16,
             width: width,
             borderRadius: 4,
             color: 'white',

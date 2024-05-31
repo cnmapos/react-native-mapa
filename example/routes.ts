@@ -3,6 +3,7 @@ import Caemra from './pages/Camera';
 import Weather from './pages/Weather';
 import Background from './pages/Background';
 import ZoomInOut from './pages/ZoomInOut';
+import Location from './pages/Location';
 import POI from './pages/POI';
 import ImageSource from './pages/ImageSource';
 import ImageShapeIcon from './pages/ImageShapeIcon';
@@ -52,6 +53,12 @@ const RoutesConfig = [
                 img: require('./assets/basic.png'),
                 id: 'ZoomInOut',
                 component: ZoomInOut,
+            },
+            {
+                title: '定位',
+                img: require('./assets/basic.png'),
+                id: 'Location',
+                component: Location,
             },
             {
                 title: 'Scalebar',

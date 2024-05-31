@@ -3,7 +3,7 @@ import Mapa from 'react-native-mapa';
 // 或者import { MapView, Camera } from 'react-native-mapa';
 
 <Mapa.MapView>
-    <Mapa.Location locateWhenInit={true} visible={true} style="right-bottom" />
+    <Mapa.Location locateWhenInit={true} visible={true} style="right" />
 </Mapa.MapView>
 ```
 

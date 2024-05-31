@@ -1,8 +1,11 @@
-import { View, StyleSheet, Image, Pressable, Dimensions } from 'react-native';
+import { View, StyleSheet, Image, Pressable, Dimensions, StyleProp, ViewStyle } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { BottomSheet, Text, Header, Button, Avatar } from '@rneui/themed';
 import { useState, useContext, useEffect, useImperativeHandle, forwardRef, ReactNode } from 'react';
 import { MapContext } from '../modules/MapContext';
+import { PositionSlot } from '..';
+import MSlot from './slots/MSlot';
+import { buttonSize } from '../config';
 
 const screenWidth = Dimensions.get('window').width;
 const itemWidth = screenWidth * 0.25; // 25% 的屏幕宽度
@@ -39,6 +42,20 @@ export type BackgroundProps = {
      * @defaultValue 默认包含高德矢量、高德卫星、Mapbox矢量、Mapbox卫星图
      */
     list: BackgroundListItem[];
+
+    /**
+     * 设置定位图标显示位置
+     *
+     * @defaultValue 'right'
+     *
+     * @example
+     * ```
+     * { right: 5, bottom: 5 }
+     * 或者 'right'
+     * ```
+     */
+    style?: PositionSlot | StyleProp<ViewStyle>;
+
     /**
      * 背景图层列表
      * @defaultValue 高德矢量
@@ -136,6 +153,8 @@ export const defaultBackgroundList: BackgroundListItem[] = [
   @category Component
  */
 const Background = forwardRef((props: BackgroundProps, ref) => {
+    const { style = 'right' } = props;
+
     const [detailVisible, setDetailVisible] = useState(false);
 
     const onOpen = async () => {
@@ -208,7 +227,11 @@ const Background = forwardRef((props: BackgroundProps, ref) => {
 
     return (
         <View>
-            <Icon name="layers-outline" style={styles.icon} onPress={onOpen} />
+            <MSlot style={style}>
+                <Button type="outline" style={backgroundPanelStyles.button} size="md" onPress={onOpen}>
+                    <Icon name="layers-outline" size={buttonSize} />
+                </Button>
+            </MSlot>
             <BottomSheet
                 onBackdropPress={backDropClickHandle}
                 modalProps={{}}
@@ -433,5 +456,8 @@ const backgroundPanelStyles = StyleSheet.create({
     backgroundItem: {
         width: itemWidth,
         marginBottom: 10,
+    },
+    button: {
+        backgroundColor: '#fff',
     },
 });

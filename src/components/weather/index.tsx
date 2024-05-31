@@ -1,9 +1,17 @@
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
-import { ForecastWheatherObject, PositionStyle, RealWeatherObject, WeatherData, WeatherReuqest } from '../../mapa';
+import {
+    ForecastWheatherObject,
+    MSlotInterface,
+    PositionSlot,
+    RealWeatherObject,
+    WeatherData,
+    WeatherReuqest,
+} from '../../mapa';
 import React, { useContext, useState } from 'react';
-import { BottomSheet, Text } from '@rneui/themed';
+import { BottomSheet, Button, Text } from '@rneui/themed';
 import { AMapGeoRequest, AMapWeatherRequest, MapContext } from '../../mapa';
 import Detail from './Detail';
+import MSlot from '../slots/MSlot';
 /**
  * Weather props
  *
@@ -24,10 +32,10 @@ export type WeatherProps = {
      * @example
      * ```
      * { right: 5, bottom: 5 }
-     * 或者 'right-top'
+     * 或者 'right'
      * ```
      */
-    style?: PositionStyle; // | PositionSlot;
+    style?: PositionSlot | StyleProp<ViewStyle>;
     /**
      * 自定义天气预报详情组件
      * @param {WeatherData} props
@@ -40,6 +48,7 @@ export type WeatherProps = {
   @category Component
  */
 const Weather = (props: WeatherProps) => {
+    const { style } = props;
     const { map } = useContext(MapContext);
     const {
         akey,
@@ -48,13 +57,11 @@ const Weather = (props: WeatherProps) => {
         }),
         detailEle: DettailEle = Detail,
     } = props;
-    const containerStyle: StyleProp<ViewStyle> = props.style
-        ? { position: 'absolute', ...props.style }
-        : styles.container;
     const geoCodeRequest = new AMapGeoRequest({ key: akey });
     const [realWeather, setRealWeather] = useState<RealWeatherObject[]>([]);
     const [forecastWeather, setForecastWeather] = useState<ForecastWheatherObject[]>([]);
     const [detailVisible, setDetailVisible] = useState(false);
+    const slotRef = React.useRef<MSlotInterface>(null);
 
     const onRequest = async ({ type = 0 }) => {
         const center = await map.getCenter();
@@ -67,8 +74,11 @@ const Weather = (props: WeatherProps) => {
         if (type) {
             setForecastWeather(result.forecasts || []);
         } else {
+            console.log('weather', result.lives);
             setRealWeather(result.lives || []);
         }
+
+        slotRef.current?.refresh();
     };
 
     map.on('loaded', () => {
@@ -90,10 +100,13 @@ const Weather = (props: WeatherProps) => {
     };
 
     return (
-        <View style={containerStyle}>
-            <Text onPress={onOpen}>
-                {realWeather?.[0]?.city}:{realWeather[0]?.temperature}:{realWeather[0]?.weather}
-            </Text>
+        <View>
+            <MSlot ref={slotRef} style={style}>
+                <Button type="outline" style={styles.button} size="md" onPress={onOpen}>
+                    <Text>{(realWeather[0]?.temperature || '?') + '℃'}</Text>
+                </Button>
+            </MSlot>
+
             <BottomSheet modalProps={{}} isVisible={detailVisible}>
                 <DettailEle data={{ lives: realWeather, forecasts: forecastWeather }} onClose={onClose} />
             </BottomSheet>
@@ -110,6 +123,9 @@ const styles = StyleSheet.create({
         bottom: 20,
     },
     header: {
+        backgroundColor: '#fff',
+    },
+    button: {
         backgroundColor: '#fff',
     },
 });
