@@ -17,7 +17,7 @@ const backgroundList: BackgroundListItem[] = [
 <Mapa.MapView>
     <Mapa.Background
         list={backgroundList}
-        defaultValue={backgroundList[0].id}
+        backgroundId={backgroundList[1].id}
     />
 </Mapa.MapView>
 ```
@@ -26,10 +26,10 @@ const backgroundList: BackgroundListItem[] = [
 
 ## Props
 
-### defaultValue
+### backgroundId
 默认选中的背景图层id、如果不设置、则默认是list的第一个要素的 id
 
-> **`optional`** **defaultValue**: string
+> **`optional`** **backgroundId**: string
 
 
 ### list
