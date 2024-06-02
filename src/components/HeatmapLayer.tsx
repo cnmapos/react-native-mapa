@@ -1,7 +1,7 @@
 import { HeatmapLayerStyleProps, LayerProps } from '..';
 import Mapbox from '@rnmapbox/maps';
 /**
- * RasterLayer props
+ * HeatmapLayer props
  *
  * @category Props
  */
