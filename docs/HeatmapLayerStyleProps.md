@@ -1,211 +1,109 @@
 # HeatmapLayerStyleProps
 
+## Properties
 
-## styles
+### visibility?
 
-* <a href="#visibility">visibility</a><br/>
-* <a href="#heatmapradius">heatmapRadius</a><br/>
-* <a href="#heatmapweight">heatmapWeight</a><br/>
-* <a href="#heatmapintensity">heatmapIntensity</a><br/>
-* <a href="#heatmapcolor">heatmapColor</a><br/>
-* <a href="#heatmapopacity">heatmapOpacity</a><br/>
+> **`optional`** **visibility**: `Value`\<`Enum`\<`VisibilityEnum`, `VisibilityEnumValues`\>, []\>
 
-___
-
-### visibility
-Name: `visibility`
-
-Mapbox spec: [visibility](https://docs.mapbox.com/style-spec/reference/layers/#layout-heatmap-visibility)
-
-#### Description
 Whether this layer is displayed.
 
-#### Type
-`enum`
-#### Default Value
-`visible`
+#### Source
 
-#### Supported Values
-**visible** - The layer is shown.<br />
-**none** - The layer is not shown.<br />
+[src/types/styles.ts:1183](https://github.com/cnmapos/react-native-mapsdk/blob/d24e9ec/src/types/styles.ts#L1183)
 
+***
 
-#### Expression
+### heatmapRadius?
 
-Parameters: ``
+> **`optional`** **heatmapRadius**: `Value`\<`number`, [`"zoom"`, `"feature"`, `"feature-state"`, `"measure-light"`]\>
 
-___
-
-### heatmapRadius
-Name: `heatmapRadius`
-
-Mapbox spec: [heatmap-radius](https://docs.mapbox.com/style-spec/reference/layers/#paint-heatmap-heatmap-radius)
-
-#### Description
 Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed. `queryRenderedFeatures` on heatmap layers will return points within this radius.
 
-#### Type
-`number`
-#### Default Value
-`30`
+#### Source
 
-#### Units
-`pixels`
+[src/types/styles.ts:1187](https://github.com/cnmapos/react-native-mapsdk/blob/d24e9ec/src/types/styles.ts#L1187)
 
-#### Minimum
-`1`
+***
 
+### heatmapRadiusTransition?
 
-#### Expression
-
-Parameters: `zoom, feature, feature-state, measure-light`
-___
-
-### heatmapRadiusTransition
-Name: `heatmapRadiusTransition`
-
-#### Description
+> **`optional`** **heatmapRadiusTransition**: `Transition`
 
 The transition affecting any changes to this layer’s heatmapRadius property.
 
-#### Type
+#### Source
 
-`{ duration, delay }`
+[src/types/styles.ts:1192](https://github.com/cnmapos/react-native-mapsdk/blob/d24e9ec/src/types/styles.ts#L1192)
 
-#### Units
-`milliseconds`
+***
 
-#### Default Value
-`{duration: 300, delay: 0}`
+### heatmapWeight?
 
+> **`optional`** **heatmapWeight**: `Value`\<`number`, [`"zoom"`, `"feature"`, `"feature-state"`, `"measure-light"`]\>
 
-___
-
-### heatmapWeight
-Name: `heatmapWeight`
-
-Mapbox spec: [heatmap-weight](https://docs.mapbox.com/style-spec/reference/layers/#paint-heatmap-heatmap-weight)
-
-#### Description
 A measure of how much an individual point contributes to the heatmap. A value of 10 would be equivalent to having 10 points of weight 1 in the same spot. Especially useful when combined with clustering.
 
-#### Type
-`number`
-#### Default Value
-`1`
+#### Source
 
-#### Minimum
-`0`
+[src/types/styles.ts:1196](https://github.com/cnmapos/react-native-mapsdk/blob/d24e9ec/src/types/styles.ts#L1196)
 
+***
 
-#### Expression
+### heatmapIntensity?
 
-Parameters: `zoom, feature, feature-state, measure-light`
+> **`optional`** **heatmapIntensity**: `Value`\<`number`, [`"zoom"`]\>
 
-___
-
-### heatmapIntensity
-Name: `heatmapIntensity`
-
-Mapbox spec: [heatmap-intensity](https://docs.mapbox.com/style-spec/reference/layers/#paint-heatmap-heatmap-intensity)
-
-#### Description
 Similar to `heatmapWeight` but controls the intensity of the heatmap globally. Primarily used for adjusting the heatmap based on zoom level.
 
-#### Type
-`number`
-#### Default Value
-`1`
+#### Source
 
-#### Minimum
-`0`
+[src/types/styles.ts:1200](https://github.com/cnmapos/react-native-mapsdk/blob/d24e9ec/src/types/styles.ts#L1200)
 
+***
 
-#### Expression
+### heatmapIntensityTransition?
 
-Parameters: `zoom`
-___
-
-### heatmapIntensityTransition
-Name: `heatmapIntensityTransition`
-
-#### Description
+> **`optional`** **heatmapIntensityTransition**: `Transition`
 
 The transition affecting any changes to this layer’s heatmapIntensity property.
 
-#### Type
+#### Source
 
-`{ duration, delay }`
+[src/types/styles.ts:1205](https://github.com/cnmapos/react-native-mapsdk/blob/d24e9ec/src/types/styles.ts#L1205)
 
-#### Units
-`milliseconds`
+***
 
-#### Default Value
-`{duration: 300, delay: 0}`
+### heatmapColor?
 
+> **`optional`** **heatmapColor**: `Value`\<`string`, [`"heatmap-density"`]\>
 
-___
-
-### heatmapColor
-Name: `heatmapColor`
-
-Mapbox spec: [heatmap-color](https://docs.mapbox.com/style-spec/reference/layers/#paint-heatmap-heatmap-color)
-
-#### Description
 Defines the color of each pixel based on its density value in a heatmap. Should be an expression that uses `["heatmapDensity"]` as input.
 
-#### Type
-`color`
-#### Default Value
-`interpolate,linear,heatmap-density,0,rgba(0, 0, 255, 0),0.1,royalblue,0.3,cyan,0.5,lime,0.7,yellow,1,red`
+#### Source
 
+[src/types/styles.ts:1209](https://github.com/cnmapos/react-native-mapsdk/blob/d24e9ec/src/types/styles.ts#L1209)
 
-#### Expression
+***
 
-Parameters: `heatmap-density`
+### heatmapOpacity?
 
-___
+> **`optional`** **heatmapOpacity**: `Value`\<`number`, [`"zoom"`]\>
 
-### heatmapOpacity
-Name: `heatmapOpacity`
-
-Mapbox spec: [heatmap-opacity](https://docs.mapbox.com/style-spec/reference/layers/#paint-heatmap-heatmap-opacity)
-
-#### Description
 The global opacity at which the heatmap layer will be drawn.
 
-#### Type
-`number`
-#### Default Value
-`1`
+#### Source
 
-#### Minimum
-`0`
+[src/types/styles.ts:1213](https://github.com/cnmapos/react-native-mapsdk/blob/d24e9ec/src/types/styles.ts#L1213)
 
+***
 
-#### Maximum
-`1`
+### heatmapOpacityTransition?
 
-#### Expression
-
-Parameters: `zoom`
-___
-
-### heatmapOpacityTransition
-Name: `heatmapOpacityTransition`
-
-#### Description
+> **`optional`** **heatmapOpacityTransition**: `Transition`
 
 The transition affecting any changes to this layer’s heatmapOpacity property.
 
-#### Type
+#### Source
 
-`{ duration, delay }`
-
-#### Units
-`milliseconds`
-
-#### Default Value
-`{duration: 300, delay: 0}`
-
-
+[src/types/styles.ts:1218](https://github.com/cnmapos/react-native-mapsdk/blob/d24e9ec/src/types/styles.ts#L1218)
