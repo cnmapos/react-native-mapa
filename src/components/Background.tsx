@@ -1,7 +1,15 @@
 import { View, StyleSheet, Image, Pressable, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { BottomSheet, Text, Header, Button, Avatar } from '@rneui/themed';
-import { useState, useContext, useEffect, useImperativeHandle, forwardRef, ReactNode } from 'react';
+import React, {
+    useState,
+    useContext,
+    useEffect,
+    useImperativeHandle,
+    forwardRef,
+    ReactNode,
+    ReactElement,
+} from 'react';
 import { MapContext } from '../modules/MapContext';
 
 const screenWidth = Dimensions.get('window').width;
@@ -48,15 +56,7 @@ export type BackgroundProps = {
      * 自定义面板、自己定义面板渲染成什么样子
      * @defaultValue null
      */
-    renderPanel?: (
-        operation: {
-            close: () => void;
-            open: () => void;
-            changeBg: (id: BackgroundListItem['id']) => void;
-            getCurrentBg: () => string;
-        },
-        list: BackgroundListItem[]
-    ) => ReactNode;
+    children?: ReactNode;
 
     /**
      * 用默认的面板、但是支持自定义背景图层列表的样式渲染
@@ -206,6 +206,17 @@ const Background = forwardRef((props: BackgroundProps, ref) => {
         setCurrentBg(id);
     };
 
+    const childrenWithProps = React.Children.map(props.children as ReactElement, (child: ReactElement) => {
+        if (!child) {
+            return child;
+        }
+        return React.cloneElement(child as ReactElement, {
+            ...child.props,
+            list,
+            operation: { open, close, changeBg, getCurrentBg },
+        });
+    });
+
     return (
         <View>
             <Icon name="layers-outline" style={styles.icon} onPress={onOpen} />
@@ -216,16 +227,8 @@ const Background = forwardRef((props: BackgroundProps, ref) => {
                 containerStyle={styles.containerStyle}
             >
                 {/* 如果用户传了panel、则用用户自己的panel渲染、只负责给他提供props供他使用 */}
-                {props.renderPanel ? (
-                    props.renderPanel(
-                        {
-                            close,
-                            open,
-                            changeBg,
-                            getCurrentBg,
-                        },
-                        list
-                    )
+                {props.children ? (
+                    childrenWithProps
                 ) : (
                     <BackgroundPanel
                         list={list}
