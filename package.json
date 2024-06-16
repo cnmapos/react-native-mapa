@@ -1,0 +1,113 @@
+{
+  "name": "react-native-mapa",
+  "version": "0.0.1",
+  "description": "React Native Mapa component for iOS + Android",
+  "author": "heavi",
+  "license": "MIT",
+  "homepage": "https://github.com/cnmapos/react-native-mapa#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "react-native": "src/index",
+  "types": "lib/typescript/index.d.ts",
+  "source": "src/index",
+  "files": [
+    "lib",
+    "src",
+    "android",
+    "ios"
+  ],
+  "scripts": {
+    "android": "react-native run-android",
+    "pod:install": "cd ios && pod install",
+    "ios": "react-native run-ios",
+    "lint": "eslint .",
+    "build": "bob build",
+    "cz": "bash .husky/pre-commit && git cz",
+    "start": "react-native start --inspect",
+    "test": "jest",
+    "doc:watch": "typedoc --watch",
+    "doc:dev": "ws -d dhtml",
+    "doc:md": "typedoc --out specs --plugin typedoc-plugin-markdown",
+    "doc:start": "yarn run typedoc && ws -d dhtml",
+    "prepare": "husky && bob build"
+  },
+  "dependencies": {
+    "@react-navigation/native": "^6.1.17",
+    "@react-navigation/native-stack": "^6.9.26",
+    "@rneui/base": "^4.0.0-rc.7",
+    "@rneui/themed": "^4.0.0-rc.8",
+    "@rnmapbox/maps": "^10.1.18",
+    "@turf/distance": "^6.5.0",
+    "@types/geojson": "^7946.0.14",
+    "axios": "^1.6.8",
+    "eventemitter3": "^5.0.1",
+    "expo-sensors": "^12.9.1",
+    "local-web-server": "^5.3.1",
+    "lodash": "^4.17.21",
+    "react-native": "0.73.5",
+    "react-native-safe-area-context": "^4.9.0",
+    "react-native-screens": "^3.29.0",
+    "react-native-vector-icons": "^10.0.3",
+    "typedoc": "^0.25.12"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "@babel/preset-env": "^7.20.0",
+    "@babel/runtime": "^7.20.0",
+    "@commitlint/cli": "^19.2.0",
+    "@commitlint/config-angular": "^19.1.0",
+    "@react-native/babel-preset": "0.73.21",
+    "@react-native/eslint-config": "0.73.2",
+    "@react-native/metro-config": "0.73.5",
+    "@react-native/typescript-config": "0.73.1",
+    "@types/lodash": "^4.17.0",
+    "@types/react": "^18.2.6",
+    "@types/react-test-renderer": "^18.0.0",
+    "babel-jest": "^29.6.3",
+    "babel-plugin-module-resolver": "^5.0.0",
+    "eslint": "^8.19.0",
+    "eslint-config-airbnb": "19.0.4",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "git-cz": "^4.9.0",
+    "husky": "^9.0.11",
+    "jest": "^29.6.3",
+    "metro-react-native-babel-preset": "^0.77.0",
+    "prettier": "2.8.8",
+    "react-docgen-typescript": "^2.2.2",
+    "react-native-builder-bob": "^0.23.2",
+    "react-test-renderer": "18.2.0",
+    "typedoc-plugin-markdown": "^4.0.0-next.53",
+    "typescript": "5.0.4"
+  },
+  "config": {
+    "commitizen": {
+      "path": "git-cz"
+    }
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "peerDependencies": {
+    "react": "^18.2.0"
+  }
+}

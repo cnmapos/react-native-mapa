@@ -1,0 +1,26 @@
+rootProject.name = 'ReactNativeMapSdk'
+apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
+include ':app'
+includeBuild('../node_modules/@react-native/gradle-plugin')
+
+dependencyResolutionManagement {
+  repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+  repositories {
+    google()
+    mavenCentral()
+    jcenter() // Warning: this repository is going to shut down soon
+    maven {
+        url 'https://api.mapbox.com/downloads/v2/releases/maven'
+        authentication {
+            basic(BasicAuthentication)
+        }
+        credentials {
+            // Do not change the username below.
+            // This should always be `mapbox` (not your username).
+            username = "mapbox"
+            // Use the secret token you stored in gradle.properties as the password
+            password = MAPBOX_DOWNLOADS_TOKEN
+        }
+      }
+    }
+  }

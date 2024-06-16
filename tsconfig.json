@@ -1,0 +1,14 @@
+{
+  "extends": ["@react-native/typescript-config/tsconfig.json", "./tsconfig.base.json"],
+  "compilerOptions": {
+    "moduleResolution": "NodeNext",
+    "declaration": true,
+    "declarationMap": true,
+    "noImplicitAny": true,
+    "alwaysStrict": true,
+    // 定义了类型的成员必须初始化值，可选属性除外！
+    "strictPropertyInitialization": true,
+  },
+  "include": ["./src"],
+  "exclude": ["./example", "./lib"]
+}
