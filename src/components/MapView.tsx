@@ -1,11 +1,14 @@
 import Mapbox from '@rnmapbox/maps';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { ReactElement, useEffect, useImperativeHandle, useLayoutEffect, useRef, useState } from 'react';
-import { MapContext } from '../modules/MapContext';
+import { ContainerSlotContext, MapContext } from '../modules/MapContext';
 import { Projection, MapStyle, MapViewInterface, MapIdleEvent, PressFeature } from '../types';
 import { styleFormat } from '../config/style';
 import React from 'react';
 import { Map } from '../modules/Map';
+import LeftSlot from './slots/LeftSlot';
+import BottomSlot from './slots/BottomSlot';
+import RightSlot from './slots/RightSlot';
 
 /**
  * MapView Props
@@ -87,6 +90,15 @@ const MapView = React.forwardRef<MapViewInterface, MapViewProps>((props: MapView
         return styleFormat(style);
     });
 
+    const containerSlotValue = useRef({
+        leftSlotChildren: [],
+        rightSlotChildren: [],
+        bottomSlotChildren: [],
+    });
+    const [lChildren, setLChildren] = useState<ReactElement[]>([]);
+    const [rChildren, setRChildren] = useState<ReactElement[]>([]);
+    const [bChildren, setBChildren] = useState<ReactElement[]>([]);
+
     const mapRef = useRef<Map>(
         new (class extends Map {
             constructor() {
@@ -140,12 +152,8 @@ const MapView = React.forwardRef<MapViewInterface, MapViewProps>((props: MapView
                     logoEnabled={false}
                     zoomEnabled={true}
                     compassEnabled={false}
-                    scaleBarEnabled={true}
+                    scaleBarEnabled={false}
                     rotateEnabled={true} // 允许地图旋转
-                    compassPosition={{
-                        left: 2,
-                        top: 5,
-                    }}
                     onLayout={getMapDimensions}
                     onPress={onMapPress as any}
                     onLongPress={onLongPress as any}
@@ -155,7 +163,14 @@ const MapView = React.forwardRef<MapViewInterface, MapViewProps>((props: MapView
                     style={styles.map}
                 >
                     <MapContext.Provider value={{ map: mapRef.current as any, pixLayoutInfo }}>
-                        {children}
+                        <ContainerSlotContext.Provider
+                            value={{ ...containerSlotValue.current, setLChildren, setRChildren, setBChildren }}
+                        >
+                            {children}
+                            <LeftSlot children={lChildren} />
+                            <RightSlot children={rChildren} />
+                            <BottomSlot children={bChildren} />
+                        </ContainerSlotContext.Provider>
                     </MapContext.Provider>
                 </Mapbox.MapView>
             </View>

@@ -131,6 +131,13 @@ export interface MapViewInterface extends PropEventSource<MapEventNameAndProps> 
     setCenter(location: Position): void;
     zoomTo(step: number, duration?: number): void;
     flyTo(center: Position, duration?: number): void;
+    /**
+     *
+     * @param visible 是否可见
+     * @param sourceId 来源ID
+     * @param sourceLayerId
+     */
+    setSourceVisibility(visible: boolean, sourceId: string, sourceLayerId: string | null): void;
     getZoom(): Promise<number | undefined>;
     /**
      * 按来源查询feature集合
@@ -176,11 +183,10 @@ export type PositionStyle = {
     bottom?: number;
     left?: number;
 };
-
 /**
  * 位置插槽
  */
-export type PositionSlot = 'top' | 'right' | 'bottom' | 'left' | 'right-top';
+export type PositionSlot = 'left' | 'right' | 'bottom';
 
 /**
  * 定位基础样式
@@ -269,4 +275,8 @@ export interface ShapePainter {
     undo(): void;
     addPoint(position: Position): void;
     getData(): any;
+}
+
+export interface MSlotInterface {
+    refresh: () => void;
 }

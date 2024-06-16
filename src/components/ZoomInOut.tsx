@@ -5,7 +5,8 @@ import { MapContext } from '../modules/MapContext';
 // import Icon from 'react-native-vector-icons/Ionicons';
 import { Icon, Button } from '@rneui/themed';
 import { buttonSize, zoomStep } from '../config';
-import { PosBaseProps, PositionStyle } from '..';
+import { PosBaseProps, PositionSlot } from '..';
+import MSlot from './slots/MSlot';
 
 /**
  * ZoomInOut props
@@ -31,7 +32,7 @@ export type ZoomInOutProps = PosBaseProps & {
      * 或者 'right-top'
      * ```
      */
-    style?: PositionStyle;
+    style?: PositionSlot | StyleProp<ViewStyle>;
 };
 
 /**
@@ -40,19 +41,16 @@ export type ZoomInOutProps = PosBaseProps & {
  * @category Component
  */
 const ZoomInOut = (props: ZoomInOutProps) => {
+    const { style = 'right' } = props;
     const { map } = useContext(MapContext);
 
-    const onZoomIn = () => { 
+    const onZoomIn = () => {
         // console.log('onZoomIn', map);
-        map.zoomTo(zoomStep)
+        map.zoomTo(zoomStep);
     };
     const onZoomOut = () => {
-        map.zoomTo(-zoomStep)
+        map.zoomTo(-zoomStep);
     };
-
-    const containerStyle: StyleProp<ViewStyle> = props.style
-        ? { position: 'absolute', ...props.style }
-        : styles.container;
 
     // 显示位置可通过插槽扩展灵活适配
     /**
@@ -62,14 +60,16 @@ const ZoomInOut = (props: ZoomInOutProps) => {
      */
 
     return (
-        <View style={containerStyle}>
-            <Button type="outline" style={styles.button} size="md" onPress={onZoomIn}>
-                <Icon name="plus" type={'antdesign'} size={buttonSize} color="#000" />
-            </Button>
-            <Button type="outline" style={styles.button} size="md" onPress={onZoomOut}>
-                <Icon name="minus" type={'antdesign'} size={buttonSize} color="#000" />
-            </Button>
-        </View>
+        <MSlot style={style}>
+            <View>
+                <Button type="outline" style={styles.button} size="md" onPress={onZoomIn}>
+                    <Icon name="plus" type={'antdesign'} size={buttonSize} color="#000" />
+                </Button>
+                <Button type="outline" style={styles.button} size="md" onPress={onZoomOut}>
+                    <Icon name="minus" type={'antdesign'} size={buttonSize} color="#000" />
+                </Button>
+            </View>
+        </MSlot>
     );
 };
 

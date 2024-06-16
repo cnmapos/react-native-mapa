@@ -46,6 +46,26 @@ export type CameraProps = {
      */
     bounds?: Bounds;
 
+    /**
+     * 跟随用户定位
+     */
+    followLocation?: boolean;
+
+    /**
+     * 跟随用户定位的zoom层级
+     */
+    followZoomLevel?: number;
+
+    /**
+     * 跟随用户定位的俯仰角
+     */
+    followPitch?: number;
+
+    /**
+     * 跟随用户定位的偏航角
+     */
+    followHeading?: number;
+
     onChange?: (e: CameraEvent) => void;
 };
 
@@ -63,6 +83,11 @@ const Camera = (props: CameraProps) => {
         center = defaultCenterCoordinates,
         heading,
         pitch,
+        bounds,
+        followLocation,
+        followZoomLevel,
+        followPitch,
+        followHeading,
         onChange,
     } = props;
 
@@ -82,7 +107,12 @@ const Camera = (props: CameraProps) => {
             // Camera的默认定位动画执行周期设置为0，否则和Location自动定位冲突
             animationDuration={0}
             minZoomLevel={minzoom}
+            followUserLocation={followLocation}
+            bounds={bounds}
             pitch={pitch}
+            followZoomLevel={followZoomLevel}
+            followHeading={followHeading}
+            followPitch={followPitch}
             centerCoordinate={center}
             heading={heading}
         />

@@ -3,6 +3,7 @@ import Caemra from './pages/Camera';
 import Weather from './pages/Weather';
 import Background from './pages/Background';
 import ZoomInOut from './pages/ZoomInOut';
+import Location from './pages/Location';
 import POI from './pages/POI';
 import ImageSource from './pages/ImageSource';
 import ImageShapeIcon from './pages/ImageShapeIcon';
@@ -27,16 +28,16 @@ import CompassView from './pages/Compass';
 
 const RoutesConfig = [
     {
-        title: '地图',
+        title: 'Map',
         data: [
             {
-                title: 'MapView',
+                title: 'Base Map',
                 img: require('./assets/basic.png'),
-                id: 'BaseMap',
+                id: 'Base Map',
                 component: BaseMap,
             },
             {
-                title: 'Background地图',
+                title: 'Background Map',
                 img: require('./assets/basic.png'),
                 id: 'BackgroundMap',
                 component: Background,
@@ -54,6 +55,12 @@ const RoutesConfig = [
                 component: ZoomInOut,
             },
             {
+                title: 'Location',
+                img: require('./assets/basic.png'),
+                id: 'Location',
+                component: Location,
+            },
+            {
                 title: 'Scalebar',
                 img: require('./assets/basic.png'),
                 id: 'Scalebar',
@@ -66,51 +73,20 @@ const RoutesConfig = [
                 component: CompassView,
             },
             {
-                title: '底图组件',
-                img: require('./assets/basic.png'),
-            },
-            {
-                title: '控件',
-                img: require('./assets/basic.png'),
-            },
-            {
-                title: 'POI搜索',
+                title: 'POI Search',
                 img: require('./assets/basic.png'),
                 component: POI,
             },
             {
-                title: '天气',
+                title: 'Weather',
                 img: require('./assets/basic.png'),
                 id: 'Weather',
                 component: Weather,
             },
-            {
-                title: 'POI',
-                img: require('./assets/basic.png'),
-                id: 'POIFinder',
-                component: POI,
-            },
         ],
     },
     {
-        title: '图层',
-        data: [
-            {
-                title: 'Image Source',
-                img: require('./assets/basic.png'),
-                id: 'ImageSource',
-                component: ImageSource,
-            },
-            {
-                title: 'Image Shape Icon',
-                img: require('./assets/basic.png'),
-                id: 'ImageShapeIcon',
-                component: ImageShapeIcon,
-            },
-        ],
-    },
-    {
-        title: '图层',
+        title: 'Layers',
         data: [
             {
                 title: 'Image Source',
@@ -180,7 +156,7 @@ const RoutesConfig = [
             },
 
             {
-                title: '栅格图层',
+                title: 'Raster Layer',
                 img: require('./assets/basic.png'),
             },
             {
@@ -198,34 +174,30 @@ const RoutesConfig = [
         ],
     },
     {
-        title: '绘制',
+        title: 'Draw',
         data: [
             {
-                title: '折线绘制',
+                title: 'Line',
                 img: require('./assets/basic.png'),
                 id: 'Polyline',
                 component: PolylinePainter,
             },
             {
-                title: '面绘制',
+                title: 'Polygon',
                 img: require('./assets/basic.png'),
                 id: 'Polygon',
                 component: PolygonPainter,
             },
             {
-                title: '圆形绘制',
+                title: 'Circle',
                 img: require('./assets/basic.png'),
                 id: 'Circle',
                 component: CirclePainter,
             },
             {
-                title: '矩形绘制',
+                title: 'Rectangle',
                 img: require('./assets/basic.png'),
                 component: RectanglePainter,
-            },
-            {
-                title: '贝塞尔曲线绘制',
-                img: require('./assets/basic.png'),
             },
         ],
     },

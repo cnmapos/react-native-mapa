@@ -67,6 +67,10 @@ export class Map implements MapViewInterface {
         this.camera?.moveTo(location);
     }
 
+    setSourceVisibility(visible: boolean, sourceId: string, sourceLayerId: string | null): void {
+        this.map?.setSourceVisibility(visible, sourceId, sourceLayerId);
+    }
+
     async zoomTo(step: number, duration?: number) {
         const zoom = await this.map?.getZoom();
         this.camera?.zoomTo(zoom! + step, duration !== undefined ? duration : zoomAnimationDuraton);

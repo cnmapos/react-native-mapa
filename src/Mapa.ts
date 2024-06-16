@@ -27,7 +27,6 @@ export { default as CircleLayer, type CircleLayerProps } from './components/Circ
 export { default as Models, type ModelsProps } from './components/Models';
 export { default as ModelLayer, type ModelLayerProps } from './components/ModelLayer';
 export { default as HeatmapLayer, type HeatmapLayerProps } from './components/HeatmapLayer';
-// export { default as Scalebar } from './components/Scalebar';
 export { default as PolylinePainter, type PolylineProps } from './components/painters/Polyline';
 export { default as PolygonPainter, type PolygonProps } from './components/painters/Polygon';
 export { default as CirclePainter, type CircleProps } from './components/painters/Circle';

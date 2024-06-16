@@ -71,6 +71,31 @@ MapView
 例如[104.061891, 30.65796, 104.062304, 30.65900]
 或者\{ sw: [104.061891, 30.65796], ne: [104.062304, 30.65900] \}
 
+### followLocation
+
+> **`optional`** **followLocation**: `boolean`
+
+跟随用户定位
+
+### followZoomLevel
+
+> **`optional`** **followZoomLevel**: `number`
+
+跟随用户定位的zoom层级
+
+### followPitch
+
+> **`optional`** **followPitch**: `number`
+
+跟随用户定位的俯仰角
+
+### followHeading
+
+> **`optional`** **followHeading**: `number`
+
+跟随用户定位的偏航角
+
+
 ### onChange()
 
 > **`optional`** **onChange**: (`e`) => `void`

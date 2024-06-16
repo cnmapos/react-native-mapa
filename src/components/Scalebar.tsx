@@ -1,8 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { MapContext } from '../modules/MapContext';
 import React from 'react';
 import { isNumber } from 'lodash';
+import MSlot from './slots/MSlot';
+import { MSlotInterface, PositionSlot } from '..';
 /**
  * ScaleBar Props
  * @category Props
@@ -16,6 +18,19 @@ export type ScalebarProps = {
      * 配置项可选，默认值参见 `defaultOptions`
      */
     options?: Options;
+
+    /**
+     * 设置显示位置
+     *
+     * @defaultValue 'bottom'
+     *
+     * @example
+     * ```
+     * { right: 5, bottom: 5 }
+     * 或者 'right'
+     * ```
+     */
+    style?: PositionSlot | StyleProp<ViewStyle>;
 };
 
 // 支持的类型
@@ -70,21 +85,18 @@ export default ScalebarView;
   @category Component
  */
 const Scalebar = (props: ScalebarProps) => {
-    const { map, pixLayoutInfo } = useContext(MapContext);
+    const { map } = useContext(MapContext);
     const [scaleInfo, setScaleInfo] = useState<{
         width: number;
         scale: string;
     }>({ width: 0, scale: '' });
+    const slotRef = React.useRef<MSlotInterface>(null);
 
     const [isShow, setIsShow] = useState<boolean>(true);
     // 获取地图的可见区域边界框
 
     const _update = (latitude: number, zoomLevel: number) => {
-        console.log('&&&_update', latitude, zoomLevel);
-
         const { maxWidth, unit } = props.options ?? defaultOptions;
-
-        const { width: _containerWidth, height: _containerHeight } = pixLayoutInfo;
 
         // TODO : 修改了计算方式
         const earthRadius = 6378137; // Earth's radius in meters
@@ -124,16 +136,17 @@ const Scalebar = (props: ScalebarProps) => {
         const ratio = distance / maxDistance;
 
         setScaleInfo({
-            width: maxWidth * ratio,
+            width: maxWidth * ratio * 2,
             scale: `${distance}${unitAbbr[unit] ?? 'km'}`,
         });
     };
 
     // 渲染
-    const onShow = () => {
+    const onShow = async () => {
         const calculateScale = async (latitude: number[], zoomLevel: number) => {
             try {
                 _update(latitude[1], zoomLevel);
+                slotRef.current?.refresh();
             } catch (error) {}
         };
 
@@ -141,6 +154,9 @@ const Scalebar = (props: ScalebarProps) => {
             // @ts-ignore
             const { center, zoom } = event.properties;
             calculateScale(center, zoom);
+        });
+        map.on('loaded', async () => {
+            calculateScale(await map.getCenter(), (await map.getZoom())!);
         });
     };
 
@@ -174,8 +190,11 @@ const Scalebar = (props: ScalebarProps) => {
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [map]);
-
-    return isShow && <ScaleIndicator scaleInfo={scaleInfo} pixLayoutInfo={pixLayoutInfo} />;
+    return (
+        <MSlot ref={slotRef} style={props.style || 'bottom'}>
+            <ScaleIndicator scaleInfo={scaleInfo} />
+        </MSlot>
+    );
 };
 
 type ScaleIndicatorProps = {
@@ -183,19 +202,12 @@ type ScaleIndicatorProps = {
         scale: string;
         width: number;
     };
-    pixLayoutInfo: {
-        width: number;
-        height: number;
-    };
 };
 
 const ScaleIndicator = ({ scaleInfo }: ScaleIndicatorProps) => {
-    const { width, scale } = scaleInfo;
+    let { width = 40, scale } = scaleInfo;
     const styles = StyleSheet.create({
         container: {
-            position: 'absolute',
-            bottom: 16,
-            left: 16,
             width: width,
             borderRadius: 4,
             color: 'white',
@@ -238,7 +250,7 @@ const ScaleIndicator = ({ scaleInfo }: ScaleIndicatorProps) => {
     });
 
     return (
-        <View style={styles.container}>
+        <View style={{ ...styles.container }}>
             {/* scale text */}
             <View>{<Text style={styles.scaleText}>{scale}</Text>}</View>
 

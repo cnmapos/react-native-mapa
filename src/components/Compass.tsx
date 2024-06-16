@@ -1,7 +1,8 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
 import { MapContext } from '../modules/MapContext';
-import { LocationEvent } from '../mapa';
+import { LocationEvent, PositionSlot } from '../mapa';
+import MSlot from './slots/MSlot';
 
 /**
  * Compass props
@@ -9,7 +10,18 @@ import { LocationEvent } from '../mapa';
  * @category Props
  */
 export type CompassProps = {
-    visibled?: boolean;
+    /**
+     * 设置图标显示位置
+     *
+     * @defaultValue 'right'
+     *
+     * @example
+     * ```
+     * { right: 5, bottom: 5 }
+     * 或者 'right'
+     * ```
+     */
+    style?: PositionSlot | StyleProp<ViewStyle>;
 };
 
 const styles = StyleSheet.create({
@@ -24,7 +36,7 @@ const styles = StyleSheet.create({
     heading: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: 'black',
+        color: '#fff',
     },
     compass: {
         width: 50,
@@ -34,19 +46,19 @@ const styles = StyleSheet.create({
         borderColor: '#bfbfbf',
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: '#2c2c2c',
     },
     arrow: {
         width: 0,
         height: 0,
-        backgroundColor: 'transparent',
-        borderLeftWidth: 10,
-        borderRightWidth: 10,
+        borderLeftWidth: 5,
+        borderRightWidth: 5,
         borderBottomWidth: 20,
         borderStyle: 'solid',
         borderTopColor: 'transparent',
         borderLeftColor: 'transparent',
         borderRightColor: 'transparent',
-        borderBottomColor: 'red',
+        borderBottomColor: '#fff',
     },
 });
 
@@ -55,13 +67,14 @@ const styles = StyleSheet.create({
   @category Component
  */
 const Compass = (props: CompassProps) => {
-    const [heading, setHeading] = useState<number>(0);
+    const { style } = props;
+    // const [heading, setHeading] = useState<number>(0);
     const [rotateStyle, setRotateStyle] = useState<any>(
         StyleSheet.create({
             ratate: {
                 transform: [
                     {
-                        rotate: `0deg`,
+                        rotate: '0deg',
                     },
                 ],
             },
@@ -70,11 +83,8 @@ const Compass = (props: CompassProps) => {
     const { map } = useContext(MapContext);
 
     const onLocationChange = (event: LocationEvent) => {
-        //
-        console.log(event.coords.heading, '+++++++++++++++', event);
         if (event.coords && event.coords.heading) {
-            setHeading(event.coords.heading);
-
+            // setHeading(event.coords.heading);
             const rotateDeg = `${event.coords.heading * (180 / Math.PI)}deg`;
 
             setRotateStyle(
@@ -101,11 +111,13 @@ const Compass = (props: CompassProps) => {
     }, []);
 
     return (
-        <View style={[styles.compass, rotateStyle.rotate]}>
-            <View style={[styles.arrow]} />
-            <Text style={styles.heading}>N</Text>
-            <Text>{heading}</Text>
-        </View>
+        <MSlot style={style}>
+            <View style={[styles.compass, rotateStyle.rotate]}>
+                <View style={[styles.arrow]} />
+                <Text style={styles.heading}>N</Text>
+                <Text />
+            </View>
+        </MSlot>
     );
 };
 
