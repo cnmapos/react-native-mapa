@@ -106,11 +106,11 @@ const styles = StyleSheet.create({
 #### Components
 - [Mapview](./docs//MapView.md)
 - [Camera](./docs//Camera.md)
-- [Background](./docs/Background.md)?
+- [Background](./docs/Background.md)
 - [Location](./docs//LineLayer.md)
 - [ZoomInOut](./docs/ZoomInOut.md)
-- [Compass](./docs/Compass.md)？
-- [Scalebar](./docs/Scalebar.md)？
+- [Compass](./docs/Compass.md)
+- [Scalebar](./docs/Scalebar.md)
 - [POIFinder](./docs/POIFinder.md)
 - [Weather](./docs//Weather.md)
 - [Images](./docs/image/Images.md)

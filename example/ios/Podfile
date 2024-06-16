@@ -6,8 +6,8 @@ require Pod::Executable.execute_command('node', ['-p',
   )', __dir__]).strip
 
 # platform :ios, min_ios_version_supported
-platform :ios, '17.4'
 
+platform :ios, min_ios_version_supported
 prepare_react_native_project!
 
 # If you are using a `react-native-flipper` your iOS build will fail when `NO_FLIPPER=1` is set.
@@ -45,7 +45,12 @@ target 'example' do
     # Pods for testing
   end
 
+  pre_install do |installer|
+    $RNMapboxMaps.pre_install(installer)
+  end
+
   post_install do |installer|
+    $RNMapboxMaps.post_install(installer)
     # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
     react_native_post_install(
       installer,

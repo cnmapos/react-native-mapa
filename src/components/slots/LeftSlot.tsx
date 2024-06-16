@@ -12,7 +12,7 @@ export type LeftSlotProps = {
   @category Component
  */
 const LeftSlot = (props: LeftSlotProps) => {
-    console.log('LeftSlot', props);
+    console.log('LeftSlot+++++');
 
     return (
         <View style={styles.container}>

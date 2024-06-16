@@ -154,10 +154,6 @@ const MapView = React.forwardRef<MapViewInterface, MapViewProps>((props: MapView
                     compassEnabled={false}
                     scaleBarEnabled={false}
                     rotateEnabled={true} // 允许地图旋转
-                    compassPosition={{
-                        left: 2,
-                        top: 5,
-                    }}
                     onLayout={getMapDimensions}
                     onPress={onMapPress as any}
                     onLongPress={onLongPress as any}
