@@ -71,4 +71,5 @@ yarn-error.log
 
 # example
 /example/ios/Pods/
-/example/ios/odfile.lock
+/example/ios/Podfile.lock
+/example/android/.gradle
