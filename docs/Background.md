@@ -17,7 +17,7 @@ const backgroundList: BackgroundListItem[] = [
 <Mapa.MapView>
     <Mapa.Background
         list={backgroundList}
-        defaultValue={backgroundList[0].id}
+        backgroundId={backgroundList[1].id}
     />
 </Mapa.MapView>
 ```
@@ -26,10 +26,10 @@ const backgroundList: BackgroundListItem[] = [
 
 ## Props
 
-### defaultValue
+### backgroundId
 默认选中的背景图层id、如果不设置、则默认是list的第一个要素的 id
 
-> **`optional`** **defaultValue**: string
+> **`optional`** **backgroundId**: string
 
 
 ### list
@@ -113,11 +113,11 @@ const defaultBackgroundList: BackgroundListItem[] = [
 ```
 
 
-### renderPanel()?
+### children?
 
-> **`optional`** **renderPanel**:`(operation: { close, open, changeBg, getCurrentBg }, list: BackgroundListItem) => ReactNode`
+> **`optional`** **children**:`(operation: { close, open, changeBg, getCurrentBg }, list: BackgroundListItem) => ReactNode`
 
-自定义整个背景组件图层面板
+自定义整个背景组件图层面板、会给子组件注入两个属性、operation和list
 
 #### Parameters
 
@@ -125,25 +125,32 @@ const defaultBackgroundList: BackgroundListItem[] = [
 
 • **list**: `BackgroundListItem[]` 背景图层配置列表
 
-#### Returns
-
-`ReactNode` 返回react组件
 
 #### Example
 ```ts
-    function CustomView(operation, list) {
-        const {close} = operation;
+    function CustomView(props: any) {
+        const {list, operation} = props;
         return (
             <View>
-                <Button onPress={close}> 关闭 </Button>
-                <Text>简单的面板内容</Text>
+                <Button onPress={operation?.close}> 关闭 </Button>
+                {list.map((item: BackgroundListItem) => {
+                    return (
+                        <Button
+                            type="outline"
+                            key={item.id}
+                            onPress={() => operation.changeBg(item.id)}>
+                            {item.name}
+                        </Button>
+                    );
+                })}
             </View>
-    );
+        );
+    }
     <Mapa.Background
         list={backgroundList}
-        renderPanel={CustomView}
-    />
-
+    >
+        <CustomView/>
+    </Mapa.Background>
 ```
 
 

@@ -1,7 +1,15 @@
 import { View, StyleSheet, Image, Pressable, Dimensions, StyleProp, ViewStyle } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { BottomSheet, Text, Header, Button, Avatar } from '@rneui/themed';
-import { useState, useContext, useEffect, useImperativeHandle, forwardRef, ReactNode } from 'react';
+import React, {
+    useState,
+    useContext,
+    useEffect,
+    useImperativeHandle,
+    forwardRef,
+    ReactNode,
+    ReactElement,
+} from 'react';
 import { MapContext } from '../modules/MapContext';
 import { PositionSlot } from '..';
 import MSlot from './slots/MSlot';
@@ -60,20 +68,12 @@ export type BackgroundProps = {
      * 背景图层列表
      * @defaultValue 高德矢量
      */
-    defaultValue: string;
+    backgroundId: string;
     /**
      * 自定义面板、自己定义面板渲染成什么样子
      * @defaultValue null
      */
-    renderPanel?: (
-        operation: {
-            close: () => void;
-            open: () => void;
-            changeBg: (id: BackgroundListItem['id']) => void;
-            getCurrentBg: () => string;
-        },
-        list: BackgroundListItem[]
-    ) => ReactNode;
+    children?: ReactNode;
 
     /**
      * 用默认的面板、但是支持自定义背景图层列表的样式渲染
@@ -164,21 +164,21 @@ const Background = forwardRef((props: BackgroundProps, ref) => {
         setDetailVisible(false);
     };
 
-    const { list = defaultBackgroundList, defaultValue = defaultBackgroundList[0].id } = props;
+    const { list = defaultBackgroundList, backgroundId = defaultBackgroundList[0].id } = props;
     const { map } = useContext(MapContext);
-    const [currentBg, setCurrentBg] = useState<string>(defaultValue);
+    const [currentBg, setCurrentBg] = useState<string>(backgroundId);
     useEffect(() => {
-        setCurrentBg(defaultValue);
-    }, [defaultValue]);
+        setCurrentBg(backgroundId);
+    }, [backgroundId]);
 
     // 背景组件初始化时、根据默认选中的value、修改mapview的style
     useEffect(() => {
-        const target = list.filter((item) => item.id === defaultValue)?.[0];
+        const target = list.filter((item) => item.id === backgroundId)?.[0];
         if (!target) {
             return;
         }
         map.updateStyle(target.style);
-    }, [list, defaultValue, map]);
+    }, [list, backgroundId, map]);
 
     const backDropClickHandle = () => {
         // 点击背景、需要关闭bottomsheet
@@ -225,6 +225,17 @@ const Background = forwardRef((props: BackgroundProps, ref) => {
         setCurrentBg(id);
     };
 
+    const childrenWithProps = React.Children.map(props.children as ReactElement, (child: ReactElement) => {
+        if (!child) {
+            return child;
+        }
+        return React.cloneElement(child as ReactElement, {
+            ...child.props,
+            list,
+            operation: { open, close, changeBg, getCurrentBg },
+        });
+    });
+
     return (
         <View>
             <MSlot style={style}>
@@ -239,21 +250,13 @@ const Background = forwardRef((props: BackgroundProps, ref) => {
                 containerStyle={styles.containerStyle}
             >
                 {/* 如果用户传了panel、则用用户自己的panel渲染、只负责给他提供props供他使用 */}
-                {props.renderPanel ? (
-                    props.renderPanel(
-                        {
-                            close,
-                            open,
-                            changeBg,
-                            getCurrentBg,
-                        },
-                        list
-                    )
+                {props.children ? (
+                    childrenWithProps
                 ) : (
                     <BackgroundPanel
                         list={list}
                         renderItem={props.renderItem || undefined}
-                        defaultValue={defaultValue}
+                        backgroundId={backgroundId}
                         currentBg={currentBg}
                         setCurrentBg={updateCurrentBg}
                         onClose={onClose}

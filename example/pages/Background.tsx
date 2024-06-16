@@ -6,12 +6,21 @@ const screenWidth = Dimensions.get('window').width;
 const itemWidth = screenWidth * 0.25; // 25% 的屏幕宽度
 import {Button} from '@rneui/themed';
 
-function CustomView(props) {
-    const {onClick} = props;
+function CustomView(props: any) {
+    const {list, operation} = props;
     return (
         <View>
-            <Button onPress={onClick}> 关闭 </Button>
-            <Text>哈哈</Text>
+            <Button onPress={operation?.close}> 关闭 </Button>
+            {list.map((item: BackgroundListItem) => {
+                return (
+                    <Button
+                        type="outline"
+                        key={item.id}
+                        onPress={() => operation.changeBg(item.id)}>
+                        {item.name}
+                    </Button>
+                );
+            })}
         </View>
     );
 }
@@ -92,21 +101,16 @@ function PreView({navigation}: any): React.JSX.Element {
     ];
     const ref = useRef(null);
 
-    const renderCustomPanel = ({close}) => {
-        const click = () => {
-            close();
-        };
-        return <CustomView onClick={click} />;
-    };
-
-    const renderListItem = (item, active) => {
+    const renderListItem = (item: BackgroundListItem, active: boolean) => {
         return (
             <View
+                // eslint-disable-next-line react-native/no-inline-styles
                 style={{
                     marginBottom: 10,
                     width: itemWidth,
                 }}>
                 <Text
+                    // eslint-disable-next-line react-native/no-inline-styles
                     style={{
                         color: active ? 'red' : '#000',
                         textAlign: 'center',
@@ -118,16 +122,18 @@ function PreView({navigation}: any): React.JSX.Element {
     };
 
     return (
+        // eslint-disable-next-line react-native/no-inline-styles
         <SafeAreaView style={{height: '100%'}}>
             <Mapa.MapView>
                 <Slot slot="rightTop" backgroundColor={'transparent'}>
                     <Mapa.Background
                         ref={ref}
                         list={backgroundList}
-                        defaultValue={backgroundList[0].id}
-                        // renderPanel={renderCustomPanel}
+                        backgroundId={backgroundList[0].id}
                         // renderItem={renderListItem}
-                    />
+                    >
+                        <CustomView />
+                    </Mapa.Background>
                     <Mapa.Camera zoom={zoom} center={center} />
                 </Slot>
             </Mapa.MapView>

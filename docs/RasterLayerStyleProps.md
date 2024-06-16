@@ -9,10 +9,6 @@
 
 Whether this layer is displayed.
 
-#### Source
-
-[src/types/styles.ts:1427](https://github.com/cnmapos/react-native-mapsdk/blob/d24e9ec/src/types/styles.ts#L1427)
-
 ***
 
 ### rasterOpacity?
@@ -20,10 +16,6 @@ Whether this layer is displayed.
 > **`optional`** **rasterOpacity**: `Value`\<`number`, [`"zoom"`]\>
 
 The opacity at which the image will be drawn.
-
-#### Source
-
-[src/types/styles.ts:1431](https://github.com/cnmapos/react-native-mapsdk/blob/d24e9ec/src/types/styles.ts#L1431)
 
 ***
 
@@ -33,10 +25,6 @@ The opacity at which the image will be drawn.
 
 The transition affecting any changes to this layer’s rasterOpacity property.
 
-#### Source
-
-[src/types/styles.ts:1436](https://github.com/cnmapos/react-native-mapsdk/blob/d24e9ec/src/types/styles.ts#L1436)
-
 ***
 
 ### rasterHueRotate?
@@ -44,10 +32,6 @@ The transition affecting any changes to this layer’s rasterOpacity property.
 > **`optional`** **rasterHueRotate**: `Value`\<`number`, [`"zoom"`]\>
 
 Rotates hues around the color wheel.
-
-#### Source
-
-[src/types/styles.ts:1440](https://github.com/cnmapos/react-native-mapsdk/blob/d24e9ec/src/types/styles.ts#L1440)
 
 ***
 
@@ -57,10 +41,6 @@ Rotates hues around the color wheel.
 
 The transition affecting any changes to this layer’s rasterHueRotate property.
 
-#### Source
-
-[src/types/styles.ts:1445](https://github.com/cnmapos/react-native-mapsdk/blob/d24e9ec/src/types/styles.ts#L1445)
-
 ***
 
 ### rasterBrightnessMin?
@@ -68,10 +48,6 @@ The transition affecting any changes to this layer’s rasterHueRotate property.
 > **`optional`** **rasterBrightnessMin**: `Value`\<`number`, [`"zoom"`]\>
 
 Increase or reduce the brightness of the image. The value is the minimum brightness.
-
-#### Source
-
-[src/types/styles.ts:1449](https://github.com/cnmapos/react-native-mapsdk/blob/d24e9ec/src/types/styles.ts#L1449)
 
 ***
 
@@ -81,10 +57,6 @@ Increase or reduce the brightness of the image. The value is the minimum brightn
 
 The transition affecting any changes to this layer’s rasterBrightnessMin property.
 
-#### Source
-
-[src/types/styles.ts:1454](https://github.com/cnmapos/react-native-mapsdk/blob/d24e9ec/src/types/styles.ts#L1454)
-
 ***
 
 ### rasterBrightnessMax?
@@ -92,10 +64,6 @@ The transition affecting any changes to this layer’s rasterBrightnessMin prope
 > **`optional`** **rasterBrightnessMax**: `Value`\<`number`, [`"zoom"`]\>
 
 Increase or reduce the brightness of the image. The value is the maximum brightness.
-
-#### Source
-
-[src/types/styles.ts:1458](https://github.com/cnmapos/react-native-mapsdk/blob/d24e9ec/src/types/styles.ts#L1458)
 
 ***
 
@@ -105,10 +73,6 @@ Increase or reduce the brightness of the image. The value is the maximum brightn
 
 The transition affecting any changes to this layer’s rasterBrightnessMax property.
 
-#### Source
-
-[src/types/styles.ts:1463](https://github.com/cnmapos/react-native-mapsdk/blob/d24e9ec/src/types/styles.ts#L1463)
-
 ***
 
 ### rasterSaturation?
@@ -116,10 +80,6 @@ The transition affecting any changes to this layer’s rasterBrightnessMax prope
 > **`optional`** **rasterSaturation**: `Value`\<`number`, [`"zoom"`]\>
 
 Increase or reduce the saturation of the image.
-
-#### Source
-
-[src/types/styles.ts:1467](https://github.com/cnmapos/react-native-mapsdk/blob/d24e9ec/src/types/styles.ts#L1467)
 
 ***
 
@@ -129,10 +89,6 @@ Increase or reduce the saturation of the image.
 
 The transition affecting any changes to this layer’s rasterSaturation property.
 
-#### Source
-
-[src/types/styles.ts:1472](https://github.com/cnmapos/react-native-mapsdk/blob/d24e9ec/src/types/styles.ts#L1472)
-
 ***
 
 ### rasterContrast?
@@ -140,11 +96,7 @@ The transition affecting any changes to this layer’s rasterSaturation property
 > **`optional`** **rasterContrast**: `Value`\<`number`, [`"zoom"`]\>
 
 Increase or reduce the contrast of the image.
-
-#### Source
-
-[src/types/styles.ts:1476](https://github.com/cnmapos/react-native-mapsdk/blob/d24e9ec/src/types/styles.ts#L1476)
-
+s
 ***
 
 ### rasterContrastTransition?
@@ -152,10 +104,6 @@ Increase or reduce the contrast of the image.
 > **`optional`** **rasterContrastTransition**: `Transition`
 
 The transition affecting any changes to this layer’s rasterContrast property.
-
-#### Source
-
-[src/types/styles.ts:1481](https://github.com/cnmapos/react-native-mapsdk/blob/d24e9ec/src/types/styles.ts#L1481)
 
 ***
 
@@ -165,10 +113,6 @@ The transition affecting any changes to this layer’s rasterContrast property.
 
 The resampling/interpolation method to use for overscaling, also known as texture magnification filter
 
-#### Source
-
-[src/types/styles.ts:1485](https://github.com/cnmapos/react-native-mapsdk/blob/d24e9ec/src/types/styles.ts#L1485)
-
 ***
 
 ### rasterFadeDuration?
@@ -176,10 +120,6 @@ The resampling/interpolation method to use for overscaling, also known as textur
 > **`optional`** **rasterFadeDuration**: `Value`\<`number`, [`"zoom"`]\>
 
 Fade duration when a new tile is added.
-
-#### Source
-
-[src/types/styles.ts:1489](https://github.com/cnmapos/react-native-mapsdk/blob/d24e9ec/src/types/styles.ts#L1489)
 
 ***
 
@@ -189,9 +129,6 @@ Fade duration when a new tile is added.
 
 Defines a color map by which to colorize a raster layer, parameterized by the `["rasterValue"]` expression and evaluated at 256 uniformly spaced steps over the range specified by `rasterColorRange`.
 
-#### Source
-
-[src/types/styles.ts:1493](https://github.com/cnmapos/react-native-mapsdk/blob/d24e9ec/src/types/styles.ts#L1493)
 
 ***
 
@@ -205,10 +142,6 @@ When `rasterColor` is active, specifies the combination of source RGB channels u
 
 rasterColor
 
-#### Source
-
-[src/types/styles.ts:1499](https://github.com/cnmapos/react-native-mapsdk/blob/d24e9ec/src/types/styles.ts#L1499)
-
 ***
 
 ### rasterColorMixTransition?
@@ -216,10 +149,6 @@ rasterColor
 > **`optional`** **rasterColorMixTransition**: `Transition`
 
 The transition affecting any changes to this layer’s rasterColorMix property.
-
-#### Source
-
-[src/types/styles.ts:1504](https://github.com/cnmapos/react-native-mapsdk/blob/d24e9ec/src/types/styles.ts#L1504)
 
 ***
 
@@ -233,10 +162,6 @@ When `rasterColor` is active, specifies the range over which `rasterColor` is ta
 
 rasterColor
 
-#### Source
-
-[src/types/styles.ts:1510](https://github.com/cnmapos/react-native-mapsdk/blob/d24e9ec/src/types/styles.ts#L1510)
-
 ***
 
 ### rasterColorRangeTransition?
@@ -244,7 +169,3 @@ rasterColor
 > **`optional`** **rasterColorRangeTransition**: `Transition`
 
 The transition affecting any changes to this layer’s rasterColorRange property.
-
-#### Source
-
-[src/types/styles.ts:1515](https://github.com/cnmapos/react-native-mapsdk/blob/d24e9ec/src/types/styles.ts#L1515)
