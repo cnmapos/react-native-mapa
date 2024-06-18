@@ -11,14 +11,14 @@ function Location(): React.JSX.Element {
         <SafeAreaView style={{height: '100%'}}>
             <Mapa.MapView style="MapboxVector">
                 <Mapa.Camera center={center} />
-                <Mapa.Compass style={'left'} />
                 <Mapa.Location style={'right'} />
                 <Mapa.Background style={'right'} />
                 <Mapa.ZoomInOut style={'right'} />
                 <Mapa.Weather
-                    style={'right'}
+                    style={'left'}
                     akey={'64bdebe6239a3a398443b2af4ba6085e'}
                 />
+                <Mapa.Scalebar style={'bottom'} />
             </Mapa.MapView>
         </SafeAreaView>
     );

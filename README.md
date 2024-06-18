@@ -10,32 +10,17 @@ react-native-mapa面向开源，我们欢迎任何感兴趣的开发者加入社
 <table>
 <tr>
     <td colspan="2">
-        <img src="./src/assets/demo/mapview.png"/>
+        <img src="https://github.com/cnmapos/react-native-mapa/blob/main/src/assets/demo/d3.png"/>
     </td>
     <td colspan="2">
-        <img src="./src/assets/demo/background.png" />
+        <img src="https://github.com/cnmapos/react-native-mapa/blob/main/src/assets/demo/poi.png" />
     </td>
     <td colspan="2">
-        <img src="./src/assets/demo/poi.png" />
+        <img src="https://github.com/cnmapos/react-native-mapa/blob/main/src/assets/demo/draw.png" />
     </td>
 </tr>
 <tr>
 </tr>
-
-<tr>
-    <td colspan="2">
-        <img src="./src/assets/demo/draw.png"/>
-    </td>
-    <td colspan="2">
-        <img src="./src/assets/demo/query.png" />
-    </td>
-    <td colspan="2">
-        <img src="./src/assets/demo/poi.png" />
-    </td>
-</tr>
-<tr>
-</tr>
-
 
 </table>
 

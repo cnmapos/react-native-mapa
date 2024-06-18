@@ -74,6 +74,7 @@ const RoutesConfig = [
             },
             {
                 title: 'POI Search',
+                id: 'poi',
                 img: require('./assets/basic.png'),
                 component: POI,
             },
@@ -197,6 +198,7 @@ const RoutesConfig = [
             {
                 title: 'Rectangle',
                 img: require('./assets/basic.png'),
+                id: 'rectangle',
                 component: RectanglePainter,
             },
         ],
