@@ -3,7 +3,7 @@
 react-native-mapa是一款开源的React Native地图组件，支持iOS和Android。
 
 ## 成为react-native-mapa的核心开发者
-react-native-mapa面相开源，我们欢迎任何感兴趣的开发者加入社区, 进入[留言区](http://xxxx)。
+react-native-mapa面向开源，我们欢迎任何感兴趣的开发者加入社区, 进入[留言区](https://github.com/cnmapos/react-native-mapa/issues/3)。
 
 ---
 
@@ -52,7 +52,7 @@ react-native-mapa底层依赖mapbox，因此需要提供`Mapbox Access Token`。
 
 ## Installation
 
-查看安装文档[Installation](INSTALL.md)
+查看安装文档[Installation](https://github.com/cnmapos/react-native-mapa/blob/main/INSTALL.md)
 
 ## Run Project
 
@@ -80,12 +80,9 @@ import {SafeAreaView, StyleSheet} from 'react-native';
 import React from 'react';
 
 function Mapview({}: any): React.JSX.Element {
-    const projection = 'mercator';
-    const styleID = 'MapboxVector';
-
     return (
         <SafeAreaView style={styles.container}>
-            <Mapa.MapView projection={projection} style={styleID}>
+            <Mapa.MapView projection={'mercator'} style={'MapboxVector'}>
                 <Mapa.Camera />
                 <Mapa.Compass />
             </Mapa.MapView>
@@ -100,40 +97,41 @@ const styles = StyleSheet.create({
         height: '100%',
     },
 });
+
 ```
 
 ## DOCUMENTTATION
 #### Components
-- [Mapview](./docs//MapView.md)
-- [Camera](./docs//Camera.md)
-- [Background](./docs/Background.md)
-- [Location](./docs//LineLayer.md)
-- [ZoomInOut](./docs/ZoomInOut.md)
-- [Compass](./docs/Compass.md)
-- [Scalebar](./docs/Scalebar.md)
-- [POIFinder](./docs/POIFinder.md)
-- [Weather](./docs//Weather.md)
-- [Images](./docs/image/Images.md)
-- [Image](./docs/image/Image.md)
-- [Marker](./docs/Marker.md)
+- [Mapview](https://github.com/cnmapos/react-native-mapa/blob/main/docs/MapView.md)
+- [Camera](https://github.com/cnmapos/react-native-mapa/blob/main/docs/Camera.md)
+- [Background](https://github.com/cnmapos/react-native-mapa/blob/main/docs/Background.md)
+- [Location](https://github.com/cnmapos/react-native-mapa/blob/main/docs//LineLayer.md)
+- [ZoomInOut](https://github.com/cnmapos/react-native-mapa/blob/main/docs/ZoomInOut.md)
+- [Compass](https://github.com/cnmapos/react-native-mapa/blob/main/docs/Compass.md)
+- [Scalebar](https://github.com/cnmapos/react-native-mapa/blob/main/docs/Scalebar.md)
+- [POIFinder](https://github.com/cnmapos/react-native-mapa/blob/main/docs/POIFinder.md)
+- [Weather](https://github.com/cnmapos/react-native-mapa/blob/main/docs//Weather.md)
+- [Images](https://github.com/cnmapos/react-native-mapa/blob/main/docs/image/Images.md)
+- [Image](https://github.com/cnmapos/react-native-mapa/blob/main/docs/image/Image.md)
+- [Marker](https://github.com/cnmapos/react-native-mapa/blob/main/docs/Marker.md)
 
 #### Sources
-- [VectorSource](./docs/VectorSource.md)
-- [RasterSource](./docs/RasterSource.md)
-- [GeoJSONSource](./docs/GeoJSONSource.md)
-- [ImageSource](./docs/image/ImageSource.md)
+- [VectorSource](https://github.com/cnmapos/react-native-mapa/blob/main/docs/VectorSource.md)
+- [RasterSource](https://github.com/cnmapos/react-native-mapa/blob/main/docs/RasterSource.md)
+- [GeoJSONSource](https://github.com/cnmapos/react-native-mapa/blob/main/docs/GeoJSONSource.md)
+- [ImageSource](https://github.com/cnmapos/react-native-mapa/blob/main/docs/image/ImageSource.md)
 
 #### Layers
-- [LineLayer](./docs/LineLayer.md)
-- [FillLayer](./docs/FillLayer.md)
-- [SymbolLayer](./docs/SymbolLayer.md)
-- [RasterLayer](./docs/RasterLayer.md)
-- [CircleLayer](./docs/CircleLayer.md)
-- [FillExtrusionLayer](./docs/FillExtrusionLayer.md)
-- [ModelLayer](./docs/ModelLayer.md)
+- [LineLayer](https://github.com/cnmapos/react-native-mapa/blob/main/docs/LineLayer.md)
+- [FillLayer](https://github.com/cnmapos/react-native-mapa/blob/main/docs/FillLayer.md)
+- [SymbolLayer](https://github.com/cnmapos/react-native-mapa/blob/main/docs/SymbolLayer.md)
+- [RasterLayer](https://github.com/cnmapos/react-native-mapa/blob/main/docs/RasterLayer.md)
+- [CircleLayer](https://github.com/cnmapos/react-native-mapa/blob/main/docs/CircleLayer.md)
+- [FillExtrusionLayer](https://github.com/cnmapos/react-native-mapa/blob/main/docs/FillExtrusionLayer.md)
+- [ModelLayer](https://github.com/cnmapos/react-native-mapa/blob/main/docs/ModelLayer.md)
 
 #### Draw
-- [PolylinePainter](./docs/painter/PolylinePainter.md)
-- [PolygonPainter](./docs/painter/PolygonPainter.md)
-- [CirclePainter](./docs/painter/CirclePainter.md)
-- [RectanglePainter](./docs/painter/RectanglePainter.md)
+- [PolylinePainter](https://github.com/cnmapos/react-native-mapa/blob/main/docs/painter/PolylinePainter.md)
+- [PolygonPainter](https://github.com/cnmapos/react-native-mapa/blob/main/docs/painter/PolygonPainter.md)
+- [CirclePainter](https://github.com/cnmapos/react-native-mapa/blob/main/docs/painter/CirclePainter.md)
+- [RectanglePainter](https://github.com/cnmapos/react-native-mapa/blob/main/docs/painter/RectanglePainter.md)

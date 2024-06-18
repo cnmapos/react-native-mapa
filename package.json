@@ -17,8 +17,19 @@
     "lib",
     "android",
     "ios",
-    "docs",
-    "*.md"
+    "!android/build",
+    "!ios/build"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cnmapos/react-native-mapa"
+  },
+  "keywords": [
+    "react",
+    "react-native",
+    "map",
+    "mapview",
+    "mapbox-maps"
   ],
   "scripts": {
     "android": "react-native run-android",
