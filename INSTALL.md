@@ -3,6 +3,15 @@
 - Mapbox secret token: 下载mapbox依赖
 - Mapbox public tokon: 访问mapbox资源
 
+NPM
+```
+npm install @rnmapbox/maps --save
+```
+YARN
+```
+yarn add @rnmapbox/maps --save
+```
+
 # INSTALLATION
 
 NPM

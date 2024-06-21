@@ -5,6 +5,8 @@ react-native-mapa是一款开源的React Native地图组件，支持iOS和Androi
 ## 成为react-native-mapa的核心开发者
 react-native-mapa面向开源，我们欢迎任何感兴趣的开发者加入社区, 进入[留言区](https://github.com/cnmapos/react-native-mapa/issues/3)。
 
+## 稳定版本请使用 v1.0.6+
+
 ---
 
 <table>
@@ -64,10 +66,14 @@ import Mapa from 'react-native-mapa';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import React from 'react';
 
+Mapa.setAccessToken(
+    'pk.XXX',
+);
+
 function Mapview({}: any): React.JSX.Element {
     return (
         <SafeAreaView style={styles.container}>
-            <Mapa.MapView projection={'mercator'} style={'MapboxVector'}>
+            <Mapa.MapView>
                 <Mapa.Camera />
                 <Mapa.Compass />
             </Mapa.MapView>
