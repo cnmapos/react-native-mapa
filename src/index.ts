@@ -1,3 +1,5 @@
+import '@rnmapbox/maps';
+
 /**
  * @packageDocumentation
  * @categoryDescription Component
