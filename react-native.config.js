@@ -1,5 +1,9 @@
 module.exports = {
     dependencies: {
-        ...require('./package.json').dependencies,
+        '@rnmapbox/maps': {
+            platforms: {
+                ios: null, // This ensures the iOS platform is included
+            },
+        },
     },
 };
