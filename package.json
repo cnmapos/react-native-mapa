@@ -21,7 +21,8 @@
     "react-native.config.js",
     "rnmapbox-maps.podspec",
     "!android/build",
-    "!ios/build"
+    "!ios/build",
+    "!ios/Pods"
   ],
   "repository": {
     "type": "git",
