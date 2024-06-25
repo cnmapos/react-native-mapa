@@ -2117,10 +2117,10 @@
   resolved "https://registry.npmmirror.com/@rneui/themed/-/themed-4.0.0-rc.8.tgz"
   integrity sha512-8L/XOrL9OK/r+/iBLvx63TbIdZOXF8SIjN9eArMYm6kRbMr8m4BitXllDN8nBhBsSPNYvL6EAgjk+i2MfY4sBA==
 
-"@rnmapbox/maps@^10.1.18":
-  version "10.1.19"
-  resolved "https://registry.npmmirror.com/@rnmapbox/maps/-/maps-10.1.19.tgz"
-  integrity sha512-zcKMlsbgSYMlyNT6KaTDMELatRIUH0LRmCjiMAXwqncStSIetsli20ctkwcN+ZI2a4x5Cwa2ZhJIkZnHFcPGIw==
+"@rnmapbox/maps@^10.1.27":
+  version "10.1.27"
+  resolved "https://registry.yarnpkg.com/@rnmapbox/maps/-/maps-10.1.27.tgz#434c3d3d955f7e2df041d17a449e4b2a696ab75c"
+  integrity sha512-x//dWjd9BbaSL0UBcbgbl9nu8rUCOIIxcTB4bbuorHnNapCq6v7gIle/dXhGYyaCGw3fLKC24PK0BEOlZYeTTg==
   dependencies:
     "@turf/along" "6.5.0"
     "@turf/distance" "6.5.0"

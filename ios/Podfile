@@ -1,5 +1,3 @@
-pod 'rnmapbox-maps', :path => '../node_modules/@rnmapbox/maps'
-
 # Resolve react_native_pods.rb with node to allow for hoisting
 require Pod::Executable.execute_command('node', ['-p',
   'require.resolve(
@@ -58,18 +56,5 @@ target 'ReactNativeMapSdk' do
       config[:reactNativePath],
       :mac_catalyst_enabled => false
     )
-
-    installer.pods_project.targets.each do |target|
-      if target.name == 'Flipper'
-        file_path = 'Pods/Flipper/xplat/Flipper/FlipperTransportTypes.h'
-        contents = File.read(file_path)
-        unless contents.include?('#include <functional>')
-          File.open(file_path, 'w') do |file|
-            file.puts('#include <functional>')
-            file.puts(contents)
-          end
-        end
-      end
-    end
   end
 end
