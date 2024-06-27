@@ -90,12 +90,12 @@ function PreView({navigation}: any): React.JSX.Element {
         },
         {
             id: 'MapboxVector',
-            name: 'mapbox矢量',
+            name: 'Mapbox矢量',
             style: 'mapbox://styles/mapbox/dark-v10',
         },
         {
             id: 'Satellite',
-            name: 'mapbox卫星',
+            name: 'Mapbox卫星',
             style: 'mapbox://styles/mapbox/satellite-v9',
         },
     ];
