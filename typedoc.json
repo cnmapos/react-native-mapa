@@ -7,7 +7,7 @@
     // "categorizeByGroup": true,
     "groupOrder": ["Functions", "Type", "*"],
     "excludeNotDocumented": true,
-    "out": "docs",
+    "out": "dhtml",
     "excludePrivate": true,
     "excludeProtected": true,
     "includeVersion": false,
