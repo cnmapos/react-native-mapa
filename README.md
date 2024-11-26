@@ -1,11 +1,26 @@
-# React Native Map SDK for iOS and Android
+<br>
 
-react-native-mapa是一款开源的React Native地图组件，支持iOS和Android。
+<p align="center">
+<img src="https://cnmapos.github.io/rnmapa.dev/assets/logo.svg" style="width:100px;" />
+</p>
 
-## 成为react-native-mapa的核心开发者
-react-native-mapa面向开源，我们欢迎任何感兴趣的开发者加入社区, 进入[留言区](https://github.com/cnmapos/react-native-mapa/issues/3)。
+<h1 align="center">React Native Mapa</h1>
 
-## 稳定版本请使用 v1.0.6+
+<p align="center">
+Easy-to-use React Native map components.
+</p>
+
+<p align="center">
+<a href="https://www.npmjs.com/package/react-native-mapa"><img src="https://img.shields.io/npm/v/react-native-mapa?color=c95f8b&amp;label=" alt="NPM version"></a></p>
+
+<br>
+<p align="center">
+<a href="https://cnmapos.github.io/rnmapa.dev/">📚 Documentation</a> |
+<a href="https://cnmapos.github.io/rnmapa.dev/docs/">🤹‍♂️ Definition</a> |
+<a href="https://cnmapos.github.io/rnmapa.dev/docs/install.html">🧑‍💻 Installation</a> |
+<a href="https://cnmapos.github.io/rnmapa.dev/docs/apis.html">🎓 API</a> 
+</p>
+<br>
 
 ---
 
@@ -27,9 +42,8 @@ react-native-mapa面向开源，我们欢迎任何感兴趣的开发者加入社
 </table>
 
 ---
-
 ## Prerequisite
-react-native-mapa底层依赖mapbox，因此需要提供`Mapbox Access Token`。
+react-native-mapa relies on mapbox, so you need to provide a `Mapbox Access Token`.
 
 ## Dependencies
 
@@ -39,7 +53,7 @@ react-native-mapa底层依赖mapbox，因此需要提供`Mapbox Access Token`。
 
 ## Installation
 
-查看安装文档[Installation](https://github.com/cnmapos/react-native-mapa/blob/main/INSTALL.md)
+Please check the installation documentation [Installation](https://github.com/cnmapos/react-native-mapa/blob/main/INSTALL.md)
 
 ## Run Project
 
